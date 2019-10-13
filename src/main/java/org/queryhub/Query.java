@@ -21,7 +21,7 @@ public final class Query implements
     Insert, Update, Update.Mixin, Where, Where.Select, Where.Mixin, Terminal {
 
   private enum Keys implements KeyWord {
-    INSERT, INTO, VALUES, SELECT, FROM, UPDATE, SET, WHERE,
+    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE,
     ;
 
     @Override
@@ -59,6 +59,10 @@ public final class Query implements
   }
 
   // TODO: Upsert
+
+  public static Where delete(final Field.Single table) {
+    return new Query().add(Keys.DELETE).add(Keys.FROM).add(table);
+  }
 
   // Implementations
 
