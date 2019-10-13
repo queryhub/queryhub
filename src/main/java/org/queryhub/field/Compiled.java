@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
  */
 final class Compiled {
 
