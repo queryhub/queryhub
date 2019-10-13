@@ -12,8 +12,6 @@ public interface Where extends Terminal {
 
   // TODO: Composite
 
-  // TODO: LIKE CLAUSE
-
   interface Mixin extends Terminal {
 
     Where.Mixin
@@ -33,7 +31,7 @@ public interface Where extends Terminal {
 
   enum Relation implements KeyWord {
 
-    EQ("="), GT(">"), GTE(">="),
+    LIKE("LIKE"), EQ("="), GT(">"), GTE(">="),
     LT("<"), LTE("<="), NEQ("!=");
 
     final String symbol;

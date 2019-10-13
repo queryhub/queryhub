@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Field;
+import org.queryhub.steps.Where.Condition;
+import org.queryhub.steps.Where.Relation;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
@@ -22,6 +24,35 @@ final class SelectTest extends BaseTest {
     // Act
     final String result = Query
         .select(Field.of(TABLE_1), Field.of(FIELD_1))
+        .build();
+    // Assert
+    Assertions.assertEquals(QUERY, result);
+  }
+
+  @Test
+  @DisplayName("Should append WHERE clause to SELECT query..")
+  final void shouldAppend_whereClause_toSelectQuery() {
+    // Arrange
+    final String QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' <= 'field_2';";
+    // Act
+    final String result = Query
+        .select(Field.of(TABLE_1), Field.of(FIELD_1))
+        .where(Field.of(FIELD_1), Relation.LTE, Field.of(FIELD_2))
+        .build();
+    // Assert
+    Assertions.assertEquals(QUERY, result);
+  }
+
+  @Test
+  @DisplayName("Should append WHERE clause sequentially to SELECT query..")
+  final void shouldAppend_whereClauseSequentially_toSelectQuery() {
+    // Arrange
+    final String QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' < 'field_2' AND 'field_2' LIKE 'field_1';";
+    // Act
+    final String result = Query
+        .select(Field.of(TABLE_1), Field.of(FIELD_1))
+        .where(Field.of(FIELD_1), Relation.LT, Field.of(FIELD_2))
+        .where(Condition.AND, Field.of(FIELD_2), Relation.LIKE, Field.of(FIELD_1))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
