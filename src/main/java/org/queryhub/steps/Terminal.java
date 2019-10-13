@@ -5,7 +5,7 @@ package org.queryhub.steps;
  */
 public interface Terminal {
 
-  interface Select extends Where {
+  interface Select extends Where, Sort {
 
   }
 

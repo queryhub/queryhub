@@ -2,11 +2,13 @@ package org.queryhub;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.field.Field.Single;
 import org.queryhub.steps.Insert;
+import org.queryhub.steps.Sort;
 import org.queryhub.steps.Terminal;
 import org.queryhub.steps.Update;
 import org.queryhub.steps.Where;
@@ -17,8 +19,8 @@ import org.queryhub.steps.Where;
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  */
-public final class Query implements
-    Insert, Update, Update.Mixin, Where, Where.Select, Where.Mixin, Terminal {
+public final class Query implements Insert, Update, Update.Mixin,
+    Where, Where.Select, Where.Mixin, Sort, Terminal {
 
   private enum Keys implements KeyWord {
     INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE,
@@ -32,6 +34,7 @@ public final class Query implements
 
   private static final String COMMA = ",";
   private static final String SPACE = " ";
+  private static final String SPACED_COMMA = ", ";
 
   private static final char END = ';';
   private static final char OPEN = '(';
@@ -101,6 +104,16 @@ public final class Query implements
   @Override
   public final Update.Mixin and(final Field.Single field, final Field.Single value) {
     return this.add(COMMA).add(field).add(Relation.EQ).add(value);
+  }
+
+  // Sort
+
+  @Override
+  public final Sort sort(final Sort.Type type, final Aggregate one, final Aggregate... ones) {
+    final var b = Stream.<Aggregate>builder().add(one);
+    Stream.of(ones).forEach(b);
+    return this.add(type).add(b.build().map(Supplier::get)
+        .collect(Collectors.joining(SPACED_COMMA)));
   }
 
   // Terminal

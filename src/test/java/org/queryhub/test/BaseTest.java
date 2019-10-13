@@ -13,6 +13,7 @@ abstract class BaseTest {
   static final String INSERT_TAG = "insert_tag";
   static final String UPDATE_TAG = "update_tag";
   static final String DELETE_TAG = "delete_tag";
+  static final String SORT_TAG = "sort_tag";
 
   static final String TABLE_1 = "table_1";
   static final String TABLE_2 = "table_2";
