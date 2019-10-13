@@ -94,7 +94,7 @@ public interface Field extends Supplier<String> {
 
   // Multiples
 
-  static Multiple of(final boolean isDistinct, final int value, final Integer... values) {
+  static Multiple of(final boolean isDistinct, final Integer value, final Integer... values) {
     return process(isDistinct, stream(value, values).map(String::valueOf));
   }
 
