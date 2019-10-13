@@ -8,6 +8,7 @@ import org.queryhub.field.Field;
 import org.queryhub.field.Field.Single;
 import org.queryhub.steps.Insert;
 import org.queryhub.steps.Terminal;
+import org.queryhub.steps.Update;
 import org.queryhub.steps.Where;
 
 /**
@@ -16,10 +17,11 @@ import org.queryhub.steps.Where;
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  */
-public final class Query implements Insert, Where, Where.Select, Where.Mixin, Terminal {
+public final class Query implements
+    Insert, Update, Update.Mixin, Where, Where.Select, Where.Mixin, Terminal {
 
   private enum Keys implements KeyWord {
-    INSERT, INTO, VALUES, SELECT, FROM, WHERE,
+    INSERT, INTO, VALUES, SELECT, FROM, UPDATE, SET, WHERE,
     ;
 
     @Override
@@ -28,6 +30,7 @@ public final class Query implements Insert, Where, Where.Select, Where.Mixin, Te
     }
   }
 
+  private static final String COMMA = ",";
   private static final String SPACE = " ";
 
   private static final char END = ';';
@@ -39,6 +42,8 @@ public final class Query implements Insert, Where, Where.Select, Where.Mixin, Te
   private Query() {
   }
 
+  // Factories
+
   public static Insert insert(final Single table) {
     return new Query().add(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
   }
@@ -48,6 +53,12 @@ public final class Query implements Insert, Where, Where.Select, Where.Mixin, Te
   }
 
   // TODO: Composite SELECT query
+
+  public static Update update(final Field.Single table) {
+    return new Query().add(Keys.UPDATE).add(table);
+  }
+
+  // TODO: Upsert
 
   // Implementations
 
@@ -74,6 +85,18 @@ public final class Query implements Insert, Where, Where.Select, Where.Mixin, Te
   public final Where.Mixin
   where(final Condition cnd, final Field.Single f1, final Relation rel, final Field.Single f2) {
     return this.add(cnd).add(f1).add(rel).add(f2);
+  }
+
+  // Update
+
+  @Override
+  public final Update.Mixin set(final Field.Single field, final Field.Single value) {
+    return this.add(Keys.SET).add(field).add(Relation.EQ).add(value);
+  }
+
+  @Override
+  public final Update.Mixin and(final Field.Single field, final Field.Single value) {
+    return this.add(COMMA).add(field).add(Relation.EQ).add(value);
   }
 
   // Terminal

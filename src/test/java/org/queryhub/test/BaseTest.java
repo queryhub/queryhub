@@ -11,6 +11,7 @@ abstract class BaseTest {
   static final String AGGREGATE_TAG = "aggregate_tag";
   static final String SELECT_TAG = "select_tag";
   static final String INSERT_TAG = "insert_tag";
+  static final String UPDATE_TAG = "update_tag";
 
   static final String TABLE_1 = "table_1";
   static final String TABLE_2 = "table_2";
