@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.field.Field.Single;
+import org.queryhub.steps.Insert;
 import org.queryhub.steps.Terminal;
 import org.queryhub.steps.Where;
 
@@ -15,10 +16,10 @@ import org.queryhub.steps.Where;
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  */
-public final class Query implements  Where, Where.Select, Where.Mixin, Terminal {
+public final class Query implements Insert, Where, Where.Select, Where.Mixin, Terminal {
 
   private enum Keys implements KeyWord {
-    SELECT, FROM, WHERE,
+    INSERT, INTO, VALUES, SELECT, FROM, WHERE,
     ;
 
     @Override
@@ -30,13 +31,17 @@ public final class Query implements  Where, Where.Select, Where.Mixin, Terminal 
   private static final String SPACE = " ";
 
   private static final char END = ';';
+  private static final char OPEN = '(';
+  private static final char CLOSE = ')';
 
   private final Stream.Builder<String> builder = Stream.builder();
 
   private Query() {
   }
 
-  // Factories
+  public static Insert insert(final Single table) {
+    return new Query().add(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
+  }
 
   public static Where.Select select(final Single from, final Field fields) {
     return new Query().add(Keys.SELECT).add(fields).add(Keys.FROM).add(from);
@@ -45,6 +50,18 @@ public final class Query implements  Where, Where.Select, Where.Mixin, Terminal 
   // TODO: Composite SELECT query
 
   // Implementations
+
+  // Values
+
+  @Override
+  public final Terminal values(final Field fields) {
+    return this.enclosed(fields.get());
+  }
+
+  @Override
+  public final Terminal values(final Where.Select where) {
+    return this.enclosed(where.build(Boolean.FALSE));
+  }
 
   // Where
 
@@ -85,5 +102,9 @@ public final class Query implements  Where, Where.Select, Where.Mixin, Terminal 
   private Query add(final String value) {
     this.builder.add(requireNonNull(value));
     return this;
+  }
+
+  private Query enclosed(final String value) {
+    return add(OPEN + value + CLOSE);
   }
 }
