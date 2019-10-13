@@ -1,0 +1,84 @@
+import java.nio.charset.StandardCharsets
+
+plugins {
+    id 'base'
+    id 'idea'
+    id 'java-library'
+}
+
+// ::: Project metadata :::
+group 'org.queryhub'
+version '0.1.0'
+
+// Should follow wrapper version shipped into this project
+wrapper { gradleVersion = '5.5.1' }
+
+ext.moduleName = '_'
+
+repositories { mavenCentral() }
+
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:' + junit_version
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:' + junit_version
+    testImplementation 'org.junit.platform:junit-platform-suite-api:' + junit_platform_version
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:' + junit_platform_version
+}
+
+defaultTasks 'clean', 'cleanIdea', 'idea', 'build'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+compileJava {
+
+    options.encoding = StandardCharsets.UTF_8
+    options.incremental = Boolean.TRUE
+
+    inputs.property("moduleName", moduleName)
+    options.compilerArgs = [
+            '--module-path', classpath.asPath,
+    ]
+    classpath = files()
+}
+
+test {
+
+    exclude { 'module-info.java' }
+
+    failFast = Boolean.TRUE
+    testLogging.showStandardStreams = Boolean.TRUE
+    testLogging.exceptionFormat = 'full'
+
+    useJUnitPlatform()
+
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        jvmArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'ALL-MODULE-PATH',
+                '--patch-module', "$moduleName=" + files(sourceSets.test.java.outputDir,
+                sourceSets.test.resources.srcDirs).asPath]
+        classpath = files()
+    }
+}
+
+
+compileTestJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--patch-module', "$moduleName=" + files(sourceSets.test.java.srcDirs).asPath,
+        ]
+        classpath = files()
+    }
+}
+
+jar {
+    inputs.property("moduleName", moduleName)
+    manifest {
+        attributes 'Main-Class': 'org.queryhub.Query'
+        attributes('Automatic-Module-Name': moduleName)
+    }
+}
