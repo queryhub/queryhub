@@ -30,14 +30,14 @@ public interface Aggregate extends Field.Single {
     return () -> type.fun.apply(Compiled.DISTINCT.apply(isDistinct, aggregate.get()));
   }
 
-  static Multiple of(final Type type, final Aggregate aggregate, final Aggregate... aggregates) {
-    return of(type, Boolean.FALSE, aggregate, aggregates);
+  static Multiple of(final Type type, final Aggregate first, final Aggregate... others) {
+    return of(type, Boolean.FALSE, first, others);
   }
 
   static Multiple
-  of(final Type type, final boolean isDistinct, final Aggregate one, final Aggregate... ones) {
+  of(final Type type, final boolean isDistinct, final Aggregate first, final Aggregate... others) {
     return () -> type.fun.apply(Compiled.DISTINCT.apply(isDistinct, Stream
-        .concat(Stream.of(one), Stream.of(ones)).map(Supplier::get)
+        .concat(Stream.of(first), Stream.of(others)).map(Supplier::get)
         .collect(Collectors.joining(Compiled.COMMA))));
   }
 

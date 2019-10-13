@@ -125,14 +125,14 @@ public interface Field extends Supplier<String> {
   // privates
 
   @SafeVarargs
-  private static <T> Stream<T> stream(final T t, final T... ts) {
-    final Stream.Builder<T> build = Stream.<T>builder().add(t);
-    Stream.of(ts).forEach(build);
+  private static <T> Stream<T> stream(final T first, final T... following) {
+    final var build = Stream.<T>builder().add(first);
+    Stream.of(following).forEach(build);
     return build.build();
   }
 
-  private static <T> Multiple process(final boolean isDistinct, Stream<T> ss) {
-    return () -> Compiled.DISTINCT.apply(isDistinct, ss
+  private static <T> Multiple process(final boolean isDistinct, final Stream<T> stream) {
+    return () -> Compiled.DISTINCT.apply(isDistinct, stream
         .map(String::valueOf).map(Compiled.QUOTED)
         .collect(Collectors.joining(Compiled.COMMA)));
   }
