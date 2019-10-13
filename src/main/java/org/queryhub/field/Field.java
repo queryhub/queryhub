@@ -71,7 +71,7 @@ public interface Field extends Supplier<String> {
 
   // Overloaded Multiples
 
-  static Multiple of(final int value, final Integer... values) {
+  static Multiple of(final Integer value, final Integer... values) {
     return of(Boolean.FALSE, value, values);
   }
 
