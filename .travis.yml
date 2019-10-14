@@ -16,3 +16,10 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+# https://docs.travis-ci.com/user/sonarcloud/
+addons:
+  sonarcloud:
+    organization: "queryhub"
+    token:
+      secure: "fe78c047c663a9859f71f618f499434eeb4d901a"

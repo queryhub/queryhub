@@ -1,7 +1,7 @@
 package org.queryhub.field;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -127,9 +127,9 @@ public interface Aggregate extends Field.Single {
     AVG(s -> String.format("AVG(%s)", s)),
     MIN(s -> String.format("MIN(%s)", s)),
     MAX(s -> String.format("MAX(%s)", s));
-    private final Function<String, String> fun;
+    private final UnaryOperator<String> fun;
 
-    Type(final Function<String, String> fun) {
+    Type(final UnaryOperator<String> fun) {
       this.fun = fun;
     }
   }

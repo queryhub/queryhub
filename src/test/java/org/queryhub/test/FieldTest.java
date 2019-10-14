@@ -2,13 +2,14 @@ package org.queryhub.test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.field.Field;
+import org.queryhub.field.Field.Constants;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
@@ -28,14 +29,14 @@ final class FieldTest extends BaseTest {
   @DisplayName("Should expose all as asterisk.")
   final void shouldExpose_all_as_asterisk() {
     // Act / Assert
-    Assertions.assertEquals("'*'", Field.ALL.get());
+    Assertions.assertEquals("'*'", Constants.ALL.getField().get());
   }
 
   @Test
   @DisplayName("Should expose variable as question mark.")
   final void shouldExpose_variable_as_questionMark() {
     // Act / Assert
-    Assertions.assertEquals("'?'", Field.VARIABLE.get());
+    Assertions.assertEquals("'?'", Constants.VARIABLE.getField().get());
   }
 
   @Test
@@ -115,8 +116,8 @@ final class FieldTest extends BaseTest {
     @DisplayName(MULTIPLE_DESCRIPTION)
     final void shouldConcat_multipleParameters_with_comma() {
       // Arrange
-      final Supplier<Boolean> SUP_TRUE = () -> Boolean.TRUE;
-      final Supplier<Boolean> SUP_FALSE = () -> Boolean.FALSE;
+      final BooleanSupplier SUP_TRUE = () -> Boolean.TRUE;
+      final BooleanSupplier SUP_FALSE = () -> Boolean.FALSE;
       // Act
       final var SUBJECT = Field.of(SUP_TRUE, SUP_FALSE, SUP_TRUE);
       // Assert

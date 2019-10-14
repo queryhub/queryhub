@@ -10,6 +10,7 @@ import org.queryhub.field.Field.Single;
 import org.queryhub.steps.Insert;
 import org.queryhub.steps.Sort;
 import org.queryhub.steps.Terminal;
+import org.queryhub.steps.Terminal.Select;
 import org.queryhub.steps.Update;
 import org.queryhub.steps.Where;
 
@@ -20,7 +21,7 @@ import org.queryhub.steps.Where;
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  */
 public final class Query implements Insert, Update, Update.Mixin,
-    Where, Where.Select, Where.Mixin, Sort, Terminal {
+    Where, Select, Where.Mixin, Sort, Terminal {
 
   private enum Keys implements KeyWord {
     INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE,
@@ -51,7 +52,7 @@ public final class Query implements Insert, Update, Update.Mixin,
     return new Query().add(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
   }
 
-  public static Where.Select select(final Single from, final Field fields) {
+  public static Select select(final Single from, final Field fields) {
     return new Query().add(Keys.SELECT).add(fields).add(Keys.FROM).add(from);
   }
 
@@ -77,7 +78,7 @@ public final class Query implements Insert, Update, Update.Mixin,
   }
 
   @Override
-  public final Terminal values(final Where.Select where) {
+  public final Terminal values(final Select where) {
     return this.enclosed(where.build(Boolean.FALSE));
   }
 

@@ -3,6 +3,7 @@ package org.queryhub.field;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,16 +11,17 @@ import java.util.stream.Stream;
 /**
  * General representation for a SQL field.
  * <p>
- * The abstraction is aimed to fill the statements' gaps between SQL native keywords. This means
- * that it should produce valid string segments according to the place where it should be set.
- * Consequently, it can input in where individual or multiple fields can is applicable, such as
- * {@link org.queryhub.Query#select(Single, Field)} or {@link org.queryhub.Query#update(Single)}.
+ * The abstraction is aimed to fill the gaps between native keywords in the SQL statements. This
+ * means that it should produce valid string segments according to the place where it should be set.
+ * Consequently, there will be methods which can accept instances to represent individual or
+ * multiple fields, such as {@link org.queryhub.Query#select(Single, Field)} or {@link
+ * org.queryhub.Query#update(Single)}.
  * <p>
- * Factories should accept exclusively the types constant in SQL specification, such as {@link
- * String}, {@link Integer}, {@link Boolean} and DATE-related types in Java native API ({@link
- * ChronoLocalDate} and {@link ChronoLocalDateTime}).By the fact of this abstraction should be a
- * {@link Supplier} specialization for letting the factory methods that produces {@link String}
- * instances be conditionally computed, as the lambda structures usually does.
+ * Factories should accept exclusively the cro types in SQL specification, such as {@link String},
+ * {@link Integer}, {@link Boolean} and JDK' API present in {@code java.time} package such as {@link
+ * ChronoLocalDate} and {@link ChronoLocalDateTime}. By the fact of this abstraction should be a
+ * {@link Supplier} specialization, it should return  {@link String} instances be lazily evaluated,
+ * as the lambda structures usually does.
  *
  * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -46,16 +48,30 @@ public interface Field extends Supplier<String> {
 
   }
 
-  /**
-   * Short-hand for wildcard statement parameters (specifically for SELECT statements). Should be a
-   * constant in order to save memory.
-   */
-  Multiple ALL = () -> "'*'";
+  enum Constants {
 
-  /**
-   * Short-hand for input-based statement parameters. Should be a constant in order to save memory.
-   */
-  Single VARIABLE = () -> "'?'";
+    /**
+     * Short-hand for wildcard statement parameters (specifically for SELECT statements). Should be
+     * a constant in order to save memory.
+     */
+    ALL(() -> "'*'"),
+
+    /**
+     * Short-hand for input-based statement parameters. Should be a constant in order to save
+     * memory.
+     */
+    VARIABLE(() -> "'?'");
+
+    private final Field field;
+
+    Constants(final Field field) {
+      this.field = field;
+    }
+
+    public final Field getField() {
+      return field;
+    }
+  }
 
   // Overloaded Singles
 
@@ -82,10 +98,10 @@ public interface Field extends Supplier<String> {
    *              {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
    * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
-   * @see #of(boolean, Supplier)
+   * @see #of(boolean, BooleanSupplier)
    * @since 0.1.0
    */
-  static Single of(final Supplier<Boolean> value) {
+  static Single of(final BooleanSupplier value) {
     return of(Boolean.FALSE, value);
   }
 
@@ -166,8 +182,8 @@ public interface Field extends Supplier<String> {
    * @see #of(boolean, String)
    * @since 0.1.0
    */
-  static Single of(final boolean isDistinct, final Supplier<Boolean> value) {
-    return of(isDistinct, Boolean.toString(value.get()));
+  static Single of(final boolean isDistinct, final BooleanSupplier value) {
+    return of(isDistinct, Boolean.toString(value.getAsBoolean()));
   }
 
   /**
@@ -249,11 +265,10 @@ public interface Field extends Supplier<String> {
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
    * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
-   * @see #of(boolean, Supplier, Supplier...)
+   * @see #of(boolean, BooleanSupplier, BooleanSupplier...)
    * @since 0.1.0
    */
-  @SafeVarargs
-  static Multiple of(final Supplier<Boolean> value, final Supplier<Boolean>... values) {
+  static Multiple of(final BooleanSupplier value, final BooleanSupplier... values) {
     return of(Boolean.FALSE, value, values);
   }
 
@@ -345,10 +360,10 @@ public interface Field extends Supplier<String> {
    * @see #process(boolean, Stream)
    * @since 0.1.0
    */
-  @SafeVarargs
   static Multiple
-  of(final boolean isDistinct, final Supplier<Boolean> value, final Supplier<Boolean>... values) {
-    return process(isDistinct, stream(value, values).map(Supplier::get).map(String::valueOf));
+  of(final boolean isDistinct, final BooleanSupplier value, final BooleanSupplier... values) {
+    return process(isDistinct, stream(value, values).map(BooleanSupplier::getAsBoolean)
+        .map(String::valueOf));
   }
 
   /**

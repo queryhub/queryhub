@@ -4,6 +4,8 @@ plugins {
     id 'base'
     id 'idea'
     id 'java-library'
+    id "org.sonarqube" version "2.8"
+    id 'jacoco'
 }
 
 // ::: Project metadata :::
@@ -62,7 +64,6 @@ test {
         classpath = files()
     }
 }
-
 
 compileTestJava {
     inputs.property("moduleName", moduleName)
