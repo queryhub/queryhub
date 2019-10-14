@@ -1,12 +1,12 @@
 # https://docs.travis-ci.com/user/languages/java/#projects-using-gradle
 language: java
-install: true
-
-os: linux
-dist: xenial
+# https://www.deps.co/guides/travis-ci-latest-java/
 jdk:
+  - oraclejdk8
+  - oraclejdk9
   - oraclejdk11
-  - openjdk11
+  - openjdk8
+  - openjdk-ea
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
