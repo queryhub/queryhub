@@ -2,11 +2,8 @@
 language: java
 # https://www.deps.co/guides/travis-ci-latest-java/
 jdk:
-  - oraclejdk8
-  - oraclejdk9
   - oraclejdk11
-  - openjdk8
-  - openjdk-ea
+  - openjdk11
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -23,3 +20,6 @@ addons:
     organization: "queryhub"
     token:
       secure: "fe78c047c663a9859f71f618f499434eeb4d901a"
+
+script:
+  ./gradlew clean check sonarqube jacocoTestReport
