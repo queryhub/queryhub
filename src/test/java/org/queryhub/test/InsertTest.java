@@ -9,6 +9,7 @@ import org.queryhub.field.Field;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
  */
 @Tag(BaseTest.INSERT_TAG)
 @DisplayName("INSERT-related test cases.")

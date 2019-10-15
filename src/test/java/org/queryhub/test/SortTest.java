@@ -12,6 +12,7 @@ import org.queryhub.steps.Sort.Type;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
  */
 @Tag(BaseTest.SORT_TAG)
 @DisplayName("GROUP BY / ORDER BY-related test cases.")

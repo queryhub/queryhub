@@ -11,6 +11,7 @@ import org.queryhub.steps.Where.Relation;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
  */
 @Tag(BaseTest.SELECT_TAG)
 @DisplayName("SELECT-related test cases.")

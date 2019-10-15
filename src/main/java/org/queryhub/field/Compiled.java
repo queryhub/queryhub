@@ -8,6 +8,8 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 /**
+ * Utility resources for the package.
+ *
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */

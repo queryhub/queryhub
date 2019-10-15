@@ -9,6 +9,7 @@ import org.queryhub.field.Aggregate.Type;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
  */
 @Tag(BaseTest.AGGREGATE_TAG)
 @DisplayName("Aggregate functions' test cases.")

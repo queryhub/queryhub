@@ -13,6 +13,7 @@ import org.queryhub.field.Field.Constants;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
  */
 @Tag(BaseTest.FIELD_TAG)
 @DisplayName("Field test cases.")
