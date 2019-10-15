@@ -21,7 +21,7 @@ import org.queryhub.steps.Where;
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  */
 public final class Query implements Insert, Update, Update.Mixin,
-    Where, Select, Where.Mixin, Sort, Terminal {
+    Where, Where.Mixin, Sort, Terminal, Select {
 
   private enum Keys implements KeyWord {
     INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE,
@@ -147,5 +147,12 @@ public final class Query implements Insert, Update, Update.Mixin,
 
   private Query enclosed(final String value) {
     return add(OPEN + value + CLOSE);
+  }
+
+  // Object
+
+  @Override
+  public final String toString() {
+    return build();
   }
 }
