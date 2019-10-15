@@ -22,4 +22,4 @@ addons:
       secure: "fe78c047c663a9859f71f618f499434eeb4d901a"
 
 script:
-  ./gradlew clean check sonarqube jacocoTestReport
+  ./gradlew -i clean check jacocoTestCoverageVerification jacocoTestReport sonarqube
