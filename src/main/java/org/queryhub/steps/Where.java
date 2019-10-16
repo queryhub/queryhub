@@ -47,13 +47,13 @@ public interface Where extends Terminal {
   // TODO: Composite
 
   /**
-   * Step that allows keep using a {@code WHERE} contract  after a first call or finish the
-   * statement building with a {@link Terminal} method call.
+   * Step that allows keep using a {@code WHERE} contract after a first call or finish the statement
+   * building with a {@link Terminal} method call.
    *
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  interface Mixin extends Terminal {
+  interface Mixin extends Terminal, Sort, Limit {
 
     /**
      * A {@code WHERE} step that can be used after a first clause composition.

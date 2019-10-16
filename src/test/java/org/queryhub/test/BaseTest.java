@@ -15,6 +15,7 @@ abstract class BaseTest {
   static final String UPDATE_TAG = "update_tag";
   static final String DELETE_TAG = "delete_tag";
   static final String SORT_TAG = "sort_tag";
+  static final String LIMIT_TAG = "limit_tag";
   static final String TERMINAL_TAG = "terminal_tag";
 
   static final String TABLE_1 = "table_1";

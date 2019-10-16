@@ -15,7 +15,7 @@ public interface Terminal {
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  interface Select extends Where, Sort {
+  interface Select extends Where, Sort, Limit {
 
   }
 

@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.field.Field.Single;
 import org.queryhub.steps.Insert;
+import org.queryhub.steps.Limit;
 import org.queryhub.steps.Sort;
 import org.queryhub.steps.Terminal;
 import org.queryhub.steps.Terminal.Select;
@@ -23,7 +24,7 @@ import org.queryhub.steps.Where;
  * @since 0.1.0
  */
 public final class Query implements Insert, Update, Update.Mixin,
-    Where, Where.Mixin, Sort, Terminal, Select {
+    Where, Where.Mixin, Sort, Limit, Terminal, Select {
 
   /**
    * SQL syntax keywords. Should be used privately.
@@ -32,8 +33,7 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @since 0.1.0
    */
   private enum Keys implements KeyWord {
-    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE,
-    ;
+    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, LIMIT;
 
     @Override
     public final String keyWord() {
@@ -282,6 +282,14 @@ public final class Query implements Insert, Update, Update.Mixin,
         .collect(Collectors.joining(SPACED_COMMA)));
   }
 
+  // Limit
+
+  @Override
+  public final Terminal limit(final long skip, long offset) {
+    throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
+    return this.add(Keys.LIMIT).add(skip + SPACED_COMMA + offset);
+  }
+
   // Terminal
 
   /**
@@ -353,6 +361,12 @@ public final class Query implements Insert, Update, Update.Mixin,
    */
   private Query enclosed(final String value) {
     return add(OPEN + value + CLOSE);
+  }
+
+  private static void throwIf(final Supplier<RuntimeException> e, final boolean predicate) {
+    if (predicate) {
+      throw e.get();
+    }
   }
 
   // Object
