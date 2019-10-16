@@ -33,7 +33,7 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @since 0.1.0
    */
   private enum Keys implements KeyWord {
-    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, LIMIT;
+    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, IN, LIMIT;
 
     @Override
     public final String keyWord() {
@@ -45,6 +45,7 @@ public final class Query implements Insert, Update, Update.Mixin,
   private static final String SPACE = " ";
   private static final String SPACED_COMMA = ", ";
 
+  private static final char EQUAL = '=';
   private static final char END = ';';
   private static final char OPEN = '(';
   private static final char CLOSE = ')';
@@ -226,8 +227,41 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @since 0.1.0
    */
   @Override
+  public final Where.Mixin where(final Single field, final Field fields) {
+    return this.add(Keys.WHERE).add(field).add(Keys.IN).enclosed(fields.get());
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  @Override
   public final Where.Mixin where(final Field.Single f1, final Relation rel, final Field.Single f2) {
     return this.add(Keys.WHERE).add(f1).add(rel).add(f2);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  @Override
+  public final Where.Mixin where(final Single field, final Select select) {
+    return this.add(Keys.WHERE).add(field).enclosed(select.build(Boolean.FALSE));
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  @Override
+  public final Where.Mixin where(final Condition cond, final Single field, final Field fields) {
+    return this.add(cond).add(field).add(Keys.IN).enclosed(fields.get());
   }
 
   /**
@@ -242,6 +276,17 @@ public final class Query implements Insert, Update, Update.Mixin,
     return this.add(cnd).add(f1).add(rel).add(f2);
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  @Override
+  public final Where.Mixin where(final Condition cond, final Single field, final Select select) {
+    return this.add(cond).add(field).enclosed(select.build(Boolean.FALSE));
+  }
+
   // Update
 
   /**
@@ -252,7 +297,7 @@ public final class Query implements Insert, Update, Update.Mixin,
    */
   @Override
   public final Update.Mixin set(final Field.Single field, final Field.Single value) {
-    return this.add(Keys.SET).add(field).add(Relation.EQ).add(value);
+    return this.add(Keys.SET).add(field).add(String.valueOf(EQUAL)).add(value);
   }
 
   /**
@@ -263,7 +308,7 @@ public final class Query implements Insert, Update, Update.Mixin,
    */
   @Override
   public final Update.Mixin and(final Field.Single field, final Field.Single value) {
-    return this.add(COMMA).add(field).add(Relation.EQ).add(value);
+    return this.add(COMMA).add(field).add(String.valueOf(EQUAL)).add(value);
   }
 
   // Sort
@@ -284,8 +329,14 @@ public final class Query implements Insert, Update, Update.Mixin,
 
   // Limit
 
+  /**
+   * {@inheritDoc}
+   *
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
   @Override
-  public final Terminal limit(final long skip, long offset) {
+  public final Terminal limit(final long skip, final long offset) {
     throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
     return this.add(Keys.LIMIT).add(skip + SPACED_COMMA + offset);
   }
@@ -363,6 +414,11 @@ public final class Query implements Insert, Update, Update.Mixin,
     return add(OPEN + value + CLOSE);
   }
 
+  /**
+   * @throws RuntimeException the given exception.
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
   private static void throwIf(final Supplier<RuntimeException> e, final boolean predicate) {
     if (predicate) {
       throw e.get();
@@ -371,6 +427,15 @@ public final class Query implements Insert, Update, Update.Mixin,
 
   // Object
 
+  /**
+   * Prints out the statement's state under the current state.
+   *
+   * @return SQL statement's current state. Then, ends the statement.
+   * @throws IllegalStateException if called a second time from the same instance.
+   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @see #build()
+   * @since 0.1.0
+   */
   @Override
   public final String toString() {
     return build();

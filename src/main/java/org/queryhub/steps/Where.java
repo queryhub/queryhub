@@ -20,6 +20,34 @@ public interface Where extends Terminal {
    * <pre>{@code
    *
    *   (...)
+   *
+   * }</pre>
+   * <p>
+   * should produce the output:
+   * <p>
+   * <pre>{@code
+   *
+   *   (...)
+   *
+   * }</pre>
+   *
+   * @param field  The leading field to be set.
+   * @param fields Trailing fields to be set.
+   * @return Current statement building instance, intended to be chained to the next building calls.
+   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  Mixin where(final Field.Single field, final Field fields);
+
+  /**
+   * Builds the first {@code WHERE} string segment. Also, it should append the {@code WHERE} clause
+   * to the statement under construction.
+   * <p>
+   * The following implementation example:
+   * <p>
+   * <pre>{@code
+   *
+   *   (...)
    *   .where(Field.of("field_1"), Relation.EQ, Field.of("field_2"))
    *   (...)
    *
@@ -44,6 +72,15 @@ public interface Where extends Terminal {
    */
   Mixin where(final Field.Single field1, final Relation relation, final Field.Single field2);
 
+  /**
+   * @param field
+   * @param select
+   * @return Current statement building instance, intended to be chained to the next building calls.
+   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  Mixin where(final Field.Single field, final Select select);
+
   // TODO: Composite
 
   /**
@@ -54,6 +91,35 @@ public interface Where extends Terminal {
    * @since 0.1.0
    */
   interface Mixin extends Terminal, Sort, Limit {
+
+    /**
+     * A {@code WHERE} step that can be used after a first clause composition.
+     * <p>
+     * The following implementation example:
+     * <p>
+     * <pre>{@code
+     *
+     *   (...)
+     *
+     * }</pre>
+     * <p>
+     * should produce the output:
+     * <p>
+     * <pre>{@code
+     *
+     *   (...)
+     *
+     * }</pre>
+     *
+     * @param condition Logical condition to lead the segment under to be set.
+     * @param field     The leading field to be set.
+     * @param fields    Trailing fields to be set.
+     * @return Current statement building instance, intended to be chained to the next building
+     * calls.
+     * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+     * @since 0.1.0
+     */
+    Where.Mixin where(final Condition condition, final Field.Single field, final Field fields);
 
     /**
      * A {@code WHERE} step that can be used after a first clause composition.
@@ -90,6 +156,17 @@ public interface Where extends Terminal {
     Where.Mixin
     where(final Condition condition, final Field.Single field1,
         final Relation relation, final Field.Single field2);
+
+    /**
+     * @param condition
+     * @param field
+     * @param select
+     * @return Current statement building instance, intended to be chained to the next building
+     * calls.
+     * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+     * @since 0.1.0
+     */
+    Where.Mixin where(final Condition condition, final Field.Single field, final Select select);
   }
 
   /**
@@ -127,10 +204,6 @@ public interface Where extends Terminal {
      * {@code LIKE} operator.
      */
     LIKE("LIKE"),
-    /**
-     * {@code =}: Equal operator.
-     */
-    EQ("="),
     /**
      * {@code >}: Greater than operator.
      */

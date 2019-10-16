@@ -9,7 +9,9 @@ package org.queryhub.steps;
 public interface Limit {
 
   /**
-   * @param offset
+   * Appends a {@code LIMIT} operation.
+   *
+   * @param offset Number of record rows to be limited to.
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @see #limit(long, long)
@@ -20,11 +22,13 @@ public interface Limit {
   }
 
   /**
-   * @param skip
-   * @param upTo
+   * Appends a {@code LIMIT} operation.
+   *
+   * @param skip   Number to record rows to be skipped from the beginning.
+   * @param offset Number of record rows to be limited to.
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  Terminal limit(final long skip, final long upTo);
+  Terminal limit(final long skip, final long offset);
 }
