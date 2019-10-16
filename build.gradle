@@ -4,6 +4,8 @@ plugins {
     id 'java-library'
     id "org.sonarqube" version "2.8"
     id 'jacoco'
+    id 'maven-publish'
+    id 'signing'
 }
 
 // ::: Project metadata :::
@@ -39,6 +41,8 @@ compileJava {
     }
 }
 
+// Testing
+
 compileTestJava {
     inputs.property("moduleName", moduleName)
     doFirst {
@@ -52,9 +56,42 @@ compileTestJava {
     }
 }
 
+// https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
+task codeCoverageReport(type: JacocoReport) {
+
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each { sourceSets it.sourceSets.main }
+
+    reports {
+        xml.enabled Boolean.TRUE
+        xml.destination = file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled Boolean.FALSE
+        csv.enabled Boolean.FALSE
+    }
+}
+
+codeCoverageReport.dependsOn { subprojects*.test }
+
 test {
     useJUnitPlatform()
     filter { exclude '**/module-info.class' }
+}
+
+// Publishing
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    manifest {
+        attributes archiveClassifier: 'sources'
+    }
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    manifest {
+        attributes archiveClassifier: 'javadoc'
+    }
 }
 
 jar {
@@ -62,5 +99,42 @@ jar {
     manifest {
         attributes 'Main-Class': 'org.queryhub.Query'
         attributes 'Automatic-Module-Name': moduleName
+    }
+}
+
+// https://docs.gradle.org/current/userguide/publishing_maven.html#publishing_maven:complete_example
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/queryhub/queryhub.git'
+                    developerConnection = 'scm:git:ssh://github.com/queryhub/queryhub.git'
+                    url = 'http://queryhub.github.io'
+                }
+            }
+        }
+    }
+}
+
+signing { sign publishing.publications.mavenJava }
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', Boolean.TRUE)
     }
 }

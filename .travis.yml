@@ -17,9 +17,15 @@ cache:
 # https://docs.travis-ci.com/user/sonarcloud/
 addons:
   sonarcloud:
-    organization: "queryhub"
+    organization: queryhub
     token:
       secure: "fe78c047c663a9859f71f618f499434eeb4d901a"
 
+# https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 script:
-  ./gradlew -i clean cleanTest jacocoTestCoverageVerification jacocoTestReport sonarqube buildNeeded
+  - ./gradlew clean cleanTest buildNeeded
+  - ./gradlew jacocoTestCoverageVerification jacocoTestReport sonarqube
+  - ./gradlew publish
