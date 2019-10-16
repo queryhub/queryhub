@@ -27,5 +27,5 @@ after_success:
 
 script:
   - ./gradlew clean cleanTest buildNeeded
-  - ./gradlew jacocoTestCoverageVerification jacocoTestReport sonarqube
+  - ./gradlew jacocoTestCoverageVerification jacocoTestReport codeCoverageReport sonarqube
   - ./gradlew publish
