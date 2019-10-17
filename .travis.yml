@@ -26,6 +26,4 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 script:
-  - ./gradlew clean cleanTest buildNeeded
-  - ./gradlew jacocoTestCoverageVerification jacocoTestReport codeCoverageReport sonarqube
-  - ./gradlew publish
+  - ./gradlew check sonarqube publish
