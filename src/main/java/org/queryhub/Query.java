@@ -89,7 +89,6 @@ public final class Query implements Insert, Update, Update.Mixin,
    *
    * @param table Table's name which values are going to be inserted.
    * @return Current statement building instance, intended to be chained to the next building calls.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   public static Insert insert(final Single table) {
@@ -120,7 +119,6 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @param from   Table's name which the selection is retrieved from.
    * @param fields The selection's columns.
    * @return Current statement building instance, intended to be chained to next building calls.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   public static Select select(final Single from, final Field fields) {
@@ -153,7 +151,6 @@ public final class Query implements Insert, Update, Update.Mixin,
    *
    * @param table Table's name which the update is going to be set.
    * @return Current statement building instance, intended to be chained to next building calls.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   public static Update update(final Field.Single table) {
@@ -184,7 +181,6 @@ public final class Query implements Insert, Update, Update.Mixin,
    * }</pre>
    *
    * @return Current statement building instance, intended to be chained to next building calls.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   public static Where delete(final Field.Single table) {
@@ -198,7 +194,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -209,7 +204,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -222,7 +216,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -233,7 +226,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -247,7 +239,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -258,7 +249,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -271,7 +261,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -284,6 +273,11 @@ public final class Query implements Insert, Update, Update.Mixin,
 
   // Limit
 
+  /**
+   * {@inheritDoc}
+   *
+   * @since 0.1.0
+   */
   @Override
   public final Terminal limit(final long skip, long offset) {
     throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
@@ -295,7 +289,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -306,7 +299,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -320,7 +312,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see Query#add(String)
    * @since 0.1.0
    */
@@ -331,7 +322,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * Adds the given {@code Keyword}'s string representation into the {@code Stream.Builder}.
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see Query#add(String)
    * @since 0.1.0
    */
@@ -344,7 +334,6 @@ public final class Query implements Insert, Update, Update.Mixin,
    *
    * @param value The value to be added.
    * @return Own query's instance.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   private Query add(final String value) {
@@ -355,7 +344,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * Encloses the given parameters with an enclosing parenthesis.
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see Query#add(String)
    * @since 0.1.0
    */
@@ -363,14 +351,26 @@ public final class Query implements Insert, Update, Update.Mixin,
     return add(OPEN + value + CLOSE);
   }
 
-  private static void throwIf(final Supplier<RuntimeException> e, final boolean predicate) {
-    if (predicate) {
-      throw e.get();
+  /**
+   * Throws an exception conditionally to a given condition.
+   *
+   * @param exception A supplied exception.
+   * @param condition The logical condition which may trigger the supplied exception.
+   * @throws RuntimeException if the given condition is not satisfied.
+   * @since 0.1.0
+   */
+  private static void throwIf(final Supplier<RuntimeException> exception, final boolean condition) {
+    if (condition) {
+      throw exception.get();
     }
   }
 
   // Object
 
+  /**
+   * @see #build()
+   * @since 0.1.0
+   */
   @Override
   public final String toString() {
     return build();

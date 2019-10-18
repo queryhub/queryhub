@@ -23,7 +23,6 @@ public interface Aggregate extends Field.Single {
    * @param value Field's reference (for column parameters) or a single value.
    * @return String representation of a single field, enclosed by single quotes, passed as parameter
    * to the prepended aggregation function.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see Aggregate#of(Type, boolean, String)
    * @since 0.1.0
    */
@@ -40,7 +39,6 @@ public interface Aggregate extends Field.Single {
    * @param value      Field's reference (for column parameters) or a single value.
    * @return String representation of a single field, enclosed by single quotes, passed as parameter
    * to the prepended aggregation function.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final String value) {
@@ -56,7 +54,6 @@ public interface Aggregate extends Field.Single {
    * @param aggregate Another aggregate to be prepended, then allowing functional composition.
    * @return String representation of a single field, enclosed by single quotes, passed as parameter
    * to the prepended aggregation function.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(Type, Aggregate)
    * @since 0.1.0
    */
@@ -73,7 +70,6 @@ public interface Aggregate extends Field.Single {
    * @param aggregate  Another aggregate to be prepended, then allowing functional composition.
    * @return String representation of a single field, enclosed by single quotes, passed as parameter
    * to the prepended aggregation function.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final Aggregate aggregate) {
@@ -88,7 +84,6 @@ public interface Aggregate extends Field.Single {
    * @param others Other aggregates to be prepended, then allowing functional composition.
    * @return String representation of multiple fields, each one with enclosed by single quotes and
    * passed as parameter to the prepended aggregation function.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(Type, boolean, Aggregate, Aggregate...)
    * @since 0.1.0
    */
@@ -105,7 +100,6 @@ public interface Aggregate extends Field.Single {
    * @param others     Other aggregates to be prepended, then allowing functional composition.
    * @return String representation of multiple fields, each one with enclosed by single quotes and
    * passed as parameter to the prepended aggregation function.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   static Multiple

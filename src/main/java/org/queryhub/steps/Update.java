@@ -3,7 +3,7 @@ package org.queryhub.steps;
 import org.queryhub.field.Field.Single;
 
 /**
- * Represents {@code UPDATE}-related building steps.
+ * Represents the SQL building steps which occur in a {@code UPDATE} operation.
  *
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -36,7 +36,6 @@ public interface Update {
    * @param field The field to be update.
    * @param value A value to be set.
    * @return Current statement building instance, intended to be chained to the next building calls.
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   Update.Mixin set(final Single field, final Single value);
@@ -74,7 +73,6 @@ public interface Update {
      * @param value A value to be set.
      * @return Current statement building instance, intended to be chained to the next building
      * calls.
-     * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
      * @since 0.1.0
      */
     Update.Mixin and(final Single field, final Single value);

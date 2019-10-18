@@ -82,7 +82,6 @@ public interface Field extends Supplier<String> {
    *              SET} / {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be
    *              {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, Integer)
    * @since 0.1.0
    */
@@ -97,7 +96,6 @@ public interface Field extends Supplier<String> {
    *              SET} / {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be
    *              {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, BooleanSupplier)
    * @since 0.1.0
    */
@@ -112,7 +110,6 @@ public interface Field extends Supplier<String> {
    *              (for {@code SET} / {@code WHERE} clauses). Leading quotes is going to be removed.
    *              Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, ChronoLocalDate)
    * @since 0.1.0
    */
@@ -127,7 +124,6 @@ public interface Field extends Supplier<String> {
    *              value (for {@code SET} / {@code WHERE} clauses). Leading quotes is going to be
    *              removed. Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, ChronoLocalDateTime)
    * @since 0.1.0
    */
@@ -142,7 +138,6 @@ public interface Field extends Supplier<String> {
    *              {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be {@code
    *              null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, String)
    * @since 0.1.0
    */
@@ -161,7 +156,6 @@ public interface Field extends Supplier<String> {
    *                   {@code SET} / {@code WHERE} clauses). Leading quotes is going to be removed.
    *                   Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, String)
    * @since 0.1.0
    */
@@ -178,7 +172,6 @@ public interface Field extends Supplier<String> {
    *                   {@code SET} / {@code WHERE} clauses). Leading quotes is going to be removed.
    *                   Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, String)
    * @since 0.1.0
    */
@@ -195,7 +188,6 @@ public interface Field extends Supplier<String> {
    *                   value (for {@code SET} / {@code WHERE} clauses). Leading quotes is going to
    *                   be removed. Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, String)
    * @since 0.1.0
    */
@@ -212,7 +204,6 @@ public interface Field extends Supplier<String> {
    *                   single value (for {@code SET} / {@code WHERE} clauses). Leading quotes is
    *                   going to be removed. Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, String)
    * @since 0.1.0
    */
@@ -229,7 +220,6 @@ public interface Field extends Supplier<String> {
    *                   / {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be
    *                   {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   static Single of(final boolean isDistinct, final String value) {
@@ -248,7 +238,6 @@ public interface Field extends Supplier<String> {
    * @param values Field's following ordinal references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, Integer, Integer...)
    * @since 0.1.0
    */
@@ -264,7 +253,6 @@ public interface Field extends Supplier<String> {
    * @param values Field's following boolean references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, BooleanSupplier, BooleanSupplier...)
    * @since 0.1.0
    */
@@ -281,7 +269,6 @@ public interface Field extends Supplier<String> {
    *               references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, ChronoLocalDate, ChronoLocalDate...)
    * @since 0.1.0
    */
@@ -298,7 +285,6 @@ public interface Field extends Supplier<String> {
    *               aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, ChronoLocalDateTime, ChronoLocalDateTime...)
    * @since 0.1.0
    */
@@ -314,7 +300,6 @@ public interface Field extends Supplier<String> {
    * @param values Field's following references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #of(boolean, String, String...)
    * @since 0.1.0
    */
@@ -335,7 +320,6 @@ public interface Field extends Supplier<String> {
    *                   references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #stream(Object, Object[])
    * @see #process(boolean, Stream)
    * @since 0.1.0
@@ -355,7 +339,6 @@ public interface Field extends Supplier<String> {
    *                   references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #stream(Object, Object[])
    * @see #process(boolean, Stream)
    * @since 0.1.0
@@ -377,7 +360,6 @@ public interface Field extends Supplier<String> {
    *                   aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #stream(Object, Object[])
    * @see #process(boolean, Stream)
    * @since 0.1.0
@@ -400,7 +382,6 @@ public interface Field extends Supplier<String> {
    *                   aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #stream(Object, Object[])
    * @see #process(boolean, Stream)
    * @since 0.1.0
@@ -422,7 +403,6 @@ public interface Field extends Supplier<String> {
    * @param values     Field's following references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #stream(Object, Object[])
    * @see #process(boolean, Stream)
    * @since 0.1.0
@@ -440,7 +420,6 @@ public interface Field extends Supplier<String> {
    * @param following The remaining variadic parameters. Optional.
    * @return the stream containing the given parameters, following the given parameters' input to
    * the method.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #process(boolean, Stream)
    * @since 0.1.0
    */
@@ -459,7 +438,6 @@ public interface Field extends Supplier<String> {
    * @param stream     The {@link Stream} which contens is goging to be processed.
    * @return String representation of {@code Multiple} fields, each one enclosed by single quotes
    * and separated by commas,
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   private static <T> Multiple process(final boolean isDistinct, final Stream<T> stream) {

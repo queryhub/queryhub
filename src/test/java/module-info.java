@@ -1,3 +1,7 @@
+/**
+ * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
+ */
 open module test.module {
 
   requires prod.module;
