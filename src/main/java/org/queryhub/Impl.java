@@ -150,8 +150,8 @@ final class Impl implements Query {
   public final Sort sort(final Sort.Type type, final Aggregate one, final Aggregate... ones) {
     final var b = Stream.<Aggregate>builder().add(one);
     Stream.of(ones).forEach(b);
-    return this.add(type).add(b.build().map(Supplier::get)
-        .collect(Collectors.joining(SPACED_COMMA)));
+    final var s = b.build().map(Supplier::get).collect(Collectors.joining(SPACED_COMMA));
+    return this.add(type).add(s);
   }
 
   // Limit
