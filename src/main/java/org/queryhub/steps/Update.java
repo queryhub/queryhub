@@ -1,6 +1,6 @@
 package org.queryhub.steps;
 
-import org.queryhub.field.Field.Single;
+import org.queryhub.field.Single;
 
 /**
  * Represents the SQL building steps which occur in a {@code UPDATE} operation.

@@ -8,8 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.queryhub.field.Field;
 import org.queryhub.field.Field.Constants;
+import org.queryhub.field.Multiple;
+import org.queryhub.field.Single;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
@@ -44,25 +45,25 @@ final class FieldTest extends BaseTest {
   @DisplayName("Should ignore escaped double quotes.")
   final void shouldIgnore_escapedDoubleQuotes() {
     // Act / Assert
-    Assertions.assertEquals("'1'", Field.of("\"1\"").get());
+    Assertions.assertEquals("'1'", Single.of("\"1\"").get());
   }
 
   @Test
   @DisplayName("Should not append 'DISTINCT' keyword.")
   final void shouldNotAppend_distinctKeyword() {
     // Act / Assert
-    Assertions.assertEquals("'field_1'", Field.of(FIELD_1).get());
+    Assertions.assertEquals("'field_1'", Single.of(FIELD_1).get());
 
-    Assertions.assertEquals("'field_1', 'field_2'", Field.of(FIELD_1, FIELD_2).get());
+    Assertions.assertEquals("'field_1', 'field_2'", Multiple.of(FIELD_1, FIELD_2).get());
   }
 
   @Test
   @DisplayName("Should append 'DISTINCT' keyword.")
   final void shouldAppend_distinctKeyword() {
     // Act / Assert
-    Assertions.assertEquals("DISTINCT 'field_1'", Field.of(Boolean.TRUE, FIELD_1).get());
+    Assertions.assertEquals("DISTINCT 'field_1'", Single.of(Boolean.TRUE, FIELD_1).get());
     Assertions.assertEquals("DISTINCT 'field_1', 'field_2'",
-        Field.of(Boolean.TRUE, FIELD_1, FIELD_2).get());
+        Multiple.of(Boolean.TRUE, FIELD_1, FIELD_2).get());
   }
 
   @SuppressWarnings("unused")
@@ -86,7 +87,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act /  Assert
-      Assertions.assertEquals("'1'", Field.of(1).get());
+      Assertions.assertEquals("'1'", Single.of(1).get());
     }
 
     @Test
@@ -94,7 +95,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(MULTIPLE_DESCRIPTION)
     final void shouldConcat_multipleParameters_with_comma() {
       // Act
-      final var SUBJECT = Field.of(1, 2, 3);
+      final var SUBJECT = Multiple.of(1, 2, 3);
       // Assert
       Assertions.assertEquals("'1', '2', '3'", SUBJECT.get());
     }
@@ -109,7 +110,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act / Assert
-      Assertions.assertEquals("'true'", Field.of(() -> true).get());
+      Assertions.assertEquals("'true'", Single.of(() -> true).get());
     }
 
     @Test
@@ -120,7 +121,7 @@ final class FieldTest extends BaseTest {
       final BooleanSupplier SUP_TRUE = () -> Boolean.TRUE;
       final BooleanSupplier SUP_FALSE = () -> Boolean.FALSE;
       // Act
-      final var SUBJECT = Field.of(SUP_TRUE, SUP_FALSE, SUP_TRUE);
+      final var SUBJECT = Multiple.of(SUP_TRUE, SUP_FALSE, SUP_TRUE);
       // Assert
       Assertions.assertEquals("'true', 'false', 'true'", SUBJECT.get());
     }
@@ -135,7 +136,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act / Assert
-      Assertions.assertEquals("'2019-10-18'", Field.of(LocalDate.of(2019, 10, 18)).get());
+      Assertions.assertEquals("'2019-10-18'", Multiple.of(LocalDate.of(2019, 10, 18)).get());
     }
 
     @Test
@@ -145,7 +146,7 @@ final class FieldTest extends BaseTest {
       // Arrange
       final var ld = LocalDate.of(2019, 10, 18);
       // Act
-      final var SUBJECT = Field.of(ld, ld, ld);
+      final var SUBJECT = Multiple.of(ld, ld, ld);
       // Assert
       Assertions.assertEquals("'2019-10-18', '2019-10-18', '2019-10-18'", SUBJECT.get());
     }
@@ -156,9 +157,9 @@ final class FieldTest extends BaseTest {
       // Arrange
       final var LD = LocalDate.of(2019, 10, 18);
       // Act
-      final var SUBJECT = Field.of(LD);
+      final var SUBJECT = Single.of(LD);
 
-      final var SUBJECT_2 = Field.of(LD, LD);
+      final var SUBJECT_2 = Multiple.of(LD, LD);
       // Assert
       Assertions.assertEquals("'2019-10-18'", SUBJECT.get());
 
@@ -171,9 +172,9 @@ final class FieldTest extends BaseTest {
       // Arrange
       final var LDT = LocalDateTime.of(2019, 12, 11, 0, 0);
       // Act
-      final var SUBJECT = Field.of(LDT);
+      final var SUBJECT = Single.of(LDT);
 
-      final var SUBJECT_2 = Field.of(LDT, LDT);
+      final var SUBJECT_2 = Multiple.of(LDT, LDT);
       // Assert
       Assertions.assertEquals("'2019-12-11 12:00:00'", SUBJECT.get());
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
-import org.queryhub.field.Field;
+import org.queryhub.field.Single;
 
 /**
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
@@ -22,8 +22,8 @@ final class InsertTest extends BaseTest {
     final String QUERY = "INSERT INTO 'table_1' VALUES ('value_1');";
     // Act
     final String result = Query
-        .insert(Field.of(TABLE_1))
-        .values(Field.of(VALUE_1))
+        .insert(Single.of(TABLE_1))
+        .values(Single.of(VALUE_1))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -36,8 +36,8 @@ final class InsertTest extends BaseTest {
     final String QUERY = "INSERT INTO 'table_1' VALUES (SELECT 'field_2' FROM 'table_2');";
     // Act
     final String result = Query
-        .insert(Field.of(TABLE_1))
-        .values(Query.select(Field.of(TABLE_2), Field.of(FIELD_2)))
+        .insert(Single.of(TABLE_1))
+        .values(Query.select(Single.of(TABLE_2), Single.of(FIELD_2)))
         // The line below should not compile
         // .values(Query.update(Field.of(TABLE_2)).set(Field.of(FIELD_2), Field.of(FIELD_2)))
         .build();

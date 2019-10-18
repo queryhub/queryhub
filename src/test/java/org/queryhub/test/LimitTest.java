@@ -5,8 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
-import org.queryhub.field.Field;
 import org.queryhub.field.Field.Constants;
+import org.queryhub.field.Single;
 
 @Tag(BaseTest.LIMIT_TAG)
 @DisplayName("LIMIT-related test cases.")
@@ -17,8 +17,8 @@ final class LimitTest extends BaseTest {
   final void shouldAppend_skipParameter_asZero_and_offsetParameter() {
     // Act / Assert
     Assertions.assertEquals("SELECT '*' FROM 'table_1' WHERE 'field_1' IN ('value_1') LIMIT 0, 10;",
-        Query.select(Field.of(TABLE_1), Constants.ALL.getField())
-            .where(Field.of(FIELD_1), Field.of(VALUE_1))
+        Query.select(Single.of(TABLE_1), Constants.ALL.getField())
+            .where(Single.of(FIELD_1), Single.of(VALUE_1))
             .limit(10).build());
   }
 
@@ -27,7 +27,7 @@ final class LimitTest extends BaseTest {
   final void shouldAppend_skipParameter_and_offsetParameter() {
     // Act / Assert
     Assertions.assertEquals("SELECT '*' FROM 'table_1' LIMIT 10, 30;",
-        Query.select(Field.of(TABLE_1), Constants.ALL.getField()).limit(10, 30).build());
+        Query.select(Single.of(TABLE_1), Constants.ALL.getField()).limit(10, 30).build());
   }
 
   @Test
@@ -36,12 +36,12 @@ final class LimitTest extends BaseTest {
     // Assert
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       // Act
-      Query.select(Field.of(TABLE_1), Constants.ALL.getField()).limit(-1);
+      Query.select(Single.of(TABLE_1), Constants.ALL.getField()).limit(-1);
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       // Act
-      Query.select(Field.of(TABLE_1), Constants.ALL.getField()).limit(-1, 0);
+      Query.select(Single.of(TABLE_1), Constants.ALL.getField()).limit(-1, 0);
     });
   }
 
@@ -51,7 +51,7 @@ final class LimitTest extends BaseTest {
     // Assert
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       // Act
-      Query.select(Field.of(TABLE_1), Constants.ALL.getField()).limit(10, 9);
+      Query.select(Single.of(TABLE_1), Constants.ALL.getField()).limit(10, 9);
     });
   }
 }

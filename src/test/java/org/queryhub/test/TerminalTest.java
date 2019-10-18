@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
-import org.queryhub.field.Field;
+import org.queryhub.field.Single;
 import org.queryhub.steps.Terminal;
 
 @Tag(BaseTest.TERMINAL_TAG)
@@ -18,7 +18,7 @@ final class TerminalTest extends BaseTest {
   @BeforeEach
   final void prepareScenario() {
     // Arrange
-    subject = Query.select(Field.of(TABLE_1), Field.of(FIELD_1));
+    subject = Query.select(Single.of(TABLE_1), Single.of(FIELD_1));
   }
 
   @Test
@@ -50,7 +50,7 @@ final class TerminalTest extends BaseTest {
   @DisplayName("toString() method should have build()'s same behavior.")
   final void toStringMethod_shouldHave_buildSameBehavior() {
     // Arrange
-    final var q = Query.select(Field.of(TABLE_1), Field.of(FIELD_1));
+    final var q = Query.select(Single.of(TABLE_1), Single.of(FIELD_1));
     // Act / Assert
     Assertions.assertEquals(q.build(), subject.toString());
   }

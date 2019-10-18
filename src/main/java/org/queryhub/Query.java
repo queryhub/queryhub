@@ -1,7 +1,7 @@
 package org.queryhub;
 
 import org.queryhub.field.Field;
-import org.queryhub.field.Field.Single;
+import org.queryhub.field.Single;
 import org.queryhub.steps.Insert;
 import org.queryhub.steps.Limit;
 import org.queryhub.steps.Sort;
@@ -133,7 +133,7 @@ public interface Query extends
    * @return Current statement building instance, intended to be chained to next building calls.
    * @since 0.1.0
    */
-  static Update update(final Field.Single table) {
+  static Update update(final Single table) {
     return new Impl().add(Keys.UPDATE).add(table);
   }
 
@@ -163,7 +163,7 @@ public interface Query extends
    * @return Current statement building instance, intended to be chained to next building calls.
    * @since 0.1.0
    */
-  static Where delete(final Field.Single table) {
+  static Where delete(final Single table) {
     return new Impl().add(Keys.DELETE).add(Keys.FROM).add(table);
   }
 }

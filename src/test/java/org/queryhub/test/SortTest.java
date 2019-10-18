@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
-import org.queryhub.field.Field;
+import org.queryhub.field.Single;
 import org.queryhub.steps.Sort.Aggregate;
 import org.queryhub.steps.Sort.Order;
 import org.queryhub.steps.Sort.Type;
@@ -25,7 +25,7 @@ final class SortTest extends BaseTest {
     final var EXPECTED = "SELECT 'field_1' FROM 'table_1' GROUP BY 'field_1' ASC;";
     // Act
     final var RESULT = Query
-        .select(Field.of(TABLE_1), Field.of(FIELD_1))
+        .select(Single.of(TABLE_1), Single.of(FIELD_1))
         .sort(Type.GROUP_BY, Aggregate.of(FIELD_1))
         .build();
     // Assert
@@ -39,7 +39,7 @@ final class SortTest extends BaseTest {
     final var EXPECTED = "SELECT 'field_1' FROM 'table_1' ORDER BY 'field_1' DESC;";
     // Act
     final var RESULT = Query
-        .select(Field.of(TABLE_1), Field.of(FIELD_1))
+        .select(Single.of(TABLE_1), Single.of(FIELD_1))
         .sort(Type.ORDER_BY, Aggregate.of(FIELD_1, Order.DESC))
         .build();
     // Assert
@@ -53,7 +53,7 @@ final class SortTest extends BaseTest {
     final var EXPECTED = "SELECT 'field_2' FROM 'table_1' ORDER BY 'field_2' DESC GROUP BY 'field_1' ASC;";
     // Act
     final var RESULT = Query
-        .select(Field.of(TABLE_1), Field.of(FIELD_2))
+        .select(Single.of(TABLE_1), Single.of(FIELD_2))
         .sort(Type.ORDER_BY, Aggregate.of(FIELD_2, Order.DESC))
         .sort(Type.GROUP_BY, Aggregate.of(FIELD_1))
         .build();
@@ -68,7 +68,7 @@ final class SortTest extends BaseTest {
     final var EXPECTED = "SELECT 'field_2' FROM 'table_1' ORDER BY 'field_2' ASC, 'field_1' DESC, 'field_2' ASC;";
     // Act
     final var RESULT = Query
-        .select(Field.of(TABLE_1), Field.of(FIELD_2))
+        .select(Single.of(TABLE_1), Single.of(FIELD_2))
         .sort(Type.ORDER_BY,
             Aggregate.of(FIELD_2),
             Aggregate.of(FIELD_1, Order.DESC),

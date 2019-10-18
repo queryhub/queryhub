@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
-import org.queryhub.field.Field;
+import org.queryhub.field.Single;
 import org.queryhub.steps.Where.Condition;
 import org.queryhub.steps.Where.Relation;
 
@@ -24,7 +24,7 @@ final class DeleteTest extends BaseTest {
     final String QUERY = "DELETE FROM 'table_1';";
     // Act
     final String result = Query
-        .delete(Field.of(TABLE_1))
+        .delete(Single.of(TABLE_1))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -37,8 +37,8 @@ final class DeleteTest extends BaseTest {
     final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' IN ('field_2');";
     // Act
     final String result = Query
-        .delete(Field.of(TABLE_1))
-        .where(Field.of(FIELD_1), Field.of(FIELD_2))
+        .delete(Single.of(TABLE_1))
+        .where(Single.of(FIELD_1), Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -51,9 +51,9 @@ final class DeleteTest extends BaseTest {
     final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' >= 'field_2' AND 'field_1' > 'field_2';";
     // Act
     final String result = Query
-        .delete(Field.of(TABLE_1))
-        .where(Field.of(FIELD_1), Relation.GTE, Field.of(FIELD_2))
-        .where(Condition.AND, Field.of(FIELD_1), Relation.GT, Field.of(FIELD_2))
+        .delete(Single.of(TABLE_1))
+        .where(Single.of(FIELD_1), Relation.GTE, Single.of(FIELD_2))
+        .where(Condition.AND, Single.of(FIELD_1), Relation.GT, Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -66,9 +66,9 @@ final class DeleteTest extends BaseTest {
     final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
     // Act
     final String result = Query
-        .delete(Field.of(TABLE_1))
-        .where(Field.of(FIELD_1), Relation.NEQ, Field.of(FIELD_2))
-        .where(Condition.OR, Field.of(FIELD_1), Relation.LTE, Field.of(FIELD_2))
+        .delete(Single.of(TABLE_1))
+        .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
+        .where(Condition.OR, Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -81,9 +81,9 @@ final class DeleteTest extends BaseTest {
     final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
     // Act
     final String result = Query
-        .delete(Field.of(TABLE_1))
-        .where(Field.of(FIELD_1), Relation.NEQ, Field.of(FIELD_2))
-        .where(Condition.OR, Field.of(FIELD_1), Relation.LTE, Field.of(FIELD_2))
+        .delete(Single.of(TABLE_1))
+        .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
+        .where(Condition.OR, Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);

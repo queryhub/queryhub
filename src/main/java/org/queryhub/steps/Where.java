@@ -2,6 +2,7 @@ package org.queryhub.steps;
 
 import org.queryhub.KeyWord;
 import org.queryhub.field.Field;
+import org.queryhub.field.Single;
 
 /**
  * Represents the SQL building steps for a {@code WHERE} operation.
@@ -39,7 +40,7 @@ public interface Where extends Terminal {
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @since 0.1.0
    */
-  Mixin where(final Field.Single field, final Field fields);
+  Mixin where(final Single field, final Field fields);
 
   /**
    * Appends the first {@code WHERE} operation's string segment to the statement building.
@@ -70,7 +71,7 @@ public interface Where extends Terminal {
    * @return The builder's instance, which allows
    * @since 0.1.0
    */
-  Mixin where(final Field.Single field1, final Relation relation, final Field.Single field2);
+  Mixin where(final Single field1, final Relation relation, final Single field2);
 
   /**
    * Appends the first {@code WHERE} operation's string segment to the statement building.
@@ -101,7 +102,7 @@ public interface Where extends Terminal {
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @since 0.1.0
    */
-  Mixin where(final Field.Single reference, final Select clause);
+  Mixin where(final Single reference, final Select clause);
 
   // TODO: Composite
 
@@ -146,7 +147,7 @@ public interface Where extends Terminal {
      * calls.
      * @since 0.1.0
      */
-    Where.Mixin where(final Condition condition, final Field.Single field, final Field fields);
+    Where.Mixin where(final Condition condition, final Single field, final Field fields);
 
     /**
      * Appends another {@code WHERE} operation's string segment to the statement building.
@@ -180,8 +181,8 @@ public interface Where extends Terminal {
      * @since 0.1.0
      */
     Where.Mixin
-    where(final Condition condition, final Field.Single field1,
-        final Relation relation, final Field.Single field2);
+    where(final Condition condition, final Single field1,
+        final Relation relation, final Single field2);
 
     /**
      * Appends another {@code WHERE} operation's string segment to the statement building.
@@ -215,7 +216,7 @@ public interface Where extends Terminal {
      * calls.
      * @since 0.1.0
      */
-    Where.Mixin where(final Condition condition, final Field.Single reference, final Select clause);
+    Where.Mixin where(final Condition condition, final Single reference, final Select clause);
   }
 
   /**

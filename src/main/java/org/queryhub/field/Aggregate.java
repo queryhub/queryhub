@@ -7,12 +7,12 @@ import java.util.stream.Stream;
 
 /**
  * Abstraction for statement parts which can receive the result of an aggregation operation in place
- * of a {@link Field.Single column field} reference directly.
+ * of a {@link Single column field} reference directly.
  *
  * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
-public interface Aggregate extends Field.Single {
+public interface Aggregate extends Single {
 
   // Composite
 
@@ -42,7 +42,7 @@ public interface Aggregate extends Field.Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final String value) {
-    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, Field.of(value).get()));
+    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, Single.of(value).get()));
   }
 
   // Composition

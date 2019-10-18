@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.queryhub.field.Field;
-import org.queryhub.field.Field.Single;
+import org.queryhub.field.Single;
 import org.queryhub.steps.Sort;
 import org.queryhub.steps.Terminal;
 import org.queryhub.steps.Update;
@@ -71,7 +71,7 @@ final class Impl implements Query {
    * @since 0.1.0
    */
   @Override
-  public final Where.Mixin where(final Field.Single f1, final Relation rel, final Field.Single f2) {
+  public final Where.Mixin where(final Single f1, final Relation rel, final Single f2) {
     return this.add(Keys.WHERE).add(f1).add(rel).add(f2);
   }
 
@@ -102,7 +102,7 @@ final class Impl implements Query {
    */
   @Override
   public final Where.Mixin
-  where(final Condition cnd, final Field.Single f1, final Relation rel, final Field.Single f2) {
+  where(final Condition cnd, final Single f1, final Relation rel, final Single f2) {
     return this.add(cnd).add(f1).add(rel).add(f2);
   }
 
@@ -125,7 +125,7 @@ final class Impl implements Query {
    * @since 0.1.0
    */
   @Override
-  public final Update.Mixin set(final Field.Single field, final Field.Single value) {
+  public final Update.Mixin set(final Single field, final Single value) {
     return this.add(Keys.SET).add(field).add(String.valueOf(EQUAL)).add(value);
   }
 
@@ -135,7 +135,7 @@ final class Impl implements Query {
    * @since 0.1.0
    */
   @Override
-  public final Update.Mixin and(final Field.Single field, final Field.Single value) {
+  public final Update.Mixin and(final Single field, final Single value) {
     return this.add(COMMA).add(field).add(String.valueOf(EQUAL)).add(value);
   }
 
