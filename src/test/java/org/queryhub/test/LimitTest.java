@@ -41,7 +41,7 @@ final class LimitTest extends BaseTest {
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       // Act
-      Query.select(Field.of(TABLE_1), Constants.ALL.getField()).limit(0, -1);
+      Query.select(Field.of(TABLE_1), Constants.ALL.getField()).limit(-1, 0);
     });
   }
 
