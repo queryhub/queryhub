@@ -19,7 +19,8 @@ public interface Terminal {
   }
 
   /**
-   * Finishes the SQL statement building operation.
+   * Finishes the SQL statement building operation. Implicitly appends a semicolon to the
+   * statement's end.
    *
    * @return Complete and finished SQL string representation so far, with an appended semicolon.
    * @since 0.1.0

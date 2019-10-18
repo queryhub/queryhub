@@ -31,7 +31,7 @@ final class SelectTest extends BaseTest {
   }
 
   @Test
-  @DisplayName("Should append WHERE clause to SELECT query..")
+  @DisplayName("Should append WHERE clause to SELECT query.")
   final void shouldAppend_whereClause_toSelectQuery() {
     // Arrange
     final String QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' <= 'field_2';";
@@ -45,7 +45,7 @@ final class SelectTest extends BaseTest {
   }
 
   @Test
-  @DisplayName("Should append WHERE clause sequentially to SELECT query..")
+  @DisplayName("Should append WHERE clause sequentially to SELECT query.")
   final void shouldAppend_whereClauseSequentially_toSelectQuery() {
     // Arrange
     final String QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' < 'field_2' AND 'field_2' LIKE 'field_1';";
@@ -54,6 +54,22 @@ final class SelectTest extends BaseTest {
         .select(Field.of(TABLE_1), Field.of(FIELD_1))
         .where(Field.of(FIELD_1), Relation.LT, Field.of(FIELD_2))
         .where(Condition.AND, Field.of(FIELD_2), Relation.LIKE, Field.of(FIELD_1))
+        .build();
+    // Assert
+    Assertions.assertEquals(QUERY, result);
+  }
+
+  @Test
+  @DisplayName("Should append SELECT query to WHERE clause compositely.")
+  final void shouldAppend_selectQuery_toWhereClause_compositely() {
+    // Arrange
+    final String QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' IN (SELECT 'field_1', "
+        + "'field_2' FROM 'table_1') AND 'field_2' IN (SELECT 'field_1' FROM 'table_2');";
+    // Act
+    final String result = Query
+        .select(Field.of(TABLE_1), Field.of(FIELD_1))
+        .where(Field.of(FIELD_1), Query.select(Field.of(TABLE_1), Field.of(FIELD_1, FIELD_2)))
+        .where(Condition.AND, Field.of(FIELD_2), Query.select(Field.of(TABLE_2), Field.of(FIELD_1)))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);

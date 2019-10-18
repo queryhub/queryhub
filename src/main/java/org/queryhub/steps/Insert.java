@@ -12,7 +12,7 @@ import org.queryhub.steps.Terminal.Select;
 public interface Insert {
 
   /**
-   * Adds the string segment to the {@code VALUES} operation.
+   * Appends the string segment to the {@code VALUES} operation to the statement building.
    * <p>
    * The following implementation example:
    * <p>
@@ -40,7 +40,7 @@ public interface Insert {
   Terminal values(final Field fields);
 
   /**
-   * Adds the string segment to the {@code VALUES} operation.
+   * Appends a {@code VALUES} operation's string segment to the statement building.
    * <p>
    * The following implementation example:
    * <p>
@@ -61,8 +61,8 @@ public interface Insert {
    *
    * }</pre>
    *
-   * @param clause {@code SELECT} statement which the returned columns will be inserted as fields to
-   *               be inserted into the table's main query.
+   * @param clause {@code SELECT} statement which the returned columns will be inserted into the
+   *               table's main query.
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @since 0.1.0
    */

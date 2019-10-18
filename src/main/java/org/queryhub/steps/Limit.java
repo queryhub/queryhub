@@ -9,8 +9,8 @@ package org.queryhub.steps;
 public interface Limit {
 
   /**
-   * Step which appends a {@code LIMIT} operation's string segment to the statement building. The
-   * starting point is implicitly set.
+   * Appends a {@code LIMIT} operation's string segment to the statement building. The starting
+   * point is implicitly set.
    * <p>
    * The following implementation example:
    * <p>
@@ -41,7 +41,7 @@ public interface Limit {
   }
 
   /**
-   * Step which appends a {@code LIMIT} operation's string segment to the statement building.
+   * Appends a {@code LIMIT} operation's string segment to the statement building.
    * <p>
    * The following implementation example:
    * <p>

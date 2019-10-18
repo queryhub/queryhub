@@ -227,7 +227,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -241,14 +240,13 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @since 0.1.0
    */
   @Override
-  public final Where.Mixin where(final Single field, final Select select) {
-    return this.add(Keys.WHERE).add(field).enclosed(select.build(Boolean.FALSE));
+  public final Where.Mixin where(final Single reference, final Select clause) {
+    return this.add(Keys.WHERE).add(reference).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
   }
 
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -259,7 +257,6 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
@@ -271,12 +268,11 @@ public final class Query implements Insert, Update, Update.Mixin,
   /**
    * {@inheritDoc}
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   @Override
-  public final Where.Mixin where(final Condition cond, final Single field, final Select select) {
-    return this.add(cond).add(field).enclosed(select.build(Boolean.FALSE));
+  public final Where.Mixin where(final Condition cond, final Single reference, final Select clause) {
+    return this.add(cond).add(reference).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
   }
 
   // Update
@@ -320,10 +316,7 @@ public final class Query implements Insert, Update, Update.Mixin,
 
   /**
    * {@inheritDoc}
-   * <p>
-   * <<<<<<< HEAD
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a> ======= >>>>>>> develop
    * @since 0.1.0
    */
   @Override
@@ -420,7 +413,6 @@ public final class Query implements Insert, Update, Update.Mixin,
    *
    * @return SQL statement's current state. Then, ends the statement.
    * @throws IllegalStateException if called a second time from the same instance.
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @see #build()
    * @since 0.1.0
    */

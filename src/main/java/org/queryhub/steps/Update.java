@@ -11,7 +11,7 @@ import org.queryhub.field.Field.Single;
 public interface Update {
 
   /**
-   * The building step to append a {@code SET} segment {@code UPDATE} statement building.
+   * Appends a {@code SET} operation's the string segment in a {@code UPDATE} statement building.
    * <p>
    * The following implementation example:
    * <p>
@@ -41,13 +41,17 @@ public interface Update {
   Update.Mixin set(final Single field, final Single value);
 
   /**
+   * Step that allows keep using a {@code WHERE} contract after the {@code SET} operation or finish
+   * the statement building with a {@link Terminal} method call.
+   *
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   interface Mixin extends Where, Terminal {
 
     /**
-     * A {@code SET} step that can be used after a first clause composition.
+     * Concatenates another string segment to {@code SET} operation in a {@code UPDATE} statement
+     * building.
      * <p>
      * The following implementation example:
      * <p>

@@ -12,7 +12,7 @@ import org.queryhub.field.Field;
 public interface Sort extends Terminal {
 
   /**
-   * Adds a string segment to the statement building which corresponds to a sorting / grouping
+   * Appends a string segment to the statement building which corresponds to a sorting / grouping
    * operation.
    * <p>
    * The following implementation example:
@@ -109,6 +109,8 @@ public interface Sort extends Terminal {
   }
 
   /**
+   * Represents a field associated to a ordering in a aggregation operation.
+   *
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
