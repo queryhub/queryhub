@@ -14,13 +14,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-env:
-  global:
-    # https://scan.coverity.com/projects/queryhub-queryhub/builds/new?tab=travis_ci
-    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-    #   via the "travis encrypt" command using the project repo's public key
-    - secure: "Qq2UEWWnSSwSdzy3BQ/OGxLH7BOPZmqk9mNtQ5Ttt0zSa32cRnI0xCXZ5+JwEdiLfHI0lY4/AdEpZZTG99zKXN1fR+fKfbxBcn/zX/tNqCW3s+PkHGUT5NAAoi8MOROUdNHVNTloM0fwscRD8VSYtNO/CpGCJMDzyvrOzMt84pBSx5aEH+n8cz8hQA7LgVgbn30uwjhEvjppIQSLJRO0ScfeDKb6hjzVVModwH3YFKCskFbCCUCfg4l1qI0hS0n+A45GjjqSweccXKfIbbdIDZBKVM9Mtz300MzyWFa9lGqNKrgx8oD09i46Xd1TfCK7RWJsga+L4bZjBQUGKoginVMf+Ff06i+xOghojiAAVK0LAg8dC8p8IBSUgco1+vVIFpEr+IFGJYdczc3c4uL+smrJHOLOaJNnAEghvnheHOeDQROhkdpsw4QKqYA4SukIwbK3P0LAQCQaJcGKdmIqOnIu3KFAVnhGfc11TKe9aRd/zBoKqVdWAId+7rZqpeM6EZ/qSig6HDIgOIaiELE2FqB5PyXhDk9cX6bykfEORTiTaO/QY7m2GBSHI8A3EynWXsc0RZ1cp74+qL4qNaa68trEf7IPVuUblvWdorG1jivQ+fSsm0thgv/flzPEjiHaGnT/zgtZPVMmp2ZvV0hs4IXPT69s0u762EKaw+QbASU="
-
 addons:
   # https://docs.travis-ci.com/user/sonarcloud/
   sonarcloud:
@@ -30,7 +23,7 @@ addons:
   # https://scan.coverity.com/projects/queryhub-queryhub/builds/new?tab=travis_ci
   coverity_scan:
     project:
-      name: queryhub/queryhub
+      name: "queryhub/queryhub"
       description: Small Java DSL for easing SQL query building.
     notification_email: queryhub.pub@gmail.com
     build_command_prepend: ./gradlew check
