@@ -1,10 +1,5 @@
 package org.queryhub;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.field.Field.Single;
 import org.queryhub.steps.Insert;
@@ -23,8 +18,8 @@ import org.queryhub.steps.Where;
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  * @since 0.1.0
  */
-public final class Query implements Insert, Update, Update.Mixin,
-    Where, Where.Mixin, Sort, Limit, Terminal, Select {
+public interface Query extends
+    Insert, Update, Update.Mixin, Where, Where.Mixin, Sort, Limit, Terminal, Select {
 
   /**
    * SQL syntax keywords. Should be used privately.
@@ -32,7 +27,7 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  private enum Keys implements KeyWord {
+  enum Keys implements KeyWord {
     INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, IN, LIMIT;
 
     @Override
@@ -40,22 +35,6 @@ public final class Query implements Insert, Update, Update.Mixin,
       return name();
     }
   }
-
-  private static final String COMMA = ",";
-  private static final String SPACE = " ";
-  private static final String SPACED_COMMA = ", ";
-
-  private static final char EQUAL = '=';
-  private static final char END = ';';
-  private static final char OPEN = '(';
-  private static final char CLOSE = ')';
-
-  private final Stream.Builder<String> builder = Stream.builder();
-
-  private Query() {
-  }
-
-  // Factories
 
   /**
    * Produces an {@code INSERT} statement.
@@ -92,8 +71,8 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @since 0.1.0
    */
-  public static Insert insert(final Single table) {
-    return new Query().add(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
+  static Insert insert(final Single table) {
+    return new Impl().add(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
   }
 
   /**
@@ -122,8 +101,8 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @return Current statement building instance, intended to be chained to next building calls.
    * @since 0.1.0
    */
-  public static Select select(final Single from, final Field fields) {
-    return new Query().add(Keys.SELECT).add(fields).add(Keys.FROM).add(from);
+  static Select select(final Single from, final Field fields) {
+    return new Impl().add(Keys.SELECT).add(fields).add(Keys.FROM).add(from);
   }
 
   // TODO: Composite SELECT query
@@ -154,8 +133,8 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @return Current statement building instance, intended to be chained to next building calls.
    * @since 0.1.0
    */
-  public static Update update(final Field.Single table) {
-    return new Query().add(Keys.UPDATE).add(table);
+  static Update update(final Field.Single table) {
+    return new Impl().add(Keys.UPDATE).add(table);
   }
 
   // TODO: Upsert
@@ -184,240 +163,7 @@ public final class Query implements Insert, Update, Update.Mixin,
    * @return Current statement building instance, intended to be chained to next building calls.
    * @since 0.1.0
    */
-  public static Where delete(final Field.Single table) {
-    return new Query().add(Keys.DELETE).add(Keys.FROM).add(table);
-  }
-
-  // Implementations
-
-  // Values
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Terminal values(final Field fields) {
-    return this.enclosed(fields.get());
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Terminal values(final Select where) {
-    return this.enclosed(where.build(Boolean.FALSE));
-  }
-
-  // Where
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Where.Mixin where(final Single field, final Field fields) {
-    return this.add(Keys.WHERE).add(field).add(Keys.IN).enclosed(fields.get());
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Where.Mixin where(final Field.Single f1, final Relation rel, final Field.Single f2) {
-    return this.add(Keys.WHERE).add(f1).add(rel).add(f2);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Where.Mixin where(final Single reference, final Select clause) {
-    return this.add(Keys.WHERE).add(reference).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Where.Mixin where(final Condition cond, final Single field, final Field fields) {
-    return this.add(cond).add(field).add(Keys.IN).enclosed(fields.get());
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Where.Mixin
-  where(final Condition cnd, final Field.Single f1, final Relation rel, final Field.Single f2) {
-    return this.add(cnd).add(f1).add(rel).add(f2);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Where.Mixin where(final Condition cond, final Single reference, final Select clause) {
-    return this.add(cond).add(reference).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
-  }
-
-  // Update
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Update.Mixin set(final Field.Single field, final Field.Single value) {
-    return this.add(Keys.SET).add(field).add(String.valueOf(EQUAL)).add(value);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Update.Mixin and(final Field.Single field, final Field.Single value) {
-    return this.add(COMMA).add(field).add(String.valueOf(EQUAL)).add(value);
-  }
-
-  // Sort
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Sort sort(final Sort.Type type, final Aggregate one, final Aggregate... ones) {
-    final var b = Stream.<Aggregate>builder().add(one);
-    Stream.of(ones).forEach(b);
-    return this.add(type).add(b.build().map(Supplier::get)
-        .collect(Collectors.joining(SPACED_COMMA)));
-  }
-
-  // Limit
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final Terminal limit(final long skip, final long offset) {
-    throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
-    return this.add(Keys.LIMIT).add(skip + SPACED_COMMA + offset);
-  }
-
-  // Terminal
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final String build() {
-    return this.build(Boolean.TRUE);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @since 0.1.0
-   */
-  @Override
-  public final String build(final boolean withSemiColon) {
-    final var s = this.builder.build().collect(Collectors.joining(SPACE));
-    return withSemiColon ? s.concat(String.valueOf(END)) : s;
-  }
-
-  // Privates
-
-  /**
-   * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
-   *
-   * @see Query#add(String)
-   * @since 0.1.0
-   */
-  private Query add(final Field value) {
-    return add(value.get());
-  }
-
-  /**
-   * Adds the given {@code Keyword}'s string representation into the {@code Stream.Builder}.
-   *
-   * @see Query#add(String)
-   * @since 0.1.0
-   */
-  private Query add(final KeyWord keyWord) {
-    return add(keyWord.keyWord());
-  }
-
-  /**
-   * Adds the given value into the {@code Stream.Builder}.
-   *
-   * @param value The value to be added.
-   * @return Own query's instance.
-   * @since 0.1.0
-   */
-  private Query add(final String value) {
-    this.builder.add(requireNonNull(value));
-    return this;
-  }
-
-  /**
-   * Encloses the given parameters with an enclosing parenthesis.
-   *
-   * @see Query#add(String)
-   * @since 0.1.0
-   */
-  private Query enclosed(final String value) {
-    return add(OPEN + value + CLOSE);
-  }
-
-  /**
-   * Throws an exception conditionally to a given condition.
-   *
-   * @param exception A supplied exception.
-   * @param condition The logical condition which may trigger the supplied exception.
-   * @throws RuntimeException if the given condition is not satisfied.
-   * @since 0.1.0
-   */
-  private static void throwIf(final Supplier<RuntimeException> exception, final boolean condition) {
-    if (condition) {
-      throw exception.get();
-    }
-  }
-
-  // Object
-
-  /**
-   * Prints out the statement's state under the current state.
-   *
-   * @return SQL statement's current state. Then, ends the statement.
-   * @throws IllegalStateException if called a second time from the same instance.
-   * @see #build()
-   * @since 0.1.0
-   */
-  @Override
-  public final String toString() {
-    return build();
+  static Where delete(final Field.Single table) {
+    return new Impl().add(Keys.DELETE).add(Keys.FROM).add(table);
   }
 }
