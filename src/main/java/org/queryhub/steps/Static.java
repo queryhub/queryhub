@@ -6,9 +6,9 @@ package org.queryhub.steps;
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
-final class Compiled {
+final class Static {
 
-  private Compiled() {
+  private Static() {
   }
 
   static final String SPACE = " ";

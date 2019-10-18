@@ -192,7 +192,7 @@ public interface Field extends Supplier<String> {
    * @since 0.1.0
    */
   static Single of(final boolean isDistinct, final ChronoLocalDate value) {
-    return of(isDistinct, Compiled.LOCAL_DATE.format(value));
+    return of(isDistinct, Static.LOCAL_DATE.format(value));
   }
 
   /**
@@ -208,7 +208,7 @@ public interface Field extends Supplier<String> {
    * @since 0.1.0
    */
   static Single of(final boolean isDistinct, final ChronoLocalDateTime value) {
-    return of(isDistinct, Compiled.LOCAL_DATE_TIME.format(value));
+    return of(isDistinct, Static.LOCAL_DATE_TIME.format(value));
   }
 
   /**
@@ -224,8 +224,8 @@ public interface Field extends Supplier<String> {
    */
   static Single of(final boolean isDistinct, final String value) {
     return () -> Optional.of(value)
-        .map(String::valueOf).map(Compiled.QUOTED).map(s -> Compiled.DISTINCT.apply(isDistinct, s))
-        .map(Compiled.DOUBLE_QUOTE::matcher).map(m -> m.replaceAll(Compiled.EMPTY)).orElseThrow();
+        .map(String::valueOf).map(Static.QUOTED).map(s -> Static.DISTINCT.apply(isDistinct, s))
+        .map(Static.DOUBLE_QUOTE::matcher).map(m -> m.replaceAll(Static.EMPTY)).orElseThrow();
   }
 
   // Overloaded Multiples
@@ -368,7 +368,7 @@ public interface Field extends Supplier<String> {
   static <C extends ChronoLocalDate> Multiple
   of(final boolean isDistinct, final C value, final C... values) {
     return process(isDistinct, stream(value, values)
-        .map(Compiled.LOCAL_DATE::format).map(String::valueOf));
+        .map(Static.LOCAL_DATE::format).map(String::valueOf));
   }
 
   /**
@@ -390,7 +390,7 @@ public interface Field extends Supplier<String> {
   static <C extends ChronoLocalDateTime> Multiple
   of(final boolean isDistinct, final C value, final C... values) {
     return process(isDistinct, stream(value, values)
-        .map(Compiled.LOCAL_DATE_TIME::format).map(String::valueOf));
+        .map(Static.LOCAL_DATE_TIME::format).map(String::valueOf));
   }
 
   /**
@@ -441,8 +441,8 @@ public interface Field extends Supplier<String> {
    * @since 0.1.0
    */
   private static <T> Multiple process(final boolean isDistinct, final Stream<T> stream) {
-    return () -> Compiled.DISTINCT.apply(isDistinct, stream
-        .map(String::valueOf).map(Compiled.QUOTED)
-        .collect(Collectors.joining(Compiled.COMMA)));
+    return () -> Static.DISTINCT.apply(isDistinct, stream
+        .map(String::valueOf).map(Static.QUOTED)
+        .collect(Collectors.joining(Static.COMMA)));
   }
 }

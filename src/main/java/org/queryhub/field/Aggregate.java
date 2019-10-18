@@ -42,7 +42,7 @@ public interface Aggregate extends Field.Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final String value) {
-    return () -> type.fun.apply(Compiled.DISTINCT.apply(isDistinct, Field.of(value).get()));
+    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, Field.of(value).get()));
   }
 
   // Composition
@@ -73,7 +73,7 @@ public interface Aggregate extends Field.Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final Aggregate aggregate) {
-    return () -> type.fun.apply(Compiled.DISTINCT.apply(isDistinct, aggregate.get()));
+    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, aggregate.get()));
   }
 
   /**
@@ -104,9 +104,9 @@ public interface Aggregate extends Field.Single {
    */
   static Multiple
   of(final Type type, final boolean isDistinct, final Aggregate first, final Aggregate... others) {
-    return () -> type.fun.apply(Compiled.DISTINCT.apply(isDistinct, Stream
+    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, Stream
         .concat(Stream.of(first), Stream.of(others)).map(Supplier::get)
-        .collect(Collectors.joining(Compiled.COMMA))));
+        .collect(Collectors.joining(Static.COMMA))));
   }
 
   /**

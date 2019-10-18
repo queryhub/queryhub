@@ -125,7 +125,7 @@ public interface Sort extends Terminal {
      * @since 0.1.0
      */
     static Aggregate of(final String single, final Order order) {
-      return () -> Field.of(single).get() + Compiled.SPACE + order.keyWord();
+      return () -> Field.of(single).get() + Static.SPACE + order.keyWord();
     }
 
     /**
