@@ -33,8 +33,8 @@ addons:
       name: queryhub/queryhub
       description: Small Java DSL for easing SQL query building.
     notification_email: queryhub.pub@gmail.com
-    # build_command_prepend: "<Your build preprocessing command here>"
-    # build_command: "<Your build command here>"
+    build_command_prepend: ./gradlew check
+    build_command: ./gradlew build
     branch_pattern: coverity_scan
 
 before_install:
