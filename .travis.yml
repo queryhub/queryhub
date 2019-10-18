@@ -35,7 +35,7 @@ addons:
     notification_email: queryhub.pub@gmail.com
     build_command_prepend: ./gradlew check
     build_command: ./gradlew build
-    branch_pattern: coverity_scan
+    branch_pattern: develop
 
 before_install:
   # https://scan.coverity.com/projects/queryhub-queryhub/builds/new?tab=travis_ci
