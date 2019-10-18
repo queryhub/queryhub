@@ -4,8 +4,6 @@ plugins {
     id 'java-library'
     id "org.sonarqube" version "2.8"
     id 'jacoco'
-    id 'maven-publish'
-    id 'signing'
 }
 
 // ::: Project metadata :::
@@ -26,7 +24,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:' + junit_platform_version
 }
 
-defaultTasks 'clean', 'cleanIdea', 'idea', 'build'
+defaultTasks 'clean', 'cleanIdea', 'cleanTest', 'idea', 'build'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -56,43 +54,22 @@ compileTestJava {
     }
 }
 
-// https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
-task codeCoverageReport(type: JacocoReport) {
-
-    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-    subprojects.each { sourceSets it.sourceSets.main }
-
-    reports {
-        xml.enabled Boolean.TRUE
-        xml.destination = file("${buildDir}/reports/jacoco/report.xml")
-        html.enabled Boolean.FALSE
-        csv.enabled Boolean.FALSE
-    }
-}
-
-codeCoverageReport.dependsOn test
-
 test {
     useJUnitPlatform()
     filter { exclude '**/module-info.class' }
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled Boolean.TRUE
+        html.enabled Boolean.TRUE
+        csv.enabled Boolean.TRUE
+    }
+}
+
+check.dependsOn jacocoTestReport
+
 // Publishing
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allJava
-    manifest {
-        attributes archiveClassifier: 'sources'
-    }
-}
-
-task javadocJar(type: Jar) {
-    from javadoc
-    manifest {
-        attributes archiveClassifier: 'javadoc'
-    }
-}
 
 jar {
     inputs.property("moduleName", moduleName)
@@ -102,39 +79,18 @@ jar {
     }
 }
 
-// https://docs.gradle.org/current/userguide/publishing_maven.html#publishing_maven:complete_example
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
-                }
-                usage('java-runtime') {
-                    fromResolutionResult()
-                }
-            }
-
-            pom {
-                scm {
-                    connection = 'scm:git:git://github.com/queryhub/queryhub.git'
-                    developerConnection = 'scm:git:ssh://github.com/queryhub/queryhub.git'
-                    url = 'http://queryhub.github.io'
-                }
-            }
-        }
-    }
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
 }
 
-signing { sign publishing.publications.mavenJava }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier "javadoc"
+    from javadoc.destinationDir
+}
 
-javadoc {
-    if (JavaVersion.current().isJava9Compatible()) {
-        options.addBooleanOption('html5', Boolean.TRUE)
-    }
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
 }

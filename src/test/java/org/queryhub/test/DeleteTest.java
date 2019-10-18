@@ -34,11 +34,11 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build DELETE query with condition.")
   final void shouldBuild_deleteQuery_withCondition() {
     // Arrange
-    final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' = 'field_2';";
+    final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' IN ('field_2');";
     // Act
     final String result = Query
         .delete(Field.of(TABLE_1))
-        .where(Field.of(FIELD_1), Relation.EQ, Field.of(FIELD_2))
+        .where(Field.of(FIELD_1), Field.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);

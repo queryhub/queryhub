@@ -4,7 +4,7 @@ import org.queryhub.KeyWord;
 import org.queryhub.field.Field;
 
 /**
- * Represents {@code WHERE}-related building steps.
+ * Represents the SQL building steps for a {@code WHERE} operation.
  *
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -67,7 +67,6 @@ public interface Where extends Terminal {
    * @param relation A relation between the first and second given fields.
    * @param field2   The trailing field to be set.
    * @return The builder's instance, which allows
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   Mixin where(final Field.Single field1, final Relation relation, final Field.Single field2);
@@ -150,7 +149,6 @@ public interface Where extends Terminal {
      * @param field2    The trailing field to be set.
      * @return Current statement building instance, intended to be chained to the next building
      * calls.
-     * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
      * @since 0.1.0
      */
     Where.Mixin
@@ -182,7 +180,6 @@ public interface Where extends Terminal {
     /**
      * {@inheritDoc}
      *
-     * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
      * @since 0.1.0
      */
     @Override
@@ -234,7 +231,6 @@ public interface Where extends Terminal {
     /**
      * {@inheritDoc}
      *
-     * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
      * @since 0.1.0
      */
     @Override

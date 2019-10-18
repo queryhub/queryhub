@@ -1,7 +1,7 @@
 package org.queryhub.steps;
 
 /**
- * Represents a SQL {@code LIMIT} operation.
+ * Represents the SQL building steps for a {@code LIMIT} operation.
  *
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -9,11 +9,30 @@ package org.queryhub.steps;
 public interface Limit {
 
   /**
-   * Appends a {@code LIMIT} operation.
+   * Step which appends a {@code LIMIT} operation's string segment to the statement building. The
+   * starting point is implicitly set.
+   * <p>
+   * The following implementation example:
+   * <p>
+   * <pre>{@code
    *
-   * @param offset Number of record rows to be limited to.
+   *   (...)
+   *   .limit(2, 5)
+   *   .build()
+   *
+   * }</pre>
+   * <p>
+   * should produce the output:
+   * <p>
+   * <pre>{@code
+   *
+   *   (...)
+   *   LIMIT 0, 5;
+   *
+   * }</pre>
+   *
+   * @param offset The number of rows after the starting row to finish the limiting.
    * @return Current statement building instance, intended to be chained to the next building calls.
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @see #limit(long, long)
    * @since 0.1.0
    */
@@ -22,12 +41,32 @@ public interface Limit {
   }
 
   /**
-   * Appends a {@code LIMIT} operation.
+   * Step which appends a {@code LIMIT} operation's string segment to the statement building.
+   * <p>
+   * The following implementation example:
+   * <p>
+   * <pre>{@code
    *
-   * @param skip   Number to record rows to be skipped from the beginning.
-   * @param offset Number of record rows to be limited to.
+   *   (...)
+   *   .limit(2, 5)
+   *   .build()
+   *
+   * }</pre>
+   * <p>
+   * should produce the output:
+   * <p>
+   * <pre>{@code
+   *
+   *   (...)
+   *   LIMIT 2, 5;
+   *
+   * }</pre>
+   *
+   * @param skip   The number of rows after the first to start the limiting
+   * @param offset The number of rows after the set by {@code skip} parameter to finish the
+   *               limiting.
    * @return Current statement building instance, intended to be chained to the next building calls.
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @throws IllegalArgumentException if the {@code skip} is greater than {@code offset};
    * @since 0.1.0
    */
   Terminal limit(final long skip, final long offset);

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Field;
 import org.queryhub.field.Field.Constants;
-import org.queryhub.steps.Where.Relation;
 
 @Tag(BaseTest.LIMIT_TAG)
 @DisplayName("LIMIT-related test cases.")
@@ -17,9 +16,9 @@ final class LimitTest extends BaseTest {
   @DisplayName("Should append skip parameter as zero and offset parameter.")
   final void shouldAppend_skipParameter_asZero_and_offsetParameter() {
     // Act / Assert
-    Assertions.assertEquals("SELECT '*' FROM 'table_1' WHERE 'field_1' = 'value_1' LIMIT 0, 10;",
+    Assertions.assertEquals("SELECT '*' FROM 'table_1' WHERE 'field_1' IN ('value_1') LIMIT 0, 10;",
         Query.select(Field.of(TABLE_1), Constants.ALL.getField())
-            .where(Field.of(FIELD_1), Relation.EQ, Field.of(VALUE_1))
+            .where(Field.of(FIELD_1), Field.of(VALUE_1))
             .limit(10).build());
   }
 

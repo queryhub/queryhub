@@ -1,7 +1,7 @@
 package org.queryhub.steps;
 
 /**
- * Represents ending operations.
+ * Represents the SQL building steps which end the statement building.
  *
  * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -9,8 +9,7 @@ package org.queryhub.steps;
 public interface Terminal {
 
   /**
-   * This abstraction is intended to represent {@code SELECT} statements for {@link Where}
-   * implementations.
+   * Represents {@code SELECT} statements for {@link Where} implementations.
    *
    * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
@@ -23,7 +22,6 @@ public interface Terminal {
    * Finishes the SQL statement building operation.
    *
    * @return Complete and finished SQL string representation so far, with an appended semicolon.
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   String build();
@@ -33,7 +31,6 @@ public interface Terminal {
    *
    * @param withSemiColon Optionally appends trailing semicolon to statement under construction.
    * @return Complete and finished SQL string representation so far.
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   String build(final boolean withSemiColon);
