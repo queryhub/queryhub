@@ -20,19 +20,6 @@ addons:
     organization: queryhub
     token:
       secure: "fe78c047c663a9859f71f618f499434eeb4d901a"
-  # https://scan.coverity.com/projects/queryhub-queryhub/builds/new?tab=travis_ci
-  coverity_scan:
-    project:
-      name: "queryhub/queryhub"
-      description: Small Java DSL for easing SQL query building.
-    notification_email: queryhub.pub@gmail.com
-    build_command_prepend: ./gradlew check
-    build_command: ./gradlew build
-    branch_pattern: develop
-
-before_install:
-  # https://scan.coverity.com/projects/queryhub-queryhub/builds/new?tab=travis_ci
-  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 # https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
 after_success:
