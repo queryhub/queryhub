@@ -15,7 +15,7 @@ import org.queryhub.steps.Where;
 /**
  * Method implementations for the building steps.
  *
- * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 final class Impl implements Query {

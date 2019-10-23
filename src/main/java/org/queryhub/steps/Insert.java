@@ -6,7 +6,7 @@ import org.queryhub.steps.Terminal.Select;
 /**
  * Represents the SQL building steps for a {@code VALUES} operation.
  *
- * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Insert {

@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * Abstraction for statement parts which can receive the result of an aggregation operation in place
  * of a {@link Single column field} reference directly.
  *
- * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Aggregate extends Single {
@@ -113,7 +113,7 @@ public interface Aggregate extends Single {
    * Represents the SQL aggregation operations. Each index should have a {@link String} enclosing
    * logic to the corresponding SQL function.
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   enum Type {

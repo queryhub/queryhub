@@ -14,7 +14,7 @@ import org.queryhub.steps.Where;
  * Library's entry point. Every building step contract should be implemented here and, preferably,
  * the same instance should conduct the statement's string building end-to-end.
  *
- * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  * @since 0.1.0
  */
@@ -24,7 +24,7 @@ public interface Query extends
   /**
    * SQL syntax keywords. Should be used privately.
    *
-   * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   enum Keys implements KeyWord {

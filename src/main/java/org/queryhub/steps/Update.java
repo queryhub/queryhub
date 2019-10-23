@@ -5,7 +5,7 @@ import org.queryhub.field.Single;
 /**
  * Represents the SQL building steps which occur in a {@code UPDATE} operation.
  *
- * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Update {
@@ -44,7 +44,7 @@ public interface Update {
    * Step that allows keep using a {@code WHERE} contract after the {@code SET} operation or finish
    * the statement building with a {@link Terminal} method call.
    *
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   interface Mixin extends Where, Terminal {

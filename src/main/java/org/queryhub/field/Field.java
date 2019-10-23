@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  * {@link Supplier} specialization, it should return  {@link String} instances be lazily evaluated,
  * as the lambda structures usually does.
  *
- * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Field extends Supplier<String>  {

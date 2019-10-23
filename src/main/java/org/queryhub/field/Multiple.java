@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 /**
  * {@code Field} specialization which allows to return multiple fields.
  *
- * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Multiple extends Field {

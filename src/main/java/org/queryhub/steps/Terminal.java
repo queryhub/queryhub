@@ -3,7 +3,7 @@ package org.queryhub.steps;
 /**
  * Represents the SQL building steps which end the statement building.
  *
- * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Terminal {
@@ -11,7 +11,7 @@ public interface Terminal {
   /**
    * Represents {@code SELECT} statements for {@link Where} implementations.
    *
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   interface Select extends Where, Sort, Limit {

@@ -9,7 +9,7 @@ import org.queryhub.field.Single;
 import org.queryhub.steps.Where.Condition;
 
 /**
- * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 @Tag(BaseTest.UPDATE_TAG)

@@ -8,7 +8,7 @@ import java.util.function.BooleanSupplier;
 /**
  * {@code Field} specialization which allows to return a individual field.
  *
- * @author <a href="queryhub.pub@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Single extends Field {

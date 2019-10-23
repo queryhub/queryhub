@@ -7,7 +7,7 @@ import org.queryhub.field.Single;
 /**
  * Represents the SQL building steps for a {@code WHERE} operation.
  *
- * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Where extends Terminal {
@@ -110,7 +110,7 @@ public interface Where extends Terminal {
    * Step that allows keep using a {@code WHERE} contract after a first call or finish the statement
    * building with a {@link Terminal} method call.
    *
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   interface Mixin extends Terminal, Sort, Limit {
@@ -222,7 +222,7 @@ public interface Where extends Terminal {
   /**
    * Represents logical keywords that can be set between two segments in a {@code WHERE} statement.
    *
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   enum Condition implements KeyWord {

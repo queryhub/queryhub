@@ -7,7 +7,7 @@ import org.queryhub.field.Single;
 /**
  * Represents the SQL building steps for sorting and grouping operations.
  *
- * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
 public interface Sort extends Terminal {
@@ -49,7 +49,7 @@ public interface Sort extends Terminal {
   /**
    * Represents sorting keywords that can be set after fields in a grouping/sorting operation.
    *
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   enum Order implements KeyWord {
@@ -112,7 +112,7 @@ public interface Sort extends Terminal {
   /**
    * Represents a field associated to a ordering in a aggregation operation.
    *
-   * @author <a href="dhsrocha@gmail.com">Diego Rocha</a>
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
   interface Aggregate extends Field {
