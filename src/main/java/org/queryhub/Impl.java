@@ -112,9 +112,8 @@ final class Impl implements Query {
    * @since 0.1.0
    */
   @Override
-  public final Where.Mixin where(final Condition cond, final Single reference,
-      final Select clause) {
-    return this.add(cond).add(reference).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
+  public final Where.Mixin where(final Condition cond, final Single ref, final Select clause) {
+    return this.add(cond).add(ref).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
   }
 
   // Update
