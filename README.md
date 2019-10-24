@@ -3,11 +3,15 @@
 [![License-badge]][License]
 [![Travis-badge]][Travis]
 [![Scrutinizer-badge]][Scrutinizer]
+[![SonarCloud-badge]](SonarCloud)
 [![CodeBeat-badge]][CodeBeat]
 [![CodeCov-badge]][CodeCov]
 [![PayPal-badge]][PayPal]
 
 ---
+
+[SonarCloud]: https://sonarcloud.io/dashboard?id=org.queryhub%3Aqueryhub
+[SonarCloud-badge]: https://sonarcloud.io/api/project_badges/measure?project=org.queryhub%3Aqueryhub&metric=alert_status
 
 [License]: https://opensource.org/licenses/MIT
 [License-badge]: https://img.shields.io/badge/License-MIT-blue.svg
