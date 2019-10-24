@@ -78,6 +78,11 @@ check.dependsOn jacocoTestReport
 
 // Publishing
 
+buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+}
+
 jar {
     inputs.property("moduleName", moduleName)
     manifest {
