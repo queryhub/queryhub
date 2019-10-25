@@ -2,8 +2,7 @@
 
 [![License-badge]][License]
 [![Travis-badge]][Travis]
-[![Scrutinizer-badge]][Scrutinizer]
-[![SonarCloud-badge]](SonarCloud)
+[![SonarCloud-badge]][SonarCloud]
 [![CodeBeat-badge]][CodeBeat]
 [![CodeCov-badge]][CodeCov]
 [![PayPal-badge]][PayPal]
