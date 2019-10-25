@@ -155,11 +155,10 @@ final class Impl extends Base<Impl> implements
    * @since 0.1.0
    */
   @Override
-  public final Sort sort(final Sort.Type type, final Aggregate one, final Aggregate... ones) {
+  public final Sort sort(final Sort.Type tp, final Aggregate one, final Aggregate... ones) {
     final var b = Stream.<Aggregate>builder().add(one);
     Stream.of(ones).forEach(b);
-    final var s = b.build().map(Supplier::get).collect(Collectors.joining(SPACED_COMMA));
-    return this.add(type).add(s);
+    return this.add(tp).add(b.build().map(Supplier::get).collect(Collectors.joining(SPACED_COMMA)));
   }
 
   // Limit
