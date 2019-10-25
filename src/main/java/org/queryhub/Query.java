@@ -3,9 +3,6 @@ package org.queryhub;
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
 import org.queryhub.steps.Insert;
-import org.queryhub.steps.Limit;
-import org.queryhub.steps.Sort;
-import org.queryhub.steps.Terminal;
 import org.queryhub.steps.Terminal.Select;
 import org.queryhub.steps.Update;
 import org.queryhub.steps.Where;
@@ -18,8 +15,7 @@ import org.queryhub.steps.Where;
  * @see <a href="https://martinfowler.com/dslCatalog/expressionBuilder.html">Expression Builder</a>
  * @since 0.1.0
  */
-public interface Query extends
-    Insert, Update, Update.Mixin, Where, Where.Mixin, Sort, Limit, Terminal, Select {
+public interface Query {
 
   /**
    * SQL syntax keywords. Should be used privately.
@@ -61,7 +57,7 @@ public interface Query extends
    *   INSERT INTO 'table_1' VALUES ('value_1', 'value_2', 'value_3');
    *
    *   INSERT INTO 'table_1'
-   *     VALUES (SELECT 'value_1','value_2','value_3'
+   *     VALUES (SELECT 'value_ 1','value_2','value_3'
    *               FROM 'table_1'
    *               WHERE 'field_1' <= 'value_1');
    *
