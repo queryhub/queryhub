@@ -26,6 +26,10 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
 
   private final Stream.Builder<String> builder = Stream.builder();
 
+  Base(final Keys keyword) {
+    this.add(keyword);
+  }
+
   /**
    * Utility method to provide own instance. Useful for using in combination with this class'
    * another utility methods.
@@ -66,8 +70,8 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see Impl#add(String)
    * @since 0.1.0
    */
-  B add(final Field value) {
-    return add(value.get());
+  final B add(final Field value) {
+    return this.add(value.get());
   }
 
   /**
@@ -76,8 +80,8 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see Impl#add(String)
    * @since 0.1.0
    */
-  B add(final KeyWord keyWord) {
-    return add(keyWord.keyWord());
+  final B add(final KeyWord keyWord) {
+    return this.add(keyWord.keyWord());
   }
 
   /**
@@ -87,7 +91,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @return Own Impl's instance.
    * @since 0.1.0
    */
-  B add(final String value) {
+  final B add(final String value) {
     this.builder.add(requireNonNull(value));
     return self();
   }
@@ -98,7 +102,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see Impl#add(String)
    * @since 0.1.0
    */
-  B enclosed(final String value) {
+  final B enclosed(final String value) {
     return add(OPEN + value + CLOSE);
   }
 

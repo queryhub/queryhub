@@ -26,6 +26,10 @@ final class Impl extends Base<Impl> implements
   private static final String COMMA = ",";
   private static final String SPACED_COMMA = ", ";
 
+  Impl(final Keys keyWord) {
+    super(keyWord);
+  }
+
   /**
    * {@inheritDoc}
    *
