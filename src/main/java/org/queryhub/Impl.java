@@ -1,6 +1,5 @@
 package org.queryhub;
 
-import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
 import org.queryhub.steps.Insert;
@@ -168,6 +167,6 @@ final class Impl extends Base<Impl> implements
   @Override
   public final Terminal limit(final long skip, final long offset) {
     throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
-    return this.add(Keys.LIMIT).withComma(Stream.of(skip, offset), String::valueOf);
+    return this.add(Keys.LIMIT).withComma(combine(skip, offset), String::valueOf);
   }
 }
