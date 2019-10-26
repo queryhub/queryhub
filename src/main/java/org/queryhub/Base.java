@@ -20,8 +20,8 @@ import org.queryhub.steps.Terminal;
 abstract class Base<B extends Base<B>> implements Query, Terminal {
 
   private static final String SPACE = " ";
-
   private static final String SPACED_COMMA = ", ";
+
   private static final char END = ';';
   private static final char OPEN = '(';
   private static final char CLOSE = ')';
@@ -83,7 +83,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
     return build();
   }
 
-  // Privates
+  // Package-private
 
   /**
    * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
@@ -156,7 +156,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
     }
   }
 
-  // Privates
+  // Utilities
 
   /**
    * Utility method to handle varargs arguments.

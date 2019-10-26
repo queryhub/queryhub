@@ -20,9 +20,6 @@ import org.queryhub.steps.Where;
 final class Impl extends Base<Impl> implements
     Insert, Update, Update.Mixin, Where, Where.Mixin, Sort, Limit, Terminal, Select {
 
-  private static final char EQUAL = '=';
-  private static final String COMMA = ",";
-
   /**
    * {@inheritDoc}
    *
@@ -136,7 +133,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Update.Mixin set(final Single field, final Single value) {
-    return this.add(Keys.SET).add(field).add(String.valueOf(EQUAL)).add(value);
+    return this.add(Keys.SET).add(field).add(String.valueOf('=')).add(value);
   }
 
   /**
@@ -146,7 +143,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Update.Mixin and(final Single field, final Single value) {
-    return this.add(COMMA).add(field).add(String.valueOf(EQUAL)).add(value);
+    return this.add(String.valueOf(',')).add(field).add(String.valueOf('=')).add(value);
   }
 
   // Sort
