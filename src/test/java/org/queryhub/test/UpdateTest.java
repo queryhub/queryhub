@@ -20,9 +20,9 @@ final class UpdateTest extends BaseTest {
   @DisplayName("Should write UPDATE query.")
   final void shouldWrite_updateQuery() {
     // Arrange
-    final String QUERY = "UPDATE 'table_1' SET 'field_1' = 'value_1' , 'field_2' = 'value_2';";
+    final var QUERY = "UPDATE 'table_1' SET 'field_1' = 'value_1' , 'field_2' = 'value_2';";
     // Act
-    final String result = Query
+    final var result = Query
         .update(Single.of(TABLE_1))
         .set(Single.of(FIELD_1), Single.of(VALUE_1))
         .and(Single.of(FIELD_2), Single.of(VALUE_2))
@@ -35,9 +35,9 @@ final class UpdateTest extends BaseTest {
   @DisplayName("Should write UPDATE query with filter clause.")
   final void shouldWrite_updateQuery_withClause() {
     // Arrange
-    final String QUERY = "UPDATE 'table_1' SET 'field_1' = 'value_1' , 'field_2' = 'value_2' WHERE 'field_1' IN ('field_2') AND 'field_1' IN ('field_2');";
+    final var QUERY = "UPDATE 'table_1' SET 'field_1' = 'value_1' , 'field_2' = 'value_2' WHERE 'field_1' IN ('field_2') AND 'field_1' IN ('field_2');";
     // Act
-    final String result = Query
+    final var result = Query
         .update(Single.of(TABLE_1))
         .set(Single.of(FIELD_1), Single.of(VALUE_1))
         .and(Single.of(FIELD_2), Single.of(VALUE_2))

@@ -21,9 +21,9 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build DELETE query.")
   final void shouldBuild_deleteQuery() {
     // Arrange
-    final String QUERY = "DELETE FROM 'table_1';";
+    final var QUERY = "DELETE FROM 'table_1';";
     // Act
-    final String result = Query
+    final var result = Query
         .delete(Single.of(TABLE_1))
         .build();
     // Assert
@@ -34,9 +34,9 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build DELETE query with condition.")
   final void shouldBuild_deleteQuery_withCondition() {
     // Arrange
-    final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' IN ('field_2');";
+    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' IN ('field_2');";
     // Act
-    final String result = Query
+    final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Single.of(FIELD_2))
         .build();
@@ -48,9 +48,9 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build delete query with additive conditions.")
   final void shouldBuild_deleteQuery_withAdditiveConditions() {
     // Arrange
-    final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' >= 'field_2' AND 'field_1' > 'field_2';";
+    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' >= 'field_2' AND 'field_1' > 'field_2';";
     // Act
-    final String result = Query
+    final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.GTE, Single.of(FIELD_2))
         .where(Condition.AND, Single.of(FIELD_1), Relation.GT, Single.of(FIELD_2))
@@ -63,9 +63,9 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build delte query with alternative conditions.")
   final void shouldBuild_deleteQuery_withAlternativeConditions() {
     // Arrange
-    final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
+    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
     // Act
-    final String result = Query
+    final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
         .where(Condition.OR, Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
@@ -78,9 +78,9 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build delete query with composite fragments")
   final void shouldBuild_deleteQuery_withCompositeFragments() {
     // Arrange
-    final String QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
+    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
     // Act
-    final String result = Query
+    final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
         .where(Condition.OR, Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))

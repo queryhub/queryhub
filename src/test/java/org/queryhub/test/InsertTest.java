@@ -19,9 +19,9 @@ final class InsertTest extends BaseTest {
   @DisplayName("Should build insert query with values.")
   final void shouldBuild_insertQuery_withValues() {
     // Arrange
-    final String QUERY = "INSERT INTO 'table_1' VALUES ('value_1');";
+    final var QUERY = "INSERT INTO 'table_1' VALUES ('value_1');";
     // Act
-    final String result = Query
+    final var result = Query
         .insert(Single.of(TABLE_1))
         .values(Single.of(VALUE_1))
         .build();
@@ -33,9 +33,9 @@ final class InsertTest extends BaseTest {
   @DisplayName("Should build insert query based on select query.")
   final void shouldBuild_insertQuery_basedOn_selectQuery() {
     // Arrange
-    final String QUERY = "INSERT INTO 'table_1' VALUES (SELECT 'field_2' FROM 'table_2');";
+    final var QUERY = "INSERT INTO 'table_1' VALUES (SELECT 'field_2' FROM 'table_2');";
     // Act
-    final String result = Query
+    final var result = Query
         .insert(Single.of(TABLE_1))
         .values(Query.select(Single.of(TABLE_2), Single.of(FIELD_2)))
         // The line below should not compile
