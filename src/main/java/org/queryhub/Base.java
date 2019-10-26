@@ -2,6 +2,7 @@ package org.queryhub;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,12 +21,19 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
 
   private static final String SPACE = " ";
 
+  private static final String SPACED_COMMA = ", ";
   private static final char END = ';';
   private static final char OPEN = '(';
   private static final char CLOSE = ')';
 
   private final Stream.Builder<String> builder = Stream.builder();
 
+  /**
+   * The first string to be set into the statement builder should always be a {@link KeyWord}.
+   *
+   * @param keyword A keyword.
+   * @since 0.1.0
+   */
   Base(final Keys keyword) {
     this.add(keyword);
   }
@@ -62,12 +70,25 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
     return withSemiColon ? s.concat(String.valueOf(END)) : s;
   }
 
+  /**
+   * Prints out the statement's state under the current state.
+   *
+   * @return SQL statement's current state. Then, ends the statement.
+   * @throws IllegalStateException if called a second time from the same instance.
+   * @see #build()
+   * @since 0.1.0
+   */
+  @Override
+  public final String toString() {
+    return build();
+  }
+
   // Privates
 
   /**
    * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
    *
-   * @see Impl#add(String)
+   * @see #add(String)
    * @since 0.1.0
    */
   final B add(final Field value) {
@@ -77,7 +98,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   /**
    * Adds the given {@code Keyword}'s string representation into the {@code Stream.Builder}.
    *
-   * @see Impl#add(String)
+   * @see #add(String)
    * @since 0.1.0
    */
   final B add(final KeyWord keyWord) {
@@ -88,7 +109,8 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * Adds the given value into the {@code Stream.Builder}.
    *
    * @param value The value to be added.
-   * @return Own Impl's instance.
+   * @return Current statement building instance.
+   * @see #self()
    * @since 0.1.0
    */
   final B add(final String value) {
@@ -97,9 +119,23 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   }
 
   /**
+   * Adds {@link Stream}'s elements joined with spaced commas.
+   *
+   * @param stream Ongoing stream.
+   * @param mapper A mapper function (functor) to string.
+   * @return Current statement building instance.
+   * @see #add(String)
+   * @see #self()
+   * @since 0.1.0
+   */
+  final <T> B withComma(final Stream<T> stream, final Function<T, String> mapper) {
+    return add(stream.map(mapper).collect(Collectors.joining(SPACED_COMMA)));
+  }
+
+  /**
    * Encloses the given parameters with an enclosing parenthesis.
    *
-   * @see Impl#add(String)
+   * @see #add(String)
    * @since 0.1.0
    */
   final B enclosed(final String value) {
@@ -120,18 +156,19 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
     }
   }
 
-  // Object
+  // Privates
 
   /**
-   * Prints out the statement's state under the current state.
+   * Utility method to handle varargs arguments.
    *
-   * @return SQL statement's current state. Then, ends the statement.
-   * @throws IllegalStateException if called a second time from the same instance.
-   * @see #build()
+   * @param first The first parameter.
+   * @param next  The next parameters.
+   * @param <T>   Inferred type shared between parameters.
+   * @return A ongoing stream of the given parameters' type.
    * @since 0.1.0
    */
-  @Override
-  public final String toString() {
-    return build();
+  @SafeVarargs
+  static <T> Stream<T> combine(final T first, final T... next) {
+    return Stream.concat(Stream.of(first), Stream.of(next));
   }
 }

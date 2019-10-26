@@ -1,7 +1,5 @@
 package org.queryhub;
 
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
@@ -24,8 +22,12 @@ final class Impl extends Base<Impl> implements
 
   private static final char EQUAL = '=';
   private static final String COMMA = ",";
-  private static final String SPACED_COMMA = ", ";
 
+  /**
+   * {@inheritDoc}
+   *
+   * @since 0.1.0
+   */
   Impl(final Keys keyWord) {
     super(keyWord);
   }
@@ -156,9 +158,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Sort sort(final Sort.Type tp, final Aggregate one, final Aggregate... ones) {
-    final var b = Stream.<Aggregate>builder().add(one);
-    Stream.of(ones).forEach(b);
-    return this.add(tp).add(b.build().map(Supplier::get).collect(Collectors.joining(SPACED_COMMA)));
+    return this.add(tp).withComma(combine(one, ones), Aggregate::get);
   }
 
   // Limit
@@ -171,6 +171,6 @@ final class Impl extends Base<Impl> implements
   @Override
   public final Terminal limit(final long skip, final long offset) {
     throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
-    return this.add(Keys.LIMIT).add(skip + SPACED_COMMA + offset);
+    return this.add(Keys.LIMIT).withComma(Stream.of(skip, offset), String::valueOf);
   }
 }
