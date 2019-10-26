@@ -19,7 +19,7 @@ addons:
   sonarcloud:
     organization: queryhub
     token:
-      secure: "fe78c047c663a9859f71f618f499434eeb4d901a"
+      secure: fe78c047c663a9859f71f618f499434eeb4d901a
 
 # https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
 after_success:
