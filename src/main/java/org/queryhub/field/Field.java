@@ -36,7 +36,7 @@ public interface Field extends Supplier<String> {
      * Short-hand for wildcard statement parameters (specifically for SELECT statements). Should be
      * a constant in order to save memory.
      */
-    ALL(() -> "'*'"),
+    ALL(() -> "*"),
 
     /**
      * Short-hand for input-based statement parameters. Should be a constant in order to save
