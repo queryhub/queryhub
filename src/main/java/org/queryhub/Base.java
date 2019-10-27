@@ -2,6 +2,7 @@ package org.queryhub;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -46,6 +47,27 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   abstract B self();
+
+  /**
+   * @since 0.1.0
+   */
+  @Override
+  public final boolean equals(final Object o) {
+    if (o == this) {
+      return Boolean.TRUE;
+    } else if (!(o instanceof Base)) {
+      return Boolean.FALSE;
+    }
+    return this.builder.equals(((Base) o).builder);
+  }
+
+  /**
+   * @since 0.1.0
+   */
+  @Override
+  public final int hashCode() {
+    return Objects.hashCode(builder);
+  }
 
   // Terminal
 

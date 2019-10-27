@@ -8,6 +8,7 @@ abstract class BaseTest {
 
   // Test Tags
 
+  static final String EQUALS_HASHCODE_TAG = "equality_tag";
   static final String FIELD_TAG = "field_tag";
   static final String AGGREGATE_TAG = "aggregate_tag";
   static final String SELECT_TAG = "select_tag";
