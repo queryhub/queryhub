@@ -226,18 +226,7 @@ public interface Where extends Terminal {
    * @since 0.1.0
    */
   enum Condition implements KeyWord {
-
     AND, OR;
-
-    /**
-     * {@inheritDoc}
-     *
-     * @since 0.1.0
-     */
-    @Override
-    public final String keyWord() {
-      return name();
-    }
   }
 
   /**

@@ -63,16 +63,6 @@ public interface Sort extends Terminal {
      * Descending order. Corresponds to the keyword with the same name.
      */
     DESC;
-
-    /**
-     * {@inheritDoc}
-     *
-     * @since 0.1.0
-     */
-    @Override
-    public final String keyWord() {
-      return name();
-    }
   }
 
   /**

@@ -25,11 +25,6 @@ public interface Query {
    */
   enum Keys implements KeyWord {
     INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, IN, LIMIT;
-
-    @Override
-    public final String keyWord() {
-      return name();
-    }
   }
 
   /**

@@ -2,7 +2,7 @@ package org.queryhub;
 
 /**
  * Represents SQL built-in keywords. Intended to stand a common contract among {@link Enum
- * enumarations} which items represent the various SQL's keywords.
+ * enumerations} which items represent the various SQL's keywords.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -15,5 +15,16 @@ public interface KeyWord {
    * @return The string representation.
    * @since 0.1.0
    */
-  String keyWord();
+  default String keyWord() {
+    return name();
+  }
+
+  /**
+   * Convenience contract to prevent {@link #keyWord()} rewriting over implementing enums when
+   * applicable.
+   *
+   * @return Enum's name.
+   * @since 0.1.0
+   */
+  String name();
 }

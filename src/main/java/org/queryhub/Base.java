@@ -101,7 +101,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see #add(String)
    * @since 0.1.0
    */
-  final B add(final KeyWord keyWord) {
+  final <K extends Enum & KeyWord> B add(final K keyWord) {
     return this.add(keyWord.keyWord());
   }
 
