@@ -22,8 +22,14 @@ import java.util.function.Supplier;
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
-public interface Field extends Supplier<String>  {
+public interface Field extends Supplier<String> {
 
+  /**
+   * {@link Field}'s utility constants.
+   *
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
   enum Constants {
 
     /**
@@ -36,14 +42,25 @@ public interface Field extends Supplier<String>  {
      * Short-hand for input-based statement parameters. Should be a constant in order to save
      * memory.
      */
-    VARIABLE(() -> "'?'");
+    VARIABLE(() -> "?");
 
     private final Field field;
 
+    /**
+     * Default constructor.
+     *
+     * @since 0.1.0
+     */
     Constants(final Field field) {
       this.field = field;
     }
 
+    /**
+     * Gets the corresponding field.
+     *
+     * @return The defined field.
+     * @since 0.1.0
+     */
     public final Field getField() {
       return field;
     }
