@@ -87,7 +87,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act /  Assert
-      Assertions.assertEquals("'1'", Single.of(1).get());
+      Assertions.assertEquals("'1'", Single.of(1L).get());
     }
 
     @Test

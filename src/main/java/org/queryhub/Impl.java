@@ -50,7 +50,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Terminal values(final Field fields) {
-    return this.add(fields, Boolean.TRUE);
+    return this.add(Boolean.TRUE, fields);
   }
 
   /**
@@ -72,7 +72,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Where.Mixin where(final Single field, final Field fields) {
-    return this.add(Keys.WHERE).add(field).add(Keys.IN).add(fields, Boolean.TRUE);
+    return this.add(Keys.WHERE).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
   }
 
   /**
@@ -102,7 +102,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Where.Mixin where(final Condition cond, final Single field, final Field fields) {
-    return this.add(cond).add(field).add(Keys.IN).add(fields, Boolean.TRUE);
+    return this.add(cond).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
   }
 
   /**
@@ -156,8 +156,8 @@ final class Impl extends Base<Impl> implements
    * @since 0.1.0
    */
   @Override
-  public final Sort sort(final Sort.Type tp, final Aggregate one, final Aggregate... ones) {
-    return this.add(tp).withComma(combine(one, ones), Aggregate::get);
+  public final Sort sort(final Sort.Type type, final Aggregate one, final Aggregate... ones) {
+    return this.add(type).add(one, ones);
   }
 
   // Limit
@@ -168,8 +168,8 @@ final class Impl extends Base<Impl> implements
    * @since 0.1.0
    */
   @Override
-  public final Terminal limit(final long skip, final long offset) {
-    throwIf(IllegalArgumentException::new, skip < 0 || skip > offset);
-    return this.add(Keys.LIMIT).withComma(combine(skip, offset), String::valueOf);
+  public final Terminal limit(final long s, final long o) {
+    Helper.throwIf(IllegalArgumentException::new, s < 0 || s > o);
+    return this.add(Keys.LIMIT).add(Helper.asField(s)).add(COMMA).add(Helper.asField(o));
   }
 }

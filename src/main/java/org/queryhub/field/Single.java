@@ -20,10 +20,10 @@ public interface Single extends Field {
    *              SET} / {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be
    *              {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, Integer)
+   * @see #of(boolean, Long)
    * @since 0.1.0
    */
-  static Single of(final Integer value) {
+  static Single of(final Long value) {
     return of(Boolean.FALSE, value);
   }
 
@@ -97,8 +97,8 @@ public interface Single extends Field {
    * @see #of(boolean, String)
    * @since 0.1.0
    */
-  static Single of(final boolean isDistinct, final Integer value) {
-    return of(isDistinct, Integer.toString(value));
+  static Single of(final boolean isDistinct, final Long value) {
+    return of(isDistinct, Long.toString(value));
   }
 
   /**

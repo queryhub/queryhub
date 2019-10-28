@@ -4,10 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.queryhub.field.Field;
 import org.queryhub.steps.Terminal;
 
@@ -22,8 +18,6 @@ import org.queryhub.steps.Terminal;
 abstract class Base<B extends Base<B>> implements Query, Terminal {
 
   private static final String SPACE = " ";
-  private static final String SPACED_COMMA = ", ";
-
   private static final String END = ";";
   private static final String OPEN = "(";
   private static final String CLOSE = ")";
@@ -91,7 +85,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    */
   @Override
   public final String build(final boolean withSemiColon) {
-    throwIf(IllegalStateException::new, isClosed);
+    Helper.throwIf(IllegalStateException::new, isClosed);
     this.isClosed = Boolean.TRUE;
     return withSemiColon ? this.joiner.toString() + END : this.joiner.toString();
   }
@@ -112,19 +106,21 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   // Package-private
 
   /**
-   * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
+   * Adds the given {@link Field}'s string representation into the {@link #joiner statement
+   * builder}.
    *
    * @param field A field to be set.
    * @return Current statement building instance.
-   * @see #add(Field, boolean)
+   * @see #add(boolean, Field, Field...)
    * @since 0.1.0
    */
-  final B add(final Field field) {
-    return this.add(field, Boolean.FALSE);
+  final B add(final Field field, final Field... fields) {
+    return this.add(Boolean.FALSE, field, fields);
   }
 
   /**
-   * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
+   * Adds the given {@link Field}'s string representation into the {@link #joiner statement
+   * builder}.
    *
    * @param field      A field to be set.
    * @param isEnclosed Indicates if the {@link Field}'s value is going to be enclosed by
@@ -133,15 +129,15 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see #add(String, boolean)
    * @since 0.1.0
    */
-  final B add(final Field field, final boolean isEnclosed) {
-    return this.add(field.get(), isEnclosed);
+  final B add(final boolean isEnclosed, final Field field, final Field... fields) {
+    return this.add(Helper.combine(field, fields, Field::get), isEnclosed);
   }
 
   /**
    * Adds a {@code SELECT} clause into the statement building. The statement is going to be
    * implicitly enclosed by parenthesis.
    *
-   * @param clause A {@code SELECT} clause
+   * @param clause A {@code SELECT} clause.
    * @return Current statement building instance.
    * @see #add(String, boolean)
    * @since 0.1.0
@@ -163,8 +159,10 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
     return this.add(keyWord.keyWord(), Boolean.FALSE);
   }
 
+  // Privates
+
   /**
-   * Adds the given value into the {@code Stream.Builder}.
+   * Adds the given value into the {@link #joiner statement builder}.
    *
    * @param value The value to be added.
    * @return Current statement building instance.
@@ -174,48 +172,5 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   private B add(final String value, final boolean isEnclosed) {
     this.joiner.add(isEnclosed ? OPEN + requireNonNull(value) + CLOSE : requireNonNull(value));
     return self();
-  }
-
-  /**
-   * Adds {@link Stream}'s elements joined with spaced commas.
-   *
-   * @param stream Ongoing stream.
-   * @param mapper A mapper function (functor) to string.
-   * @return Current statement building instance.
-   * @see #add(String, boolean)
-   * @since 0.1.0
-   */
-  final <T> B withComma(final Stream<T> stream, final Function<T, String> mapper) {
-    return add(stream.map(mapper).collect(Collectors.joining(SPACED_COMMA)), Boolean.FALSE);
-  }
-
-  /**
-   * Throws an exception conditionally to a given condition.
-   *
-   * @param exception A supplied exception.
-   * @param condition The logical condition which may trigger the supplied exception.
-   * @throws RuntimeException if the given condition is not satisfied.
-   * @since 0.1.0
-   */
-  static void throwIf(final Supplier<RuntimeException> exception, final boolean condition) {
-    if (condition) {
-      throw exception.get();
-    }
-  }
-
-  // Utilities
-
-  /**
-   * Utility method to handle varargs arguments.
-   *
-   * @param first The first parameter.
-   * @param next  The next parameters.
-   * @param <T>   Inferred type shared between parameters.
-   * @return A ongoing stream of the given parameters' type.
-   * @since 0.1.0
-   */
-  @SafeVarargs
-  static <T> Stream<T> combine(final T first, final T... next) {
-    return Stream.concat(Stream.of(first), Stream.of(next));
   }
 }
