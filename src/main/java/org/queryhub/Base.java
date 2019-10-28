@@ -3,6 +3,7 @@ package org.queryhub;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -23,11 +24,13 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   private static final String SPACE = " ";
   private static final String SPACED_COMMA = ", ";
 
-  private static final char END = ';';
-  private static final char OPEN = '(';
-  private static final char CLOSE = ')';
+  private static final String END = ";";
+  private static final String OPEN = "(";
+  private static final String CLOSE = ")";
 
-  private final Stream.Builder<String> builder = Stream.builder();
+  private final StringJoiner joiner = new StringJoiner(SPACE);
+
+  private boolean isClosed = Boolean.FALSE;
 
   /**
    * The first string to be set into the statement builder should always be a {@link KeyWord}.
@@ -58,7 +61,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
     } else if (!(o instanceof Base)) {
       return Boolean.FALSE;
     }
-    return this.builder.equals(((Base) o).builder);
+    return this.joiner.equals(((Base) o).joiner);
   }
 
   /**
@@ -66,7 +69,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    */
   @Override
   public final int hashCode() {
-    return Objects.hashCode(builder);
+    return Objects.hashCode(joiner);
   }
 
   // Terminal
@@ -88,8 +91,9 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    */
   @Override
   public final String build(final boolean withSemiColon) {
-    final var s = this.builder.build().collect(Collectors.joining(SPACE));
-    return withSemiColon ? s.concat(String.valueOf(END)) : s;
+    throwIf(IllegalStateException::new, isClosed);
+    this.isClosed = Boolean.TRUE;
+    return withSemiColon ? this.joiner.toString() + END : this.joiner.toString();
   }
 
   /**
@@ -110,6 +114,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   /**
    * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
    *
+   * @return Current statement building instance.
    * @see #add(String)
    * @since 0.1.0
    */
@@ -120,6 +125,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   /**
    * Adds the given {@code Keyword}'s string representation into the {@code Stream.Builder}.
    *
+   * @return Current statement building instance.
    * @see #add(String)
    * @since 0.1.0
    */
@@ -136,7 +142,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   final B add(final String value) {
-    this.builder.add(requireNonNull(value));
+    this.joiner.add(requireNonNull(value));
     return self();
   }
 
@@ -157,6 +163,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   /**
    * Encloses the given parameters with an enclosing parenthesis.
    *
+   * @return Current statement building instance.
    * @see #add(String)
    * @since 0.1.0
    */
