@@ -49,21 +49,20 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   @Override
-  public final boolean equals(final Object o) {
-    if (o == this) {
-      return Boolean.TRUE;
-    } else if (!(o instanceof Base)) {
+  public boolean equals(final Object o) {
+    if (o == null || getClass() != o.getClass()) {
       return Boolean.FALSE;
     }
-    return this.joiner.equals(((Base) o).joiner);
+    final var b = (Base) o;
+    return this.isClosed == b.isClosed && this.joiner.equals(b.joiner);
   }
 
   /**
    * @since 0.1.0
    */
   @Override
-  public final int hashCode() {
-    return Objects.hashCode(joiner);
+  public int hashCode() {
+    return Objects.hash(joiner, isClosed);
   }
 
   // Terminal

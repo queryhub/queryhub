@@ -16,7 +16,8 @@ version '0.1.0'
 wrapper { gradleVersion = '5.6.3' }
 
 ext {
-    moduleName = '_'
+    module_core = 'queryhub.core'
+    module_test = 'queryhub.test'
 
     junit_version = '5.5.2+'
     junit_platform_version = '1.5.2+'
@@ -37,7 +38,7 @@ sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
 compileJava {
-    inputs.property("moduleName", moduleName)
+    inputs.property('moduleName', module_core)
     doFirst {
         options.compilerArgs = [
                 '--module-path', classpath.asPath,
@@ -49,13 +50,13 @@ compileJava {
 // Testing
 
 compileTestJava {
-    inputs.property("moduleName", moduleName)
+    inputs.property('moduleName', module_test)
     doFirst {
         options.compilerArgs = [
                 '--module-path', classpath.asPath,
                 '--add-modules', 'org.junit.jupiter.api',
-                '--add-reads', "$moduleName=org.junit.jupiter.api",
-                '--patch-module', "$moduleName=" + files(sourceSets.test.java.srcDirs).asPath,
+                '--add-reads', "$module_test=org.junit.jupiter.api",
+                '--patch-module', "$module_test=" + files(sourceSets.test.java.srcDirs).asPath,
         ]
         classpath = files()
     }
@@ -93,25 +94,16 @@ sonarqube {
 }
 
 jar {
-    inputs.property('moduleName', moduleName)
+    inputs.property('moduleName', module_test)
     manifest {
         attributes 'Main-Class': 'org.queryhub.Query'
-        attributes 'Automatic-Module-Name': moduleName
+        attributes 'Automatic-Module-Name': module_core
     }
 }
 
-task sourceJar(type: Jar) {
-    classifier 'sources'
-    from sourceSets.main.allJava
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives jar
-    archives sourceJar
-    archives javadocJar
-}
+/**
+ task sourceJar(type: Jar) {classifier 'sources'
+ from sourceSets.main.allJava}task javadocJar(type: Jar, dependsOn: javadoc) {classifier 'javadoc'
+ from javadoc.destinationDir}artifacts {archives jar
+ archives sourceJar
+ archives javadocJar}*/
