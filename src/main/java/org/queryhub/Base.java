@@ -114,23 +114,53 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   /**
    * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
    *
+   * @param field A field to be set.
    * @return Current statement building instance.
-   * @see #add(String)
+   * @see #add(Field, boolean)
    * @since 0.1.0
    */
-  final B add(final Field value) {
-    return this.add(value.get());
+  final B add(final Field field) {
+    return this.add(field, Boolean.FALSE);
   }
 
   /**
-   * Adds the given {@code Keyword}'s string representation into the {@code Stream.Builder}.
+   * Adds the given {@code Field}'s string representation into the {@code Stream.Builder}.
    *
+   * @param field      A field to be set.
+   * @param isEnclosed Indicates if the {@link Field}'s value is going to be enclosed by
+   *                   parenthesis.
    * @return Current statement building instance.
-   * @see #add(String)
+   * @see #add(String, boolean)
+   * @since 0.1.0
+   */
+  final B add(final Field field, final boolean isEnclosed) {
+    return this.add(field.get(), isEnclosed);
+  }
+
+  /**
+   * Adds a {@code SELECT} clause into the statement building. The statement is going to be
+   * implicitly enclosed by parenthesis.
+   *
+   * @param clause A {@code SELECT} clause
+   * @return Current statement building instance.
+   * @see #add(String, boolean)
+   * @since 0.1.0
+   */
+  final B add(final Select clause) {
+    return this.add(clause.build(Boolean.FALSE), Boolean.TRUE);
+  }
+
+  /**
+   * Adds the given {@link KeyWord}'s string representation into the {@link #joiner statement
+   * builder}.
+   *
+   * @param keyWord A keyword to be set.
+   * @return Current statement building instance.
+   * @see #add(String, boolean)
    * @since 0.1.0
    */
   final <K extends Enum & KeyWord> B add(final K keyWord) {
-    return this.add(keyWord.keyWord());
+    return this.add(keyWord.keyWord(), Boolean.FALSE);
   }
 
   /**
@@ -141,8 +171,8 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see #self()
    * @since 0.1.0
    */
-  final B add(final String value) {
-    this.joiner.add(requireNonNull(value));
+  private B add(final String value, final boolean isEnclosed) {
+    this.joiner.add(isEnclosed ? OPEN + requireNonNull(value) + CLOSE : requireNonNull(value));
     return self();
   }
 
@@ -152,23 +182,11 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @param stream Ongoing stream.
    * @param mapper A mapper function (functor) to string.
    * @return Current statement building instance.
-   * @see #add(String)
-   * @see #self()
+   * @see #add(String, boolean)
    * @since 0.1.0
    */
   final <T> B withComma(final Stream<T> stream, final Function<T, String> mapper) {
-    return add(stream.map(mapper).collect(Collectors.joining(SPACED_COMMA)));
-  }
-
-  /**
-   * Encloses the given parameters with an enclosing parenthesis.
-   *
-   * @return Current statement building instance.
-   * @see #add(String)
-   * @since 0.1.0
-   */
-  final B enclosed(final String value) {
-    return add(OPEN + value + CLOSE);
+    return add(stream.map(mapper).collect(Collectors.joining(SPACED_COMMA)), Boolean.FALSE);
   }
 
   /**

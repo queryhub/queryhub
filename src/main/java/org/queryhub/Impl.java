@@ -19,6 +19,9 @@ import org.queryhub.steps.Where;
 final class Impl extends Base<Impl> implements
     Insert, Update, Update.Mixin, Where, Where.Mixin, Sort, Limit, Terminal, Select {
 
+  private static final Field COMMA = () -> ",";
+  private static final Field EQUAL = () -> "=";
+
   /**
    * {@inheritDoc}
    *
@@ -47,7 +50,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Terminal values(final Field fields) {
-    return this.enclosed(fields.get());
+    return this.add(fields, Boolean.TRUE);
   }
 
   /**
@@ -56,8 +59,8 @@ final class Impl extends Base<Impl> implements
    * @since 0.1.0
    */
   @Override
-  public final Terminal values(final Select where) {
-    return this.enclosed(where.build(Boolean.FALSE));
+  public final Terminal values(final Select clause) {
+    return this.add(clause);
   }
 
   // Where
@@ -69,7 +72,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Where.Mixin where(final Single field, final Field fields) {
-    return this.add(Keys.WHERE).add(field).add(Keys.IN).enclosed(fields.get());
+    return this.add(Keys.WHERE).add(field).add(Keys.IN).add(fields, Boolean.TRUE);
   }
 
   /**
@@ -89,7 +92,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Where.Mixin where(final Single reference, final Select clause) {
-    return this.add(Keys.WHERE).add(reference).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
+    return this.add(Keys.WHERE).add(reference).add(Keys.IN).add(clause);
   }
 
   /**
@@ -99,7 +102,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Where.Mixin where(final Condition cond, final Single field, final Field fields) {
-    return this.add(cond).add(field).add(Keys.IN).enclosed(fields.get());
+    return this.add(cond).add(field).add(Keys.IN).add(fields, Boolean.TRUE);
   }
 
   /**
@@ -120,7 +123,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Where.Mixin where(final Condition cond, final Single ref, final Select clause) {
-    return this.add(cond).add(ref).add(Keys.IN).enclosed(clause.build(Boolean.FALSE));
+    return this.add(cond).add(ref).add(Keys.IN).add(clause);
   }
 
   // Update
@@ -132,7 +135,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Update.Mixin set(final Single field, final Single value) {
-    return this.add(Keys.SET).add(field).add(String.valueOf('=')).add(value);
+    return this.add(Keys.SET).add(field).add(EQUAL).add(value);
   }
 
   /**
@@ -142,7 +145,7 @@ final class Impl extends Base<Impl> implements
    */
   @Override
   public final Update.Mixin and(final Single field, final Single value) {
-    return this.add(String.valueOf(',')).add(field).add(String.valueOf('=')).add(value);
+    return this.add(COMMA).add(field).add(EQUAL).add(value);
   }
 
   // Sort
