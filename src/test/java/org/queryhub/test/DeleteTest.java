@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
+import org.queryhub.field.Multiple;
 import org.queryhub.field.Single;
 import org.queryhub.steps.Where.Relation;
 
@@ -62,12 +63,12 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build delte query with alternative conditions.")
   final void shouldBuild_deleteQuery_withAlternativeConditions() {
     // Arrange
-    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
+    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' IN ('field_1', 'field_2');";
     // Act
     final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
-        .or(Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
+        .or(Single.of(FIELD_1), Multiple.of(FIELD_1, FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -77,12 +78,12 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build delete query with composite fragments")
   final void shouldBuild_deleteQuery_withCompositeFragments() {
     // Arrange
-    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' <= 'field_2';";
+    final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' IN (SELECT 'field_2' FROM 'table_2');";
     // Act
     final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
-        .or(Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
+        .or(Single.of(FIELD_1), Query.select(Single.of(TABLE_2), Single.of(FIELD_2)))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);

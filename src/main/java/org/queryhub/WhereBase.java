@@ -110,6 +110,6 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    */
   @Override
   public final Mixin or(final Single field, final Field fields) {
-    return this.add(Keys.WHERE).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
+    return this.add(Keys.OR).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
   }
 }
