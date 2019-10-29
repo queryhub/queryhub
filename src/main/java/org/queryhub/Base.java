@@ -23,8 +23,10 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   private static final String CLOSE = ")";
 
   private final StringJoiner joiner = new StringJoiner(SPACE);
+  private final B self;
 
   private boolean isClosed = Boolean.FALSE;
+  private int hashCode;
 
   /**
    * The first string to be set into the statement builder should always be a {@link KeyWord}.
@@ -34,6 +36,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    */
   Base(final Keys keyword) {
     this.add(keyword);
+    this.self = self();
   }
 
   /**
@@ -49,7 +52,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   @Override
-  public boolean equals(final Object o) {
+  public final boolean equals(final Object o) {
     if (o == null || getClass() != o.getClass()) {
       return Boolean.FALSE;
     }
@@ -61,8 +64,11 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   @Override
-  public int hashCode() {
-    return Objects.hash(joiner, isClosed);
+  public final int hashCode() {
+    if (hashCode == 0) {
+      hashCode = Objects.hash(joiner, isClosed);
+    }
+    return hashCode;
   }
 
   // Terminal
@@ -170,6 +176,6 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    */
   private B add(final String value, final boolean isEnclosed) {
     this.joiner.add(isEnclosed ? OPEN + requireNonNull(value) + CLOSE : requireNonNull(value));
-    return self();
+    return this.self;
   }
 }

@@ -16,7 +16,7 @@ import org.queryhub.steps.Where;
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
-final class Impl extends Base<Impl> implements
+final class Impl<I extends Impl<I>> extends Base<Impl<I>> implements
     Insert, Update, Update.Mixin, Where, Where.Mixin, Sort, Limit, Terminal, Select {
 
   private static final Field COMMA = () -> ",";
@@ -37,7 +37,7 @@ final class Impl extends Base<Impl> implements
    * @since 0.1.0
    */
   @Override
-  final Impl self() {
+  final Impl<I> self() {
     return this;
   }
 
