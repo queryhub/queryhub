@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Single;
-import org.queryhub.steps.Where.Condition;
 import org.queryhub.steps.Where.Relation;
 
 /**
@@ -53,7 +52,7 @@ final class DeleteTest extends BaseTest {
     final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.GTE, Single.of(FIELD_2))
-        .where(Condition.AND, Single.of(FIELD_1), Relation.GT, Single.of(FIELD_2))
+        .and(Single.of(FIELD_1), Relation.GT, Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -68,7 +67,7 @@ final class DeleteTest extends BaseTest {
     final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
-        .where(Condition.OR, Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
+        .or(Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
@@ -83,7 +82,7 @@ final class DeleteTest extends BaseTest {
     final var result = Query
         .delete(Single.of(TABLE_1))
         .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
-        .where(Condition.OR, Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
+        .or(Single.of(FIELD_1), Relation.LTE, Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);

@@ -24,7 +24,7 @@ public interface Query {
    * @since 0.1.0
    */
   enum Keys implements KeyWord {
-    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, IN, LIMIT;
+    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, AND, OR, IN, LIMIT;
   }
 
   /**

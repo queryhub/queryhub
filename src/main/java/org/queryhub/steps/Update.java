@@ -38,7 +38,7 @@ public interface Update {
    * @return Current statement building instance, intended to be chained to the next building calls.
    * @since 0.1.0
    */
-  Update.Mixin set(final Single field, final Single value);
+  After set(final Single field, final Single value);
 
   /**
    * Step that allows keep using a {@code WHERE} contract after the {@code SET} operation or finish
@@ -47,7 +47,7 @@ public interface Update {
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  interface Mixin extends Where, Terminal {
+  interface After {
 
     /**
      * Concatenates another string segment to {@code SET} operation in a {@code UPDATE} statement
@@ -79,6 +79,16 @@ public interface Update {
      * calls.
      * @since 0.1.0
      */
-    Update.Mixin and(final Single field, final Single value);
+    Mixin and(final Single field, final Single value);
+  }
+
+  /**
+   * Mixin steps for terminal {@link Update} interfaces.
+   *
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
+  interface Mixin extends After, Where {
+
   }
 }

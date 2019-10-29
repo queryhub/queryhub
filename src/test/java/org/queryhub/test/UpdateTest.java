@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Single;
-import org.queryhub.steps.Where.Condition;
 
 /**
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
@@ -42,7 +41,7 @@ final class UpdateTest extends BaseTest {
         .set(Single.of(FIELD_1), Single.of(VALUE_1))
         .and(Single.of(FIELD_2), Single.of(VALUE_2))
         .where(Single.of(FIELD_1), Single.of(FIELD_2))
-        .where(Condition.AND, Single.of(FIELD_1), Single.of(FIELD_2))
+        .and(Single.of(FIELD_1), Single.of(FIELD_2))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);

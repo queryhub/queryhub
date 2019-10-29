@@ -113,7 +113,7 @@ public interface Where extends Terminal {
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  interface Mixin extends Terminal, Sort, Limit {
+  interface After extends Terminal {
 
     /**
      * Appends another {@code WHERE} operation's string segment to the statement building.
@@ -125,7 +125,40 @@ public interface Where extends Terminal {
      * <pre>{@code
      *
      *   (...)
-     *   .where(Condition.OR, Field.of("field_1"), Field.of("field_2", "field_3", "field_4"))
+     *   .and(Condition.OR, Field.of("field_1"), Field.of("field_2", "field_3", "field_4"))
+     *   (...)
+     *
+     * }</pre>
+     * <p>
+     * should produce the output:
+     * <p>
+     * <pre>{@code
+     *
+     *   (...)
+     *   AND 'field_1' IN ('field_2', 'field_'3, 'field_4')
+     *   (...)
+     *
+     * }</pre>
+     *
+     * @param field  The leading field in statement's segment.
+     * @param fields Trailing fields in statement's segment.
+     * @return Current statement building instance, intended to be chained to the next building
+     * calls.
+     * @since 0.1.0
+     */
+    Mixin and(final Single field, final Field fields);
+
+    /**
+     * Appends another {@code WHERE} operation's string segment to the statement building.
+     * <p>
+     * A {@code WHERE} step that can be used after a first clause composition.
+     * <p>
+     * The following implementation example:
+     * <p>
+     * <pre>{@code
+     *
+     *   (...)
+     *   .or(Field.of("field_1"), Field.of("field_2", "field_3", "field_4"))
      *   (...)
      *
      * }</pre>
@@ -140,14 +173,13 @@ public interface Where extends Terminal {
      *
      * }</pre>
      *
-     * @param condition Logical condition to lead the segment.
-     * @param field     The leading field in statement's segment.
-     * @param fields    Trailing fields in statement's segment.
+     * @param field  The leading field in statement's segment.
+     * @param fields Trailing fields in statement's segment.
      * @return Current statement building instance, intended to be chained to the next building
      * calls.
      * @since 0.1.0
      */
-    Where.Mixin where(final Condition condition, final Single field, final Field fields);
+    Mixin or(final Single field, final Field fields);
 
     /**
      * Appends another {@code WHERE} operation's string segment to the statement building.
@@ -157,7 +189,7 @@ public interface Where extends Terminal {
      * <pre>{@code
      *
      *   (...)
-     *   .where(Relation.AND, Field.of("field_1"), Relation.GTE, Field.of("field_2"))
+     *   .and(Field.of("field_1"), Relation.GTE, Field.of("field_2"))
      *   (...)
      *
      * }</pre>
@@ -172,28 +204,34 @@ public interface Where extends Terminal {
      *
      * }</pre>
      *
-     * @param condition Logical condition to lead the segment under to be set.
-     * @param field1    The leading field in statement's segment.
-     * @param relation  A relation between the first and second given fields.
-     * @param field2    The trailing field in statement's segment.
+     * @param field1   The leading field in statement's segment.
+     * @param relation A relation between the first and second given fields.
+     * @param field2   The trailing field in statement's segment.
      * @return Current statement building instance, intended to be chained to the next building
      * calls.
      * @since 0.1.0
      */
-    Where.Mixin
-    where(final Condition condition, final Single field1,
-        final Relation relation, final Single field2);
+    Mixin and(final Single field1, final Relation relation, final Single field2);
 
     /**
-     * Appends another {@code WHERE} operation's string segment to the statement building.
+     * @param field1   The leading field in statement's segment.
+     * @param relation A relation between the first and second given fields.
+     * @param field2   The trailing field in statement's segment.
+     * @return Current statement building instance, intended to be chained to the next building
+     * calls.
+     * @since 0.1.0
+     */
+    Mixin or(final Single field1, final Relation relation, final Single field2);
+
+    /**
+     * Appends an {@code AND} operation's string segment to the statement building.
      * <p>
      * The following implementation example:
      * <p>
      * <pre>{@code
      *
      *   (...)
-     *   .where(Condition.AND, Field.of("field_1"),
-     *     Query.select(Field.of("table_2"), Field.of("field_2")))
+     *   .and(Field.of("field_1"), Query.select(Field.of("table_2"), Field.of("field_2")))
      *   (...)
      *
      * }</pre>
@@ -208,7 +246,6 @@ public interface Where extends Terminal {
      *
      * }</pre>
      *
-     * @param condition Logical condition to lead the segment under to be set.
      * @param reference The reference field in the comparison.
      * @param clause    {@code SELECT} statement which the returned columns will be compared to the
      *                  given filed parameter.
@@ -216,17 +253,49 @@ public interface Where extends Terminal {
      * calls.
      * @since 0.1.0
      */
-    Where.Mixin where(final Condition condition, final Single reference, final Select clause);
+    Mixin and(final Single reference, final Select clause);
+
+    /**
+     * Appends an {@code AND} operation's string segment to the statement building.
+     * <p>
+     * The following implementation example:
+     * <p>
+     * <pre>{@code
+     *
+     *   (...)
+     *   .or(Field.of("field_1"), Query.select(Field.of("table_2"), Field.of("field_2")))
+     *   (...)
+     *
+     * }</pre>
+     * <p>
+     * should produce the output:
+     * <p>
+     * <pre>{@code
+     *
+     *   (...)
+     *   OR 'field_1' IN (SELECT 'field_2' FROM 'table_2')
+     *   (...)
+     *
+     * }</pre>
+     *
+     * @param reference The reference field in the comparison.
+     * @param clause    {@code SELECT} statement which the returned columns will be compared to the
+     *                  given filed parameter.
+     * @return Current statement building instance, intended to be chained to the next building
+     * calls.
+     * @since 0.1.0
+     */
+    Mixin or(final Single reference, final Select clause);
   }
 
   /**
-   * Represents logical keywords that can be set between two segments in a {@code WHERE} statement.
+   * Mixin steps for terminal {@link Where} interfaces.
    *
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  enum Condition implements KeyWord {
-    AND, OR;
+  interface Mixin extends After, Sort, Limit {
+
   }
 
   /**
@@ -262,7 +331,7 @@ public interface Where extends Terminal {
      */
     NEQ("!=");
 
-    final String symbol;
+    private final String symbol;
 
     Relation(final String symbol) {
       this.symbol = symbol;
