@@ -2,6 +2,7 @@ package org.queryhub;
 
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
+import org.queryhub.helper.KeyWord;
 import org.queryhub.steps.Insert;
 import org.queryhub.steps.Terminal.Select;
 import org.queryhub.steps.Update;

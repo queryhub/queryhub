@@ -1,4 +1,4 @@
-package org.queryhub;
+package org.queryhub.helper;
 
 /**
  * Represents SQL built-in keywords. Intended to stand a common contract among {@link Enum

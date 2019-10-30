@@ -5,6 +5,7 @@ import java.time.chrono.ChronoLocalDateTime;
 import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.queryhub.helper.Helper;
 
 /**
  * {@code Field} specialization which allows to return multiple fields.
@@ -150,7 +151,7 @@ public interface Multiple extends Field {
   static <C extends ChronoLocalDate> Multiple
   of(final boolean isDistinct, final C value, final C... values) {
     return process(isDistinct, stream(value, values)
-        .map(Static.LOCAL_DATE::format).map(String::valueOf));
+        .map(Helper.LOCAL_DATE::format).map(String::valueOf));
   }
 
   /**
@@ -172,7 +173,7 @@ public interface Multiple extends Field {
   static <C extends ChronoLocalDateTime> Multiple
   of(final boolean isDistinct, final C value, final C... values) {
     return process(isDistinct, stream(value, values)
-        .map(Static.LOCAL_DATE_TIME::format).map(String::valueOf));
+        .map(Helper.LOCAL_DATE_TIME::format).map(String::valueOf));
   }
 
   /**
@@ -223,8 +224,8 @@ public interface Multiple extends Field {
    * @since 0.1.0
    */
   private static <T> Multiple process(final boolean isDistinct, final Stream<T> stream) {
-    return () -> Static.DISTINCT.apply(isDistinct, stream
-        .map(String::valueOf).map(Static.QUOTED)
-        .collect(Collectors.joining(Static.COMMA)));
+    return () -> Helper.DISTINCT.apply(isDistinct, stream
+        .map(String::valueOf).map(Helper::quoted)
+        .collect(Collectors.joining(Helper.COMMA)));
   }
 }

@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 import java.util.StringJoiner;
 import org.queryhub.field.Field;
+import org.queryhub.helper.Helper;
+import org.queryhub.helper.KeyWord;
 import org.queryhub.steps.Terminal;
 
 /**

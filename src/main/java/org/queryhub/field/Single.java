@@ -4,6 +4,7 @@ import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
+import org.queryhub.helper.Helper;
 
 /**
  * {@code Field} specialization which allows to return a individual field.
@@ -130,7 +131,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final boolean isDistinct, final ChronoLocalDate value) {
-    return of(isDistinct, Static.LOCAL_DATE.format(value));
+    return of(isDistinct, Helper.LOCAL_DATE.format(value));
   }
 
   /**
@@ -146,7 +147,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final boolean isDistinct, final ChronoLocalDateTime value) {
-    return of(isDistinct, Static.LOCAL_DATE_TIME.format(value));
+    return of(isDistinct, Helper.LOCAL_DATE_TIME.format(value));
   }
 
   /**
@@ -162,7 +163,7 @@ public interface Single extends Field {
    */
   static Single of(final boolean isDistinct, final String value) {
     return () -> Optional.of(value)
-        .map(String::valueOf).map(Static.QUOTED).map(s -> Static.DISTINCT.apply(isDistinct, s))
-        .map(Static.DOUBLE_QUOTE::matcher).map(m -> m.replaceAll(Static.EMPTY)).orElseThrow();
+        .map(String::valueOf).map(Helper::quoted).map(s -> Helper.DISTINCT.apply(isDistinct, s))
+        .map(Helper.DOUBLE_QUOTE::matcher).map(m -> m.replaceAll(Helper.EMPTY)).orElseThrow();
   }
 }

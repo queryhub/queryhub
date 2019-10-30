@@ -1,8 +1,9 @@
 package org.queryhub.steps;
 
-import org.queryhub.KeyWord;
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
+import org.queryhub.helper.Helper;
+import org.queryhub.helper.KeyWord;
 
 /**
  * Represents the SQL building steps for sorting and grouping operations.
@@ -116,7 +117,7 @@ public interface Sort extends Terminal {
      * @since 0.1.0
      */
     static Aggregate of(final String single, final Order order) {
-      return () -> Single.of(single).get() + Static.SPACE + order.keyWord();
+      return () -> Single.of(single).get() + Helper.SPACE + order.keyWord();
     }
 
     /**

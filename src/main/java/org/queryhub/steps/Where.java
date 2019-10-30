@@ -1,6 +1,6 @@
 package org.queryhub.steps;
 
-import org.queryhub.KeyWord;
+import org.queryhub.helper.KeyWord;
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
 

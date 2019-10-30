@@ -2,6 +2,7 @@ package org.queryhub;
 
 import org.queryhub.field.Field;
 import org.queryhub.field.Single;
+import org.queryhub.helper.Helper;
 import org.queryhub.steps.Insert;
 import org.queryhub.steps.Limit;
 import org.queryhub.steps.Sort;

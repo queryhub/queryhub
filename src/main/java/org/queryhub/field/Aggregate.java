@@ -1,9 +1,7 @@
 package org.queryhub.field;
 
-import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.queryhub.helper.Helper;
 
 /**
  * Abstraction for statement parts which can receive the result of an aggregation operation in place
@@ -42,7 +40,7 @@ public interface Aggregate extends Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final String value) {
-    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, Single.of(value).get()));
+    return () -> type.fun.apply(Helper.DISTINCT.apply(isDistinct, Single.of(value).get()));
   }
 
   // Composition
@@ -73,7 +71,7 @@ public interface Aggregate extends Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final boolean isDistinct, final Aggregate aggregate) {
-    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, aggregate.get()));
+    return () -> type.fun.apply(Helper.DISTINCT.apply(isDistinct, aggregate.get()));
   }
 
   /**
@@ -104,9 +102,8 @@ public interface Aggregate extends Single {
    */
   static Multiple
   of(final Type type, final boolean isDistinct, final Aggregate first, final Aggregate... others) {
-    return () -> type.fun.apply(Static.DISTINCT.apply(isDistinct, Stream
-        .concat(Stream.of(first), Stream.of(others)).map(Supplier::get)
-        .collect(Collectors.joining(Static.COMMA))));
+    return () -> type.fun.apply(Helper.DISTINCT.apply(isDistinct,
+        Helper.combine(first, others, Aggregate::get)));
   }
 
   /**
@@ -123,6 +120,11 @@ public interface Aggregate extends Single {
     MAX(s -> String.format("MAX(%s)", s));
     private final UnaryOperator<String> fun;
 
+    /**
+     * Default constructor.
+     *
+     * @since 0.1.0
+     */
     Type(final UnaryOperator<String> fun) {
       this.fun = fun;
     }
