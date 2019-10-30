@@ -14,11 +14,13 @@ version '0.1.0'
 wrapper { gradleVersion = '6.0' }
 
 ext {
-    module_core = 'queryhub.core'
+    module_core = '_'
     module_test = 'queryhub.test'
 
     junit_version = '5.5.2+'
     junit_platform_version = '1.5.2+'
+
+    h2_version = '1.3.148'
 }
 
 repositories { mavenCentral() }
@@ -28,6 +30,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:' + junit_version
     testImplementation 'org.junit.platform:junit-platform-suite-api:' + junit_platform_version
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:' + junit_platform_version
+    testImplementation 'com.h2database:h2:' + h2_version
 }
 
 defaultTasks 'clean', 'cleanIdea', 'cleanTest', 'idea', 'build'
