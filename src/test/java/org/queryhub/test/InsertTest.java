@@ -6,8 +6,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Single;
+import org.queryhub.steps.Insert;
 
 /**
+ * Defines {@link Insert {@code INSERT}}'s test cases.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
@@ -15,6 +18,9 @@ import org.queryhub.field.Single;
 @DisplayName("INSERT-related test cases.")
 final class InsertTest extends BaseTest {
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build insert query with values.")
   final void shouldBuild_insertQuery_withValues() {
@@ -29,6 +35,9 @@ final class InsertTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build insert query based on select query.")
   final void shouldBuild_insertQuery_basedOn_selectQuery() {

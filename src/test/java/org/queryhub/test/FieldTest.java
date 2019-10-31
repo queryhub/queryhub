@@ -8,11 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.queryhub.field.Field;
 import org.queryhub.field.Field.Constants;
 import org.queryhub.field.Multiple;
 import org.queryhub.field.Single;
 
 /**
+ * Defines {@link Field}'s test cases.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
@@ -27,6 +30,9 @@ final class FieldTest extends BaseTest {
     Assertions.assertThrows(NullPointerException.class, () -> Field.of(null).get());
   }*/
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should expose all as asterisk.")
   final void shouldExpose_all_as_asterisk() {
@@ -34,6 +40,9 @@ final class FieldTest extends BaseTest {
     Assertions.assertEquals("*", Constants.ALL.getField().get());
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should expose variable as question mark.")
   final void shouldExpose_variable_as_questionMark() {
@@ -41,6 +50,9 @@ final class FieldTest extends BaseTest {
     Assertions.assertEquals("?", Constants.VARIABLE.getField().get());
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should ignore escaped double quotes.")
   final void shouldIgnore_escapedDoubleQuotes() {
@@ -48,6 +60,9 @@ final class FieldTest extends BaseTest {
     Assertions.assertEquals("'1'", Single.of("\"1\"").get());
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should not append 'DISTINCT' keyword.")
   final void shouldNotAppend_distinctKeyword() {
@@ -57,6 +72,9 @@ final class FieldTest extends BaseTest {
     Assertions.assertEquals("'field_1', 'field_2'", Multiple.of(FIELD_1, FIELD_2).get());
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append 'DISTINCT' keyword.")
   final void shouldAppend_distinctKeyword() {
@@ -82,6 +100,9 @@ final class FieldTest extends BaseTest {
   @DisplayName("SQL NUMBER-related field test cases.")
   final class IntegerField extends BaseFieldTest {
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @Override
     @DisplayName(SINGLE_DESCRIPTION)
@@ -90,6 +111,9 @@ final class FieldTest extends BaseTest {
       Assertions.assertEquals("'1'", Single.of(1L).get());
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @Override
     @DisplayName(MULTIPLE_DESCRIPTION)
@@ -105,6 +129,9 @@ final class FieldTest extends BaseTest {
   @DisplayName("SQL BOOLEAN-related field test cases.")
   final class BooleanField extends BaseFieldTest {
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @Override
     @DisplayName(SINGLE_DESCRIPTION)
@@ -113,6 +140,9 @@ final class FieldTest extends BaseTest {
       Assertions.assertEquals("'true'", Single.of(() -> true).get());
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @Override
     @DisplayName(MULTIPLE_DESCRIPTION)
@@ -131,6 +161,9 @@ final class FieldTest extends BaseTest {
   @DisplayName("SQL DATE-related field test cases.")
   final class DateField extends BaseFieldTest {
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @Override
     @DisplayName(SINGLE_DESCRIPTION)
@@ -139,6 +172,9 @@ final class FieldTest extends BaseTest {
       Assertions.assertEquals("'2019-10-18'", Multiple.of(LocalDate.of(2019, 10, 18)).get());
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @Override
     @DisplayName(MULTIPLE_DESCRIPTION)
@@ -151,6 +187,9 @@ final class FieldTest extends BaseTest {
       Assertions.assertEquals("'2019-10-18', '2019-10-18', '2019-10-18'", SUBJECT.get());
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @DisplayName("Should format local date to DATE field.")
     final void shouldFormat_localDate_toDateField() {
@@ -166,6 +205,9 @@ final class FieldTest extends BaseTest {
       Assertions.assertEquals("'2019-10-18', '2019-10-18'", SUBJECT_2.get());
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     @DisplayName("Should format LocalDateTime to DATE field.")
     final void shouldFormat_localDateTime_toDateField() {

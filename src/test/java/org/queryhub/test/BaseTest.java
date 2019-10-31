@@ -1,6 +1,8 @@
 package org.queryhub.test;
 
 /**
+ * Defines general resources for the implementing test cases' classes.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */

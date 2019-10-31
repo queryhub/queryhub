@@ -9,6 +9,12 @@ import org.queryhub.Query;
 import org.queryhub.field.Single;
 import org.queryhub.steps.Terminal.Select;
 
+/**
+ * Defines equality-related test cases.
+ *
+ * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
+ * @since 0.1.0
+ */
 @Tag(BaseTest.EQUALS_HASHCODE_TAG)
 @DisplayName("Equality test cases.")
 final class EqualityTest extends BaseTest {
@@ -21,6 +27,9 @@ final class EqualityTest extends BaseTest {
 
   private static final Select DIFFERENT = Query.select(Single.of(TABLE_2), Single.of(FIELD_2));
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should return false for null parameter.")
   final void shouldReturn_false_for_nullParameter() {
@@ -28,6 +37,9 @@ final class EqualityTest extends BaseTest {
     Assertions.assertEquals(Boolean.FALSE, ONE.equals(null));
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should return false for another class' parameter.")
   final void shouldReturn_false_for_otherClassParameter() {
@@ -35,6 +47,9 @@ final class EqualityTest extends BaseTest {
     Assertions.assertEquals(Boolean.FALSE, ONE.equals(""));
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should be reflexive.")
   final void shouldBe_reflexive() {
@@ -42,6 +57,9 @@ final class EqualityTest extends BaseTest {
     Assertions.assertEquals(Boolean.TRUE, ONE.equals(SAME));
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should be transitive.")
   final void shouldBe_transitive() {
@@ -49,6 +67,9 @@ final class EqualityTest extends BaseTest {
     Assertions.assertEquals(Boolean.TRUE, ONE.equals(OTHER_SAME));
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should be symmetric.")
   final void shouldBe_symmetric() {
@@ -58,6 +79,9 @@ final class EqualityTest extends BaseTest {
     Assertions.assertEquals(Boolean.TRUE, SAME.equals(ONE));
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should be symmetric.")
   final void shouldNot_collide() {

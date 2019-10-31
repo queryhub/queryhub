@@ -8,6 +8,8 @@ import org.queryhub.field.Aggregate;
 import org.queryhub.field.Aggregate.Type;
 
 /**
+ * Defines {@link Aggregate}'s test cases.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
@@ -15,6 +17,9 @@ import org.queryhub.field.Aggregate.Type;
 @DisplayName("Aggregate functions' test cases.")
 final class AggregateTest extends BaseTest {
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should aggregate function to passed field.")
   final void shouldAppend_aggregateFunction_toPassedField() {
@@ -25,6 +30,9 @@ final class AggregateTest extends BaseTest {
     Assertions.assertEquals("MAX('field_2')", Aggregate.of(Type.MAX, FIELD_2).get());
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append 'DISTINCT' keyword to aggregate function.")
   final void shouldAppend_distinctKeyword_toAggregateFunction() {

@@ -7,9 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Multiple;
 import org.queryhub.field.Single;
+import org.queryhub.steps.Terminal.Select;
 import org.queryhub.steps.Where.Relation;
 
 /**
+ * Defines {@link Select {@code SELECT}}-related test cases.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
@@ -17,6 +20,9 @@ import org.queryhub.steps.Where.Relation;
 @DisplayName("SELECT-related test cases.")
 final class SelectTest extends BaseTest {
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build select query.")
   final void shouldBuild_selectQuery() {
@@ -30,6 +36,9 @@ final class SelectTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append WHERE clause to SELECT query.")
   final void shouldAppend_whereClause_toSelectQuery() {
@@ -44,6 +53,9 @@ final class SelectTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append WHERE clause sequentially to SELECT query.")
   final void shouldAppend_whereClauseSequentially_toSelectQuery() {
@@ -59,6 +71,9 @@ final class SelectTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append SELECT query to WHERE clause compositely.")
   final void shouldAppend_selectQuery_toWhereClause_compositely() {

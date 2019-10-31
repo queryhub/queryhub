@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Single;
+import org.queryhub.steps.Sort;
 import org.queryhub.steps.Sort.Aggregate;
 import org.queryhub.steps.Sort.Order;
 import org.queryhub.steps.Sort.Type;
 
 /**
+ * Defines {@link Sort {@code GROUP BY / SORT BY}}-related test cases.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
@@ -18,6 +21,9 @@ import org.queryhub.steps.Sort.Type;
 @DisplayName("GROUP BY / ORDER BY-related test cases.")
 final class SortTest extends BaseTest {
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append implicitly keyword ASC to GROUP BY clause.")
   final void shouldAppendImplicitly_keywordAsc_toGroupByClause() {
@@ -32,6 +38,9 @@ final class SortTest extends BaseTest {
     Assertions.assertEquals(EXPECTED, RESULT);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append keyword DESC to ORDER BY clause.")
   final void shouldAppend_keywordDesc_toOrderByClause() {
@@ -46,6 +55,9 @@ final class SortTest extends BaseTest {
     Assertions.assertEquals(EXPECTED, RESULT);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append sequentially ORDER BY and GROUP BY clause.")
   final void shouldAppendSequentially_toOrderByAndGroupByClause() {
@@ -61,6 +73,9 @@ final class SortTest extends BaseTest {
     Assertions.assertEquals(EXPECTED, RESULT);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should append compositely field.")
   final void shouldAppendCompositely_toOrderByAndGroupByClause() {

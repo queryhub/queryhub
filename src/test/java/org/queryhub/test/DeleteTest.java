@@ -10,6 +10,8 @@ import org.queryhub.field.Single;
 import org.queryhub.steps.Where.Relation;
 
 /**
+ * Defines {@code DELETE}-related test cases.
+ *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
@@ -17,6 +19,9 @@ import org.queryhub.steps.Where.Relation;
 @DisplayName("DELETE-related test cases.")
 final class DeleteTest extends BaseTest {
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build DELETE query.")
   final void shouldBuild_deleteQuery() {
@@ -30,6 +35,9 @@ final class DeleteTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build DELETE query with condition.")
   final void shouldBuild_deleteQuery_withCondition() {
@@ -44,6 +52,9 @@ final class DeleteTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build delete query with additive conditions.")
   final void shouldBuild_deleteQuery_withAdditiveConditions() {
@@ -59,6 +70,9 @@ final class DeleteTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build delte query with alternative conditions.")
   final void shouldBuild_deleteQuery_withAlternativeConditions() {
@@ -74,6 +88,9 @@ final class DeleteTest extends BaseTest {
     Assertions.assertEquals(QUERY, result);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("Should build delete query with composite fragments")
   final void shouldBuild_deleteQuery_withCompositeFragments() {
