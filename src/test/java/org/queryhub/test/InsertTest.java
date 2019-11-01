@@ -25,14 +25,17 @@ final class InsertTest extends BaseTest {
   @DisplayName("Should build insert query with values.")
   final void shouldBuild_insertQuery_withValues() {
     // Arrange
-    final var QUERY = "INSERT INTO 'table_1' VALUES ('value_1');";
+    // FIXME: Column count does not match; SQL statement:
+    final var expected = "INSERT INTO 'table_1' VALUES ('value_1');";
     // Act
     final var result = Query
         .insert(Single.of(TABLE_1))
         .values(Single.of(VALUE_1))
         .build();
     // Assert
-    Assertions.assertEquals(QUERY, result);
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(expected),
+        () -> Assertions.assertEquals(expected, result));
   }
 
   /**
@@ -42,7 +45,8 @@ final class InsertTest extends BaseTest {
   @DisplayName("Should build insert query based on select query.")
   final void shouldBuild_insertQuery_basedOn_selectQuery() {
     // Arrange
-    final var QUERY = "INSERT INTO 'table_1' VALUES (SELECT 'field_2' FROM 'table_2');";
+    // FIXME: Column count does not match; SQL statement:
+    final var expected = "INSERT INTO 'table_1' VALUES (SELECT 'field_2' FROM 'table_2');";
     // Act
     final var result = Query
         .insert(Single.of(TABLE_1))
@@ -51,6 +55,8 @@ final class InsertTest extends BaseTest {
         // .values(Query.update(Field.of(TABLE_2)).set(Field.of(FIELD_2), Field.of(FIELD_2)))
         .build();
     // Assert
-    Assertions.assertEquals(QUERY, result);
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(expected),
+        () -> Assertions.assertEquals(expected, result));
   }
 }

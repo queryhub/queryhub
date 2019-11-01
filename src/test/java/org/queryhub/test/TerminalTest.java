@@ -19,6 +19,9 @@ import org.queryhub.steps.Terminal;
 @DisplayName("Terminal methods test cases.")
 final class TerminalTest extends BaseTest {
 
+  private static final String REF_QUERY = "SELECT 'field_1' FROM 'table_1';";
+  private static final String REF_QUERY_NO_SEMI_COLON = "SELECT 'field_1' FROM 'table_1'";
+
   private Terminal subject;
 
   /**
@@ -37,7 +40,9 @@ final class TerminalTest extends BaseTest {
   @DisplayName("Build method should append semicolon.")
   final void buildMethod_shouldAppend_semiColon() {
     // Act / Assert
-    Assertions.assertEquals("SELECT 'field_1' FROM 'table_1';", subject.build());
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(REF_QUERY),
+        () -> Assertions.assertEquals(REF_QUERY, subject.build()));
   }
 
   /**
@@ -47,7 +52,9 @@ final class TerminalTest extends BaseTest {
   @DisplayName("false boolean Build method should not semicolon.")
   final void falseBooleanBuildMethod_shouldNotAppend_semiColon() {
     // Act / Assert
-    Assertions.assertEquals("SELECT 'field_1' FROM 'table_1'", subject.build(Boolean.FALSE));
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(REF_QUERY_NO_SEMI_COLON),
+        () -> Assertions.assertEquals(REF_QUERY_NO_SEMI_COLON, subject.build(Boolean.FALSE)));
   }
 
   /**
@@ -64,6 +71,9 @@ final class TerminalTest extends BaseTest {
     Assertions.assertThrows(IllegalStateException.class, subject::toString);
   }
 
+  /**
+   * @since 0.1.0
+   */
   @Test
   @DisplayName("toString() method should have build()'s same behavior.")
   final void toStringMethod_shouldHave_buildSameBehavior() {

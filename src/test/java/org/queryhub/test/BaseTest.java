@@ -1,10 +1,12 @@
 package org.queryhub.test;
 
-import java.sql.DriverManager;
+import java.util.function.Predicate;
 import org.junit.jupiter.api.Assertions;
+import org.queryhub.test.helper.TestClient;
+import org.queryhub.test.helper.TestClient.SQlHandler;
 
 /**
- * Defines general resources for the implementing test cases' classes.
+ * Defines general resources and fixtures for the implementing test cases' classes.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -33,57 +35,46 @@ abstract class BaseTest {
   static final String VALUE_1 = "value_1";
   static final String VALUE_2 = "value_2";
 
+  // Methods
+
   /**
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  static final class Client {
+  enum Statement implements Predicate<String> {
+    QUERY(java.sql.Statement::executeQuery),
+    DELETE_UPDATE(java.sql.Statement::executeUpdate),
+    // DDL(Statement::execute),
+    ;
+    private final SQlHandler handler;
 
-    private static final String URL = "jdbc:h2:mem:";
     // TODO Should replace for a QueryHub statement building application.
-    private static final String DEFAULT_SCHEMA = "CREATE TABLE \"table_1\" (\"field_1\" VARCHAR, \"field_2\" VARCHAR );";
+    private static final String DEFAULT_SCHEMA = ""
+        + "CREATE TABLE `table_1` (`field_1` VARCHAR, `field_2` VARCHAR );"
+        + "CREATE TABLE `table_2` (`field_1` VARCHAR, `field_2` VARCHAR );";
 
     /**
+     * {@inheritDoc}
+     *
      * @since 0.1.0
      */
-    private Client() {
+    Statement(final SQlHandler handler) {
+      this.handler = handler;
     }
 
-    // TODO Implement DDL syntax assertion.
+    // TODO: DDL might need to implement another methods.
 
     /**
-     * Evaluates a data manipulation language query syntax based on a default schema
-     * representation.
-     * <p>
-     * Might cause failure if the provided query syntax is invalid under {@link org.h2} terms.
+     * Parses a query. Might assert failure if any exception from the {@link TestClient testing
+     * client} is thrown.
      *
-     * @param query A query to be evaluated.
-     * @return The given parameter, after passing through {@link org.h2} evaluation.
-     * @see #assertDML(String, String)
+     * @param query The query string to be parsed.
      * @since 0.1.0
      */
-    static String assertDML(final String query) {
-      return assertDML(query, DEFAULT_SCHEMA);
-    }
-
-    /**
-     * Evaluates a data manipulation language query syntax based on a given schema representation.
-     * <p>
-     * Might cause failure if the provided query syntax is invalid under {@link org.h2} terms.
-     *
-     * @param query  A query to be evaluated.
-     * @param schema A DDL query representing which schema {@code query} should be based on.
-     * @return A query string representation, same as given parameter, after passing through {@link
-     * org.h2} evaluation.
-     * @since 0.1.0
-     */
-    private static String assertDML(final String query, final String schema) {
-      Assertions.assertDoesNotThrow(() -> {
-        final var stmt = DriverManager.getConnection(URL).createStatement();
-        stmt.execute(schema);
-        return stmt.executeQuery(query);
-      }, "Syntax not acceptable.");
-      return query;
+    @Override
+    public final boolean test(final String query) {
+      TestClient.parse(DEFAULT_SCHEMA, query, handler).findFirst().ifPresent(Assertions::fail);
+      return Boolean.TRUE;
     }
   }
 }

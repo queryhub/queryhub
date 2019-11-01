@@ -28,14 +28,16 @@ final class SortTest extends BaseTest {
   @DisplayName("Should append implicitly keyword ASC to GROUP BY clause.")
   final void shouldAppendImplicitly_keywordAsc_toGroupByClause() {
     // Arrange
-    final var EXPECTED = "SELECT 'field_1' FROM 'table_1' GROUP BY 'field_1' ASC;";
+    final var expected = "SELECT 'field_1' FROM 'table_1' GROUP BY 'field_1' ASC;";
     // Act
-    final var RESULT = Query
+    final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_1))
         .sort(Type.GROUP_BY, Aggregate.of(FIELD_1))
         .build();
     // Assert
-    Assertions.assertEquals(EXPECTED, RESULT);
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(expected),
+        () -> Assertions.assertEquals(expected, result));
   }
 
   /**
@@ -45,14 +47,16 @@ final class SortTest extends BaseTest {
   @DisplayName("Should append keyword DESC to ORDER BY clause.")
   final void shouldAppend_keywordDesc_toOrderByClause() {
     // Arrange
-    final var EXPECTED = "SELECT 'field_1' FROM 'table_1' ORDER BY 'field_1' DESC;";
+    final var expected = "SELECT 'field_1' FROM 'table_1' ORDER BY 'field_1' DESC;";
     // Act
-    final var RESULT = Query
+    final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_1))
         .sort(Type.ORDER_BY, Aggregate.of(FIELD_1, Order.DESC))
         .build();
     // Assert
-    Assertions.assertEquals(EXPECTED, RESULT);
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(expected),
+        () -> Assertions.assertEquals(expected, result));
   }
 
   /**
@@ -62,15 +66,17 @@ final class SortTest extends BaseTest {
   @DisplayName("Should append sequentially ORDER BY and GROUP BY clause.")
   final void shouldAppendSequentially_toOrderByAndGroupByClause() {
     // Arrange
-    final var EXPECTED = "SELECT 'field_2' FROM 'table_1' ORDER BY 'field_2' DESC GROUP BY 'field_1' ASC;";
+    final var expected = "SELECT 'field_2' FROM 'table_1' ORDER BY 'field_2' DESC GROUP BY 'field_1' ASC;";
     // Act
-    final var RESULT = Query
+    final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_2))
         .sort(Type.ORDER_BY, Aggregate.of(FIELD_2, Order.DESC))
         .sort(Type.GROUP_BY, Aggregate.of(FIELD_1))
         .build();
     // Assert
-    Assertions.assertEquals(EXPECTED, RESULT);
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(expected),
+        () -> Assertions.assertEquals(expected, result));
   }
 
   /**
@@ -80,9 +86,9 @@ final class SortTest extends BaseTest {
   @DisplayName("Should append compositely field.")
   final void shouldAppendCompositely_toOrderByAndGroupByClause() {
     // Arrange
-    final var EXPECTED = "SELECT 'field_2' FROM 'table_1' ORDER BY 'field_2' ASC, 'field_1' DESC, 'field_2' ASC;";
+    final var expected = "SELECT 'field_2' FROM 'table_1' ORDER BY 'field_2' ASC, 'field_1' DESC, 'field_2' ASC;";
     // Act
-    final var RESULT = Query
+    final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_2))
         .sort(Type.ORDER_BY,
             Aggregate.of(FIELD_2),
@@ -90,6 +96,8 @@ final class SortTest extends BaseTest {
             Aggregate.of(FIELD_2, Order.ASC))
         .build();
     // Assert
-    Assertions.assertEquals(EXPECTED, RESULT);
+    Assertions.assertAll(
+        () -> Statement.QUERY.test(expected),
+        () -> Assertions.assertEquals(expected, result));
   }
 }
