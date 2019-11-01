@@ -96,7 +96,6 @@ sonarqube {
 jar {
     inputs.property('moduleName', module_test)
     manifest {
-        attributes 'Main-Class': 'org.queryhub.Query'
         attributes 'Automatic-Module-Name': module_core
     }
 }
