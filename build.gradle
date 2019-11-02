@@ -94,15 +94,18 @@ sonarqube {
 }
 
 jar {
-    inputs.property('moduleName', module_test)
-    manifest {
-        attributes 'Automatic-Module-Name': module_core
+    inputs.property('moduleName', module_core)
+
+    doFirst {
+        manifest {
+            attributes 'Manifest-Version': 1.0
+            attributes 'Specification-Title': rootProject.name
+            attributes 'Specification-Version': rootProject.version
+            attributes 'Specification-Vendor': rootProject.group
+            // attributes 'Implementation-Title': ''
+            // attributes 'Implementation-Version': ''
+            // attributes 'Implementation-Vendor': ''
+            attributes 'Automatic-Module-Name': module_core
+        }
     }
 }
-
-/**
- task sourceJar(type: Jar) {classifier 'sources'
- from sourceSets.main.allJava}task javadocJar(type: Jar, dependsOn: javadoc) {classifier 'javadoc'
- from javadoc.destinationDir}artifacts {archives jar
- archives sourceJar
- archives javadocJar}*/
