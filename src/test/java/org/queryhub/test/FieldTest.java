@@ -72,18 +72,6 @@ final class FieldTest extends BaseTest {
     Assertions.assertEquals("'field_1', 'field_2'", Multiple.of(FIELD_1, FIELD_2).get());
   }
 
-  /**
-   * @since 0.1.0
-   */
-  @Test
-  @DisplayName("Should append 'DISTINCT' keyword.")
-  final void shouldAppend_distinctKeyword() {
-    // Act / Assert
-    Assertions.assertEquals("DISTINCT 'field_1'", Single.of(Boolean.TRUE, FIELD_1).get());
-    Assertions.assertEquals("DISTINCT 'field_1', 'field_2'",
-        Multiple.of(Boolean.TRUE, FIELD_1, FIELD_2).get());
-  }
-
   @SuppressWarnings("unused")
   static abstract class BaseFieldTest {
 

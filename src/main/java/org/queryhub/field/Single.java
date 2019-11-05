@@ -21,11 +21,11 @@ public interface Single extends Field {
    *              SET} / {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be
    *              {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, Long)
+   * @see #of(String)
    * @since 0.1.0
    */
   static Single of(final Long value) {
-    return of(Boolean.FALSE, value);
+    return of(Long.toString(value));
   }
 
   /**
@@ -35,39 +35,39 @@ public interface Single extends Field {
    *              SET} / {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be
    *              {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, BooleanSupplier)
+   * @see #of(String)
    * @since 0.1.0
    */
   static Single of(final BooleanSupplier value) {
-    return of(Boolean.FALSE, value);
+    return of(Boolean.toString(value.getAsBoolean()));
   }
 
   /**
    * Produces a single field.
    *
-   * @param value Field's <i>temporal</i> (date) reference (for column parameters) or a single
-   *              value (for {@code SET} / {@code WHERE} clauses). Leading quotes is going to be
-   *              removed. Cannot be {@code null}.
+   * @param value Field's <i>temporal</i> (date) reference (for column parameters) or a single value
+   *              (for {@code SET} / {@code WHERE} clauses). Leading quotes is going to be removed.
+   *              Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, ChronoLocalDate)
+   * @see #of(String)
    * @since 0.1.0
    */
   static Single of(final ChronoLocalDate value) {
-    return of(Boolean.FALSE, value);
+    return of(Helper.LOCAL_DATE.format(value));
   }
 
   /**
    * Produces a single field.
    *
-   * @param value Field's <i>temporal</i> (date/time) reference (for column parameters) or a
-   *              single value (for {@code SET} / {@code WHERE} clauses). Leading quotes is going
-   *              to be removed. Cannot be {@code null}.
+   * @param value Field's <i>temporal</i> (date/time) reference (for column parameters) or a single
+   *              value (for {@code SET} / {@code WHERE} clauses). Leading quotes is going to be
+   *              removed. Cannot be {@code null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, ChronoLocalDateTime)
+   * @see #of(String)
    * @since 0.1.0
    */
   static Single of(final ChronoLocalDateTime value) {
-    return of(Boolean.FALSE, value);
+    return of(Helper.LOCAL_DATE_TIME.format(value));
   }
 
   /**
@@ -77,93 +77,10 @@ public interface Single extends Field {
    *              {@code WHERE} clauses). Leading quotes is going to be removed. Cannot be {@code
    *              null}.
    * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, String)
    * @since 0.1.0
    */
   static Single of(final String value) {
-    return of(Boolean.FALSE, value);
-  }
-
-  // Singles
-
-  /**
-   * Produces a single field.
-   *
-   * @param isDistinct Indicates if a keyword {@code DISTINCT} should be placed before the
-   *                   operation result.
-   * @param value      Field's ordinal reference (for column parameters) or a single value (for
-   *                   {@code SET} / {@code WHERE} clauses). Leading quotes is going to be
-   *                   removed. Cannot be {@code null}.
-   * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, String)
-   * @since 0.1.0
-   */
-  static Single of(final boolean isDistinct, final Long value) {
-    return of(isDistinct, Long.toString(value));
-  }
-
-  /**
-   * Produces a single field.
-   *
-   * @param isDistinct Indicates if a keyword {@code DISTINCT} should be placed before the
-   *                   operation result.
-   * @param value      Field's boolean reference (for column parameters) or a single value (for
-   *                   {@code SET} / {@code WHERE} clauses). Leading quotes is going to be
-   *                   removed. Cannot be {@code null}.
-   * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, String)
-   * @since 0.1.0
-   */
-  static Single of(final boolean isDistinct, final BooleanSupplier value) {
-    return of(isDistinct, Boolean.toString(value.getAsBoolean()));
-  }
-
-  /**
-   * Produces a single field.
-   *
-   * @param isDistinct Indicates if a keyword {@code DISTINCT} should be placed before the
-   *                   operation result.
-   * @param value      Field's <i>temporal</i> (date) reference (for column parameters) or a
-   *                   single value (for {@code SET} / {@code WHERE} clauses). Leading quotes is
-   *                   going to be removed. Cannot be {@code null}.
-   * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, String)
-   * @since 0.1.0
-   */
-  static Single of(final boolean isDistinct, final ChronoLocalDate value) {
-    return of(isDistinct, Helper.LOCAL_DATE.format(value));
-  }
-
-  /**
-   * Produces a single field.
-   *
-   * @param isDistinct Indicates if a keyword {@code DISTINCT} should be placed before the
-   *                   operation result.
-   * @param value      Field's <i>temporal</i> (date/time) reference (for column parameters) or a
-   *                   single value (for {@code SET} / {@code WHERE} clauses). Leading quotes is
-   *                   going to be removed. Cannot be {@code null}.
-   * @return String representation of a single field, enclosed by single quotes.
-   * @see #of(boolean, String)
-   * @since 0.1.0
-   */
-  static Single of(final boolean isDistinct, final ChronoLocalDateTime value) {
-    return of(isDistinct, Helper.LOCAL_DATE_TIME.format(value));
-  }
-
-  /**
-   * Produces a single field.
-   *
-   * @param isDistinct Indicates if a keyword {@code DISTINCT} should be placed before the
-   *                   operation result.
-   * @param value      Field's reference (for column parameters) or a single value (for {@code
-   *                   SET} / {@code WHERE} clauses). Leading quotes is going to be removed.
-   *                   Cannot be {@code null}.
-   * @return String representation of a single field, enclosed by single quotes.
-   * @since 0.1.0
-   */
-  static Single of(final boolean isDistinct, final String value) {
-    return () -> Optional.of(value)
-        .map(String::valueOf).map(Helper::quoted).map(s -> Helper.DISTINCT.apply(isDistinct, s))
+    return () -> Optional.of(value).map(String::valueOf).map(Helper::quoted)
         .map(Helper.DOUBLE_QUOTE::matcher).map(m -> m.replaceAll(Helper.EMPTY)).orElseThrow();
   }
 }

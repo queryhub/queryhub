@@ -5,7 +5,6 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
@@ -28,9 +27,6 @@ public final class Helper {
   public static final DateTimeFormatter LOCAL_DATE = ofPattern("YYYY-MM-dd");
   public static final DateTimeFormatter LOCAL_DATE_TIME = ofPattern("YYYY-MM-dd hh:mm:ss");
   public static final Pattern DOUBLE_QUOTE = Pattern.compile("\"");
-
-  public static final BiFunction<Boolean, String, String> DISTINCT =
-      (b, s) -> Boolean.TRUE.equals(b) ? "DISTINCT " + s : s;
 
   /**
    * Non-visible constructor.
