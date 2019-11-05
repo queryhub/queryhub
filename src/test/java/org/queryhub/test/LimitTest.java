@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
-import org.queryhub.field.Aggregate;
 import org.queryhub.field.Field.Constants;
 import org.queryhub.field.Single;
 import org.queryhub.steps.Limit;

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.queryhub.Query;
 import org.queryhub.field.Single;
-import org.queryhub.steps.Sort;
 import org.queryhub.steps.Terminal;
 
 /**
