@@ -12,6 +12,8 @@ import org.queryhub.field.Field;
 
 /**
  * Stateless class for grouping the package's utility resources.
+ * <p>
+ * Preferably, for design purposes, only {@code static} members should be written here.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -78,7 +80,12 @@ public final class Helper {
   }
 
   /**
-   * https://www.iso.org/obp/ui/#iso:std:iso-iec:9075:-11:ed-4:v1:en
+   * Encloses with single quotes.
+   *
+   * @param value A string.
+   * @return The given string enclosed by single quotes.
+   * @see <a href="https://www.iso.org/obp/ui/#iso:std:iso-iec:9075:-11:ed-4:v1:en">Syntax
+   * reference</a>
    */
   public static String quoted(final String value) {
     return "'" + value + "'";
