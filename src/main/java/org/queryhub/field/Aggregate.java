@@ -54,7 +54,7 @@ public interface Aggregate extends Single {
    */
   static Multiple of(final Type type, final Aggregate first, final Aggregate... next) {
     return () -> Helper
-        .combine(Aggregate[]::new)
+        .variadicOf(Aggregate[]::new)
         .andThen(Helper.mapToString(Aggregate::get))
         .andThen(type.fun)
         .apply(first, next);

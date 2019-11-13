@@ -136,7 +136,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   final B add(final boolean isEnclosed, final Field field, final Field... fields) {
-    return Helper.combine(Field[]::new)
+    return Helper.variadicOf(Field[]::new)
         .andThen(Helper.mapToString(Field::get))
         .andThen(s -> this.add(isEnclosed, s))
         .apply(field, fields);

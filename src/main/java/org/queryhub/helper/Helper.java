@@ -77,11 +77,11 @@ public final class Helper {
    *
    * @param generator A function to generate the array to wrap the handled items.
    * @param <T>       Inferred type shared between parameters.
-   * @return A bi-function to handle two variadic parameters which are eventually handled by some
+   * @return A bi-function to apply on variadic parameters which are eventually handled by some
    * other method. This intends to widen function composition.
    * @since 0.1.0
    */
-  public static <T> BiFunction<T, T[], T[]> combine(final IntFunction<T[]> generator) {
+  public static <T> BiFunction<T, T[], T[]> variadicOf(final IntFunction<T[]> generator) {
     return (t, ts) -> {
       final var arr = generator.apply(ts.length + 1);
       for (var i = 0; i < ts.length + 1; i++) {
