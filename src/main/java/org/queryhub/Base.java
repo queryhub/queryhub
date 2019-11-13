@@ -127,15 +127,19 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * Adds the given {@link Field}'s string representation into the {@link #joiner statement
    * builder}.
    *
-   * @param field      A field to be set.
+   * @param field      The first field to be set.
+   * @param fields     The next fields to be set.
    * @param isEnclosed Indicates if the {@link Field}'s value is going to be enclosed by
    *                   parenthesis.
    * @return Current statement building instance.
-   * @see #add(String, boolean)
+   * @see #add(boolean, String)
    * @since 0.1.0
    */
   final B add(final boolean isEnclosed, final Field field, final Field... fields) {
-    return this.add(Helper.combine(field, fields, Field::get), isEnclosed);
+    return Helper.combine(Field[]::new)
+        .andThen(Helper.mapToString(Field::get))
+        .andThen(s -> this.add(isEnclosed, s))
+        .apply(field, fields);
   }
 
   /**
@@ -144,11 +148,11 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    *
    * @param clause A {@code SELECT} clause.
    * @return Current statement building instance.
-   * @see #add(String, boolean)
+   * @see #add(boolean, String)
    * @since 0.1.0
    */
   final B add(final Select clause) {
-    return this.add(clause.build(Boolean.FALSE), Boolean.TRUE);
+    return this.add(Boolean.TRUE, clause.build(Boolean.FALSE));
   }
 
   /**
@@ -157,11 +161,11 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    *
    * @param keyWord A keyword to be set.
    * @return Current statement building instance.
-   * @see #add(String, boolean)
+   * @see #add(boolean, String)
    * @since 0.1.0
    */
   final <K extends Enum & KeyWord> B add(final K keyWord) {
-    return this.add(keyWord.keyWord(), Boolean.FALSE);
+    return this.add(Boolean.FALSE, keyWord.keyWord());
   }
 
   // Privates
@@ -174,7 +178,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @see #self()
    * @since 0.1.0
    */
-  private B add(final String value, final boolean isEnclosed) {
+  private B add(final boolean isEnclosed, final String value) {
     this.joiner.add(isEnclosed ? OPEN + requireNonNull(value) + CLOSE : requireNonNull(value));
     return self();
   }

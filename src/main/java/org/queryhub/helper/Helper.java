@@ -5,7 +5,9 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import org.queryhub.field.Field;
@@ -52,21 +54,45 @@ public final class Helper {
     }
   }
 
+  // Functors
+
   /**
    * Combines variadic arguments' string forms.
    *
-   * @param ts  Parameters to be joined.
    * @param <T> Inferred type shared between parameters.
    * @return A ongoing stream of the given parameters' type.
    * @since 0.1.0
    */
-  public static <T> String combine(final T t, final T[] ts, final Function<T, String> mapper) {
-    final var joiner = new StringJoiner(SPACED_COMMA).add(mapper.apply(t));
-    for (final T o : ts) {
-      joiner.add(mapper.apply(o));
-    }
-    return joiner.toString();
+  public static <T> Function<T[], String> mapToString(final Function<T, String> mapper) {
+    return arr -> {
+      final var joiner = new StringJoiner(SPACED_COMMA);
+      for (final var o : arr) {
+        mapper.andThen(joiner::add).apply(o);
+      }
+      return joiner.toString();
+    };
   }
+
+  /**
+   * Combines variadic arguments into one array wrapper.
+   *
+   * @param generator A function to generate the array to wrap the handled items.
+   * @param <T>       Inferred type shared between parameters.
+   * @return A bi-function to handle two variadic parameters which are eventually handled by some
+   * other method. This intends to widen function composition.
+   * @since 0.1.0
+   */
+  public static <T> BiFunction<T, T[], T[]> combine(final IntFunction<T[]> generator) {
+    return (t, ts) -> {
+      final var arr = generator.apply(ts.length + 1);
+      for (var i = 0; i < ts.length + 1; i++) {
+        arr[i] = i == 0 ? t : ts[i - 1];
+      }
+      return arr;
+    };
+  }
+
+  // Other
 
   /**
    * Converts into a field, with no special modification.

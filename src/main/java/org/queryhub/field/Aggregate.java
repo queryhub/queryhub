@@ -45,15 +45,19 @@ public interface Aggregate extends Single {
   /**
    * Produces aggregation operations to a given fields.
    *
-   * @param type   Aggregation's type.
-   * @param first  Another aggregate to be prepended, then allowing functional composition.
-   * @param others Other aggregates to be prepended, then allowing functional composition.
+   * @param type  Aggregation's type.
+   * @param first Another aggregate to be prepended, then allowing functional composition.
+   * @param next  Other aggregates to be prepended, then allowing functional composition.
    * @return String representation of multiple fields, each one with enclosed by single quotes and
    * passed as parameter to the prepended aggregation function.
    * @since 0.1.0
    */
-  static Multiple of(final Type type, final Aggregate first, final Aggregate... others) {
-    return () -> type.fun.apply(Helper.combine(first, others, Aggregate::get));
+  static Multiple of(final Type type, final Aggregate first, final Aggregate... next) {
+    return () -> Helper
+        .combine(Aggregate[]::new)
+        .andThen(Helper.mapToString(Aggregate::get))
+        .andThen(type.fun)
+        .apply(first, next);
   }
 
   /**
