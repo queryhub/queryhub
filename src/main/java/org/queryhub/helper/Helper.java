@@ -22,7 +22,6 @@ import org.queryhub.field.Field;
  */
 public final class Helper {
 
-  public static final String COMMA = ", ";
   public static final String EMPTY = "";
   public static final String SPACE = " ";
 

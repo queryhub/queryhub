@@ -2,9 +2,10 @@ package org.queryhub.field;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
+import java.util.function.BiFunction;
 import java.util.function.BooleanSupplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import org.queryhub.helper.Helper;
 
 /**
@@ -23,12 +24,11 @@ public interface Multiple extends Field {
    * @param values Field's following ordinal references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #stream(Object, Object[])
-   * @see #process(Stream)
+   * @see #process(IntFunction, Function)
    * @since 0.1.0
    */
   static Multiple of(final Integer value, final Integer... values) {
-    return process(stream(value, values).map(String::valueOf));
+    return process(Integer[]::new, String::valueOf).apply(value, values);
   }
 
   /**
@@ -39,12 +39,12 @@ public interface Multiple extends Field {
    * @param values Field's following boolean references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #stream(Object, Object[])
-   * @see #process(Stream)
+   * @see #process(IntFunction, Function)
    * @since 0.1.0
    */
   static Multiple of(final BooleanSupplier value, final BooleanSupplier... values) {
-    return process(stream(value, values).map(BooleanSupplier::getAsBoolean).map(String::valueOf));
+    return process(BooleanSupplier[]::new, bs ->
+        Boolean.toString(bs.getAsBoolean())).apply(value, values);
   }
 
   /**
@@ -56,13 +56,12 @@ public interface Multiple extends Field {
    *               references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #stream(Object, Object[])
-   * @see #process(Stream)
+   * @see #process(IntFunction, Function)
    * @since 0.1.0
    */
   @SafeVarargs
   static <C extends ChronoLocalDate> Multiple of(final C value, final C... values) {
-    return process(stream(value, values).map(String::valueOf));
+    return process(ChronoLocalDate[]::new, String::valueOf).apply(value, values);
   }
 
   /**
@@ -74,13 +73,12 @@ public interface Multiple extends Field {
    *               aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #stream(Object, Object[])
-   * @see #process(Stream)
+   * @see #process(IntFunction, Function)
    * @since 0.1.0
    */
   @SafeVarargs
   static <C extends ChronoLocalDateTime> Multiple of(final C value, final C... values) {
-    return process(stream(value, values).map(Helper.LOCAL_DATE_TIME::format).map(String::valueOf));
+    return process(ChronoLocalDateTime[]::new, Helper.LOCAL_DATE_TIME::format).apply(value, values);
   }
 
   /**
@@ -91,43 +89,37 @@ public interface Multiple extends Field {
    * @param values Field's following references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #stream(Object, Object[])
-   * @see #process(Stream)
+   * @see #process(IntFunction, Function)
    * @since 0.1.0
    */
   static Multiple of(final String value, final String... values) {
-    return process(stream(value, values));
+    return process(String[]::new, Function.identity()).apply(value, values);
   }
 
   // privates
 
   /**
-   * Handles variadic parameters set into a stream of the given type.
+   * Helper method to handle multiple parameters for the public methods.
    *
-   * @param first     The first parameter. Required.
-   * @param following The remaining variadic parameters. Optional.
-   * @return the stream containing the given parameters, following the given parameters' input to
-   * the method.
+   * @param generator A function to generate an array.
+   * @param mapper    A mapper function to convert into a string representation.
+   * @return A bi-function to apply on variadic parameters which are eventually handled by some
+   * other method. This intends to widen function composition.
+   * @see Helper#variadicOf(IntFunction)
+   * @see Helper#mapToString(Function)
+   * @see Helper#quoted(String)
    * @since 0.1.0
    */
-  @SafeVarargs
-  private static <T> Stream<T> stream(final T first, final T... following) {
-    final var build = Stream.<T>builder().add(first);
-    Stream.of(following).forEach(build);
-    return build.build();
-  }
-
-  /**
-   * Process a stream of input of fields references.
-   *
-   * @param stream The {@link Stream} which contens is goging to be processed.
-   * @return String representation of {@code Multiple} fields, each one enclosed by single quotes
-   * and separated by commas,
-   * @since 0.1.0
-   */
-  private static <T> Multiple process(final Stream<T> stream) {
-    return () -> stream
-        .map(String::valueOf).map(Helper::quoted)
-        .collect(Collectors.joining(Helper.COMMA));
+  private static <T> BiFunction<T, T[], Multiple>
+  process(final IntFunction<T[]> generator, final Function<T, String> mapper) {
+    return (t, tt) -> () -> Helper
+        .variadicOf(generator).andThen(arr -> {
+          final var ss = new String[arr.length];
+          for (var i = 0; i < ss.length; i++) {
+            ss[i] = mapper.andThen(Helper::quoted).apply(arr[i]);
+          }
+          return ss;
+        })
+        .andThen(Helper.mapToString(Function.identity())).apply(t, tt);
   }
 }
