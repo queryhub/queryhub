@@ -62,7 +62,7 @@ public interface Multiple extends Field {
    */
   @SafeVarargs
   static <C extends ChronoLocalDate> Multiple of(final C value, final C... values) {
-    return process(stream(value, values).map(Helper.LOCAL_DATE::format).map(String::valueOf));
+    return process(stream(value, values).map(String::valueOf));
   }
 
   /**

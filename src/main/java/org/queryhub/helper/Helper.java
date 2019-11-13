@@ -28,7 +28,6 @@ public final class Helper {
 
   private static final String SPACED_COMMA = ", ";
 
-  public static final DateTimeFormatter LOCAL_DATE = ofPattern("YYYY-MM-dd");
   public static final DateTimeFormatter LOCAL_DATE_TIME = ofPattern("YYYY-MM-dd hh:mm:ss");
   public static final Pattern DOUBLE_QUOTE = Pattern.compile("\"");
 

@@ -53,7 +53,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final ChronoLocalDate value) {
-    return of(Helper.LOCAL_DATE.format(value));
+    return of(String.valueOf(value));
   }
 
   /**
