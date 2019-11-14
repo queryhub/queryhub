@@ -55,10 +55,11 @@ public final class Helper {
   // Functors
 
   /**
-   * Combines variadic arguments' string forms.
+   * Combines variadic arguments to the string form of theirs.
    *
-   * @param <T> Inferred type shared between parameters.
-   * @return A ongoing stream of the given parameters' type.
+   * @param mapper A mapping function which converts one type to a string representation.
+   * @param <T>    Inferred type shared between parameters.
+   * @return A string function which accepts an array.
    * @since 0.1.0
    */
   public static <T> Function<T[], String> mapToString(final Function<T, String> mapper) {
@@ -74,17 +75,20 @@ public final class Helper {
   /**
    * Combines variadic arguments into one array wrapper.
    *
-   * @param generator A function to generate the array to wrap the handled items.
-   * @param <T>       Inferred type shared between parameters.
-   * @return A bi-function to apply on variadic parameters which are eventually handled by some
-   * other method. This intends to widen function composition.
+   * @param <T>    Inferred type for the variadic parameters.
+   * @param <U>    Inferred type for the returning array.
+   * @param mapper A mapping function which converts one type to another.
+   * @param generator    A generator function to create a wrapping array for the handled items.
+   * @return A bi-function to apply on variadic parameters which are eventually going to be handled
+   * by some other method. This intends to widen function composition.
    * @since 0.1.0
    */
-  public static <T> BiFunction<T, T[], T[]> variadicOf(final IntFunction<T[]> generator) {
+  public static <T, U> BiFunction<T, T[], U[]>
+  variadicOf(final Function<T, U> mapper, final IntFunction<U[]> generator) {
     return (t, ts) -> {
       final var arr = generator.apply(ts.length + 1);
       for (var i = 0; i < ts.length + 1; i++) {
-        arr[i] = i == 0 ? t : ts[i - 1];
+        arr[i] = mapper.apply(i == 0 ? t : ts[i - 1]);
       }
       return arr;
     };

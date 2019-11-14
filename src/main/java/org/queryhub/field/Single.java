@@ -80,7 +80,10 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final String value) {
-    return () -> Optional.of(value).map(String::valueOf).map(Helper::quoted)
-        .map(Helper.DOUBLE_QUOTE::matcher).map(m -> m.replaceAll(Helper.EMPTY)).orElseThrow();
+    return () -> Optional.of(value)
+        .map(Helper::quoted)
+        .map(Helper.DOUBLE_QUOTE::matcher)
+        .map(m -> m.replaceAll(Helper.EMPTY))
+        .orElseThrow();
   }
 }

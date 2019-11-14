@@ -1,5 +1,6 @@
 package org.queryhub.field;
 
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import org.queryhub.helper.Helper;
 
@@ -54,8 +55,8 @@ public interface Aggregate extends Single {
    */
   static Multiple of(final Type type, final Aggregate first, final Aggregate... next) {
     return () -> Helper
-        .variadicOf(Aggregate[]::new)
-        .andThen(Helper.mapToString(Aggregate::get))
+        .variadicOf(Aggregate::get, String[]::new)
+        .andThen(Helper.mapToString(Function.identity()))
         .andThen(type.fun)
         .apply(first, next);
   }
