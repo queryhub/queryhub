@@ -5,6 +5,7 @@ import java.time.chrono.ChronoLocalDateTime;
 import java.util.function.BiFunction;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
+import org.queryhub.helper.Functor;
 import org.queryhub.helper.Helper;
 
 /**
@@ -102,12 +103,12 @@ public interface Multiple extends Field {
    * @param mapper A mapper function to convert into a string representation.
    * @return A bi-function to apply on variadic parameters which are eventually handled by some
    * other method. This intends to widen function composition.
-   * @see Helper#mapToString(Function)
+   * @see Functor#mapToString(Function)
    * @see Helper#quoted(String)
    * @since 0.1.0
    */
   private static <T> BiFunction<T, T[], Multiple> process(final Function<T, String> mapper) {
-    return (t, tt) -> () -> Helper.variadicOf(mapper, String[]::new)
-        .andThen(Helper.mapToString(Helper::quoted)).apply(t, tt);
+    return (t, tt) -> () -> Functor.variadicOf(mapper, String[]::new)
+        .andThen(Functor.mapToString(Helper::quoted)).apply(t, tt);
   }
 }

@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.function.Function;
 import org.queryhub.field.Field;
+import org.queryhub.helper.Functor;
 import org.queryhub.helper.Helper;
 import org.queryhub.helper.KeyWord;
 import org.queryhub.steps.Terminal;
@@ -137,9 +137,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   final B add(final boolean isEnclosed, final Field field, final Field... fields) {
-    return Helper.variadicOf(Field::get, String[]::new)
-        .andThen(Helper.mapToString(Function.identity()))
-        .andThen(s -> this.add(isEnclosed, s))
+    return Functor.variadicOf(Field::get).andThen(s -> this.add(isEnclosed, s))
         .apply(field, fields);
   }
 
