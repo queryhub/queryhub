@@ -2,7 +2,6 @@ package org.queryhub.field;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
-import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import org.queryhub.helper.Helper;
 
@@ -80,10 +79,8 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final String value) {
-    return () -> Optional.of(value)
-        .map(Helper::quoted)
-        .map(Helper.DOUBLE_QUOTE::matcher)
-        .map(m -> m.replaceAll(Helper.EMPTY))
-        .orElseThrow();
+    return () -> Mutator.PUT_DOUBLE_QUOTE
+        .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES)
+        .apply(value);
   }
 }

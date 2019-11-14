@@ -104,11 +104,10 @@ public interface Multiple extends Field {
    * @return A bi-function to apply on variadic parameters which are eventually handled by some
    * other method. This intends to widen function composition.
    * @see Functor#mapToString(Function)
-   * @see Helper#quoted(String)
    * @since 0.1.0
    */
   private static <T> BiFunction<T, T[], Multiple> process(final Function<T, String> mapper) {
     return (t, tt) -> () -> Functor.variadicOf(mapper, String[]::new)
-        .andThen(Functor.mapToString(Helper::quoted)).apply(t, tt);
+        .andThen(Functor.mapToString(Mutator.PUT_DOUBLE_QUOTE)).apply(t, tt);
   }
 }
