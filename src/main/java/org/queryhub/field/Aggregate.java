@@ -1,8 +1,7 @@
 package org.queryhub.field;
 
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
-import org.queryhub.helper.Functor;
+import org.queryhub.helper.Variadic;
 
 /**
  * Abstraction for statement parts which can receive the result of an aggregation operation in place
@@ -54,9 +53,8 @@ public interface Aggregate extends Single {
    * @since 0.1.0
    */
   static Multiple of(final Type type, final Aggregate first, final Aggregate... next) {
-    return () -> Functor
-        .variadicOf(Aggregate::get, String[]::new)
-        .andThen(Functor.mapToString(Function.identity()))
+    return () -> Variadic
+        .asString(Aggregate::get)
         .andThen(type.fun)
         .apply(first, next);
   }
