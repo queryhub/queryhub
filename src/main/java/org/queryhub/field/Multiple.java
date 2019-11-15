@@ -105,6 +105,6 @@ public interface Multiple extends Field {
    * @since 0.1.0
    */
   private static <T> BiFunction<T, T[], Multiple> process(final Function<T, String> mapper) {
-    return (a, b) -> () -> Variadic.asString(mapper.andThen(Mutator.PUT_DOUBLE_QUOTE)).apply(a, b);
+    return (a, b) -> () -> Variadic.asString(mapper.andThen(Mutator.PUT_SIMPLE_QUOTE)).apply(a, b);
   }
 }

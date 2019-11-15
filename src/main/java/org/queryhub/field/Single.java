@@ -78,7 +78,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final String value) {
-    return () -> Mutator.PUT_DOUBLE_QUOTE
+    return () -> Mutator.PUT_SIMPLE_QUOTE
         .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES)
         .apply(value);
   }
