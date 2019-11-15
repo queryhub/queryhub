@@ -2,7 +2,6 @@ package org.queryhub.test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.function.BooleanSupplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -125,7 +124,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act / Assert
-      Assertions.assertEquals("'true'", Single.of(() -> true).get());
+      Assertions.assertEquals("'true'", Single.of(true).get());
     }
 
     /**
@@ -135,11 +134,8 @@ final class FieldTest extends BaseTest {
     @Override
     @DisplayName(MULTIPLE_DESCRIPTION)
     final void shouldConcat_multipleParameters_with_comma() {
-      // Arrange
-      final BooleanSupplier SUP_TRUE = () -> Boolean.TRUE;
-      final BooleanSupplier SUP_FALSE = () -> Boolean.FALSE;
       // Act
-      final var SUBJECT = Multiple.of(SUP_TRUE, SUP_FALSE, SUP_TRUE);
+      final var SUBJECT = Multiple.of(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE);
       // Assert
       Assertions.assertEquals("'true', 'false', 'true'", SUBJECT.get());
     }

@@ -2,7 +2,6 @@ package org.queryhub.field;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
-import java.util.function.BooleanSupplier;
 import org.queryhub.helper.Helper;
 
 /**
@@ -37,8 +36,8 @@ public interface Single extends Field {
    * @see #of(String)
    * @since 0.1.0
    */
-  static Single of(final BooleanSupplier value) {
-    return of(Boolean.toString(value.getAsBoolean()));
+  static Single of(final boolean value) {
+    return of(String.valueOf(value));
   }
 
   /**

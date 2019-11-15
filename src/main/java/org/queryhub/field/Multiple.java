@@ -3,7 +3,6 @@ package org.queryhub.field;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.function.BiFunction;
-import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import org.queryhub.helper.Helper;
 import org.queryhub.helper.Variadic;
@@ -42,8 +41,8 @@ public interface Multiple extends Field {
    * @see #process(Function)
    * @since 0.1.0
    */
-  static Multiple of(final BooleanSupplier value, final BooleanSupplier... values) {
-    return process((BooleanSupplier b) -> Boolean.toString(b.getAsBoolean())).apply(value, values);
+  static Multiple of(final boolean value, final Boolean... values) {
+    return process(String::valueOf).apply(value, values);
   }
 
   /**
