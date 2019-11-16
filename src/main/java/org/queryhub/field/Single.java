@@ -2,6 +2,7 @@ package org.queryhub.field;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
+import java.util.Objects;
 import org.queryhub.helper.Helper;
 
 /**
@@ -78,8 +79,8 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final String value) {
-    return () -> Mutator.PUT_SIMPLE_QUOTE
+    return () -> Mutator.ADD_SIMPLE_QUOTE
         .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES)
-        .apply(value);
+        .apply(Objects.requireNonNull(value));
   }
 }

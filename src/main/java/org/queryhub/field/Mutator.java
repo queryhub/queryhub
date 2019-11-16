@@ -10,7 +10,7 @@ import org.queryhub.helper.Helper;
  * @since 0.1.0
  */
 enum Mutator implements UnaryOperator<String> {
-  PUT_SIMPLE_QUOTE(s -> "\'" + s + "\'"), // TODO: back-ticks
+  ADD_SIMPLE_QUOTE(s -> "\'" + s + "\'"), // TODO: back-ticks
   REMOVE_REDUNDANT_DOUBLE_QUOTES(s -> Helper.DOUBLE_QUOTE.matcher(s).replaceAll(Helper.EMPTY)),
   ;
   private final UnaryOperator<String> fun;

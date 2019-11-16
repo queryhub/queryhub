@@ -57,20 +57,14 @@ final class FieldTest extends BaseTest {
   final void shouldIgnore_escapedDoubleQuotes() {
     // Act / Assert
     Assertions.assertEquals("'1'", Single.of("\"1\"").get());
+
+    Assertions.assertEquals("'1', '2'", Multiple.of("\"1\"", "\"2\"").get());
   }
 
   /**
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  @Test
-  @DisplayName("Should not append 'DISTINCT' keyword.")
-  final void shouldNotAppend_distinctKeyword() {
-    // Act / Assert
-    Assertions.assertEquals("'field_1'", Single.of(FIELD_1).get());
-
-    Assertions.assertEquals("'field_1', 'field_2'", Multiple.of(FIELD_1, FIELD_2).get());
-  }
-
   @SuppressWarnings("unused")
   static abstract class BaseFieldTest {
 
@@ -83,6 +77,10 @@ final class FieldTest extends BaseTest {
     abstract void shouldConcat_multipleParameters_with_comma();
   }
 
+  /**
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
   @Nested
   @DisplayName("SQL NUMBER-related field test cases.")
   final class IntegerField extends BaseFieldTest {
@@ -112,6 +110,10 @@ final class FieldTest extends BaseTest {
     }
   }
 
+  /**
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
   @Nested
   @DisplayName("SQL BOOLEAN-related field test cases.")
   final class BooleanField extends BaseFieldTest {
@@ -141,6 +143,10 @@ final class FieldTest extends BaseTest {
     }
   }
 
+  /**
+   * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
+   * @since 0.1.0
+   */
   @Nested
   @DisplayName("SQL DATE-related field test cases.")
   final class DateField extends BaseFieldTest {
