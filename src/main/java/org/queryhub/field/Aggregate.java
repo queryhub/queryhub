@@ -1,6 +1,5 @@
 package org.queryhub.field;
 
-import java.util.function.UnaryOperator;
 import org.queryhub.helper.Variadic;
 
 /**
@@ -12,8 +11,6 @@ import org.queryhub.helper.Variadic;
  */
 public interface Aggregate extends Single {
 
-  // Composite
-
   /**
    * Produces an aggregation operation to a given field.
    *
@@ -24,7 +21,10 @@ public interface Aggregate extends Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final String value) {
-    return () -> type.fun.apply(Single.of(value).get());
+    return () -> Mutator.ADD_PARENTHESIS
+        .compose((String s) -> Single.of(s).get())
+        .andThen(s -> type + s)
+        .apply(value);
   }
 
   // Composition
@@ -39,7 +39,7 @@ public interface Aggregate extends Single {
    * @since 0.1.0
    */
   static Aggregate of(final Type type, final Aggregate aggregate) {
-    return () -> type.fun.apply(aggregate.get());
+    return () -> Mutator.ADD_PARENTHESIS.andThen((String s) -> type + s).apply(aggregate.get());
   }
 
   /**
@@ -55,7 +55,8 @@ public interface Aggregate extends Single {
   static Multiple of(final Type type, final Aggregate first, final Aggregate... next) {
     return () -> Variadic
         .asString(Aggregate::get)
-        .andThen(type.fun)
+        .andThen(Mutator.ADD_PARENTHESIS)
+        .andThen(s -> type + s)
         .apply(first, next);
   }
 
@@ -66,22 +67,5 @@ public interface Aggregate extends Single {
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  enum Type {
-    COUNT(s -> "COUNT(" + s + ")"),
-    AVG(s -> "AVG(" + s + ")"),
-    MIN(s -> "MIN(" + s + ")"),
-    MAX(s -> "MAX(" + s + ")"),
-    DISTINCT(s -> "DISTINCT(" + s + ")"),
-    ;
-    private final UnaryOperator<String> fun;
-
-    /**
-     * Default constructor.
-     *
-     * @since 0.1.0
-     */
-    Type(final UnaryOperator<String> fun) {
-      this.fun = fun;
-    }
-  }
+  enum Type {COUNT, AVG, MIN, MAX, DISTINCT}
 }
