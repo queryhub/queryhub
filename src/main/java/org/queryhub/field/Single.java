@@ -25,7 +25,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final long value) {
-    return of(Long.toString(value));
+    return () -> Long.toString(value);
   }
 
   /**
@@ -39,7 +39,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final boolean value) {
-    return of(String.valueOf(value));
+    return () -> Boolean.toString(value);
   }
 
   /**

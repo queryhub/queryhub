@@ -93,7 +93,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act /  Assert
-      Assertions.assertEquals("'1'", Single.of(1L).get());
+      Assertions.assertEquals("1", Single.of(1).get());
     }
 
     /**
@@ -106,7 +106,7 @@ final class FieldTest extends BaseTest {
       // Act
       final var SUBJECT = Multiple.of(1, 2, 3);
       // Assert
-      Assertions.assertEquals("'1', '2', '3'", SUBJECT.get());
+      Assertions.assertEquals("1, 2, 3", SUBJECT.get());
     }
   }
 
@@ -126,7 +126,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act / Assert
-      Assertions.assertEquals("'true'", Single.of(true).get());
+      Assertions.assertEquals("true", Single.of(true).get());
     }
 
     /**
@@ -139,7 +139,7 @@ final class FieldTest extends BaseTest {
       // Act
       final var SUBJECT = Multiple.of(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE);
       // Assert
-      Assertions.assertEquals("'true', 'false', 'true'", SUBJECT.get());
+      Assertions.assertEquals("true, false, true", SUBJECT.get());
     }
   }
 

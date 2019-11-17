@@ -1,12 +1,12 @@
 package org.queryhub.field;
 
+import static org.queryhub.helper.Variadic.asString;
+
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import org.queryhub.helper.Helper;
 import org.queryhub.helper.Mutator;
-import org.queryhub.helper.Variadic;
 
 /**
  * {@code Field} specialization which allows to return multiple fields.
@@ -24,11 +24,10 @@ public interface Multiple extends Field {
    * @param values Field's following ordinal references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #process(Function)
    * @since 0.1.0
    */
   static Multiple of(final long value, final Number... values) {
-    return process(String::valueOf).apply(value, values);
+    return () -> asString((Function<Number, String>) String::valueOf).apply(value, values);
   }
 
   /**
@@ -39,11 +38,10 @@ public interface Multiple extends Field {
    * @param values Field's following boolean references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #process(Function)
    * @since 0.1.0
    */
   static Multiple of(final boolean value, final Boolean... values) {
-    return process(String::valueOf).apply(value, values);
+    return () -> asString((Function<Boolean, String>) String::valueOf).apply(value, values);
   }
 
   /**
@@ -55,11 +53,10 @@ public interface Multiple extends Field {
    *               references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #process(Function)
    * @since 0.1.0
    */
   static Multiple of(final ChronoLocalDate value, final ChronoLocalDate... values) {
-    return process(String::valueOf).apply(value, values);
+    return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(String::valueOf)).apply(value, values);
   }
 
   /**
@@ -71,11 +68,11 @@ public interface Multiple extends Field {
    *               aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #process(Function)
    * @since 0.1.0
    */
   static Multiple of(final ChronoLocalDateTime value, final ChronoLocalDateTime... values) {
-    return process(Helper.LOCAL_DATE_TIME::format).apply(value, values);
+    return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(Helper.LOCAL_DATE_TIME::format))
+        .apply(value, values);
   }
 
   /**
@@ -86,25 +83,10 @@ public interface Multiple extends Field {
    * @param values Field's following references, with the same aforementioned references.
    * @return String representation of multiple fields, each one enclosed by single quotes, separated
    * by commas.
-   * @see #process(Function)
    * @since 0.1.0
    */
   static Multiple of(final CharSequence value, final CharSequence... values) {
-    return process(String::valueOf).apply(value, values);
-  }
-
-  // privates
-
-  /**
-   * Helper method to handle multiple parameters for the public methods.
-   *
-   * @param mapper A mapper function to convert into a string representation.
-   * @return A bi-function to apply on variadic parameters which are eventually handled by some
-   * other method. This intends to widen function composition.
-   * @since 0.1.0
-   */
-  private static <T> BiFunction<T, T[], Multiple> process(final Function<T, String> mapper) {
-    return (a, b) -> () -> Variadic.asString(mapper.andThen(Mutator.ADD_SIMPLE_QUOTE))
-        .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES).apply(a, b);
+    return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(String::valueOf))
+        .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES).apply(value, values);
   }
 }
