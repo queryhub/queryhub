@@ -4,6 +4,7 @@ import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.Objects;
 import org.queryhub.helper.Helper;
+import org.queryhub.helper.Mutator;
 
 /**
  * {@code Field} specialization which allows to return a individual field.

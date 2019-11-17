@@ -1,4 +1,4 @@
-package org.queryhub.field;
+package org.queryhub.helper;
 
 import java.util.Objects;
 import java.util.function.UnaryOperator;
@@ -12,7 +12,7 @@ import org.queryhub.helper.Helper;
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
-enum Mutator implements UnaryOperator<String> {
+public enum Mutator implements UnaryOperator<String> {
   ADD_SIMPLE_QUOTE(s -> "\'" + s + "\'"), // TODO: back-ticks
   ADD_PARENTHESIS(s -> "(" + s + ")"),
   REMOVE_REDUNDANT_DOUBLE_QUOTES(s -> Helper.DOUBLE_QUOTE.matcher(s).replaceAll(Helper.EMPTY)),

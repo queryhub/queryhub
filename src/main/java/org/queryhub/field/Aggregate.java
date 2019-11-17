@@ -1,5 +1,6 @@
 package org.queryhub.field;
 
+import org.queryhub.helper.Mutator;
 import org.queryhub.helper.Variadic;
 
 /**

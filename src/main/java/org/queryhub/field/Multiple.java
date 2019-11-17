@@ -5,6 +5,7 @@ import java.time.chrono.ChronoLocalDateTime;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import org.queryhub.helper.Helper;
+import org.queryhub.helper.Mutator;
 import org.queryhub.helper.Variadic;
 
 /**
