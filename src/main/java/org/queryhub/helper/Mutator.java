@@ -2,7 +2,6 @@ package org.queryhub.helper;
 
 import java.util.Objects;
 import java.util.function.UnaryOperator;
-import org.queryhub.helper.Helper;
 
 /**
  * Applies a string transformation logic.
