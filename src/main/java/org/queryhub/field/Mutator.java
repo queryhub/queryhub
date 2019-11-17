@@ -1,10 +1,13 @@
 package org.queryhub.field;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 import org.queryhub.helper.Helper;
 
 /**
- * Assembles String mutator logic.
+ * Applies a string transformation logic.
+ * <p>
+ * Items' names pattern indicates what the operation does.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -16,12 +19,25 @@ enum Mutator implements UnaryOperator<String> {
   ;
   private final UnaryOperator<String> fun;
 
+  /**
+   * {@inheritDoc}
+   *
+   * @param fun A transformation logic.
+   * @since 0.1.0
+   */
   Mutator(final UnaryOperator<String> fun) {
     this.fun = fun;
   }
 
+  /**
+   * Mutates a string value. Requited.
+   *
+   * @param value String representation of a value.
+   * @return The mutates value according to the operation.
+   * @since 0.1.0
+   */
   @Override
-  public final String apply(final String s) {
-    return fun.apply(s);
+  public final String apply(final String value) {
+    return fun.andThen(Objects::requireNonNull).apply(value);
   }
 }

@@ -24,9 +24,8 @@ public interface Query {
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  enum Keys implements KeyWord {
-    INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, AND, OR, IN, LIMIT;
-  }
+  enum Keys implements
+      KeyWord {INSERT, INTO, VALUES, SELECT, DELETE, FROM, UPDATE, SET, WHERE, AND, OR, IN, LIMIT}
 
   /**
    * Produces an {@code INSERT} statement.
