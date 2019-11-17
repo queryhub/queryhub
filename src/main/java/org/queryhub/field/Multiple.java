@@ -26,7 +26,7 @@ public interface Multiple extends Field {
    * @see #process(Function)
    * @since 0.1.0
    */
-  static Multiple of(final Integer value, final Integer... values) {
+  static Multiple of(final long value, final Number... values) {
     return process(String::valueOf).apply(value, values);
   }
 
@@ -57,8 +57,7 @@ public interface Multiple extends Field {
    * @see #process(Function)
    * @since 0.1.0
    */
-  @SafeVarargs
-  static <C extends ChronoLocalDate> Multiple of(final C value, final C... values) {
+  static Multiple of(final ChronoLocalDate value, final ChronoLocalDate... values) {
     return process(String::valueOf).apply(value, values);
   }
 
@@ -74,8 +73,7 @@ public interface Multiple extends Field {
    * @see #process(Function)
    * @since 0.1.0
    */
-  @SafeVarargs
-  static <C extends ChronoLocalDateTime> Multiple of(final C value, final C... values) {
+  static Multiple of(final ChronoLocalDateTime value, final ChronoLocalDateTime... values) {
     return process(Helper.LOCAL_DATE_TIME::format).apply(value, values);
   }
 
@@ -90,8 +88,8 @@ public interface Multiple extends Field {
    * @see #process(Function)
    * @since 0.1.0
    */
-  static Multiple of(final String value, final String... values) {
-    return process(Function.identity()).apply(value, values);
+  static Multiple of(final CharSequence value, final CharSequence... values) {
+    return process(String::valueOf).apply(value, values);
   }
 
   // privates

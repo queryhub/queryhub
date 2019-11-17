@@ -23,7 +23,7 @@ public interface Single extends Field {
    * @see #of(String)
    * @since 0.1.0
    */
-  static Single of(final Long value) {
+  static Single of(final long value) {
     return of(Long.toString(value));
   }
 
