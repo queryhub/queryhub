@@ -131,7 +131,8 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   final <K extends Enum & KeyWord> B add(final K keyWord) {
-    return this.add(Helper.asField(keyWord.keyWord()));
+    this.joiner.add(keyWord.keyWord());
+    return self();
   }
 
   /**
@@ -144,7 +145,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   final <T> B enclose(final T val, final Function<T, String> mapper) {
-    return Mutator.ADD_PARENTHESIS.compose(mapper).andThen(Helper::asField)
-        .andThen(this::add).apply(val);
+    Mutator.ADD_PARENTHESIS.compose(mapper).andThen(this.joiner::add).apply(val);
+    return self();
   }
 }

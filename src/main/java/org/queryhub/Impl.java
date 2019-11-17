@@ -108,6 +108,6 @@ final class Impl<I extends Impl<I>> extends WhereBase<Impl<I>> implements
   @Override
   public final Terminal limit(final long s, final long o) {
     Helper.throwIf(IllegalArgumentException::new, s < 0 || s > o);
-    return this.add(Keys.LIMIT).add(Helper.asField(s)).add(COMMA).add(Helper.asField(o));
+    return this.add(Keys.LIMIT).add(Single.of(s)).add(COMMA).add(Single.of(o));
   }
 }

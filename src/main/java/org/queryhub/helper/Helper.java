@@ -3,10 +3,8 @@ package org.queryhub.helper;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import org.queryhub.field.Field;
 
 /**
  * Stateless class for grouping the package's utility resources.
@@ -44,16 +42,5 @@ public final class Helper {
     if (condition) {
       throw exception.get();
     }
-  }
-
-  /**
-   * Converts into a field, with no special modification.
-   *
-   * @param o A object.
-   * @return A field containing the given object in the string value.
-   * @since 0.1.0
-   */
-  public static Field asField(final Object o) {
-    return () -> Objects.toString(o);
   }
 }
