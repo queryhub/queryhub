@@ -36,7 +36,7 @@ final class FieldTest extends BaseTest {
   @DisplayName("Should expose all as asterisk.")
   final void shouldExpose_all_as_asterisk() {
     // Act / Assert
-    Assertions.assertEquals("*", Constants.ALL.getField().get());
+    Assertions.assertEquals("*", Constants.ALL.get());
   }
 
   /**
@@ -46,7 +46,7 @@ final class FieldTest extends BaseTest {
   @DisplayName("Should expose variable as question mark.")
   final void shouldExpose_variable_as_questionMark() {
     // Act / Assert
-    Assertions.assertEquals("?", Constants.VARIABLE.getField().get());
+    Assertions.assertEquals("?", Constants.VARIABLE.get());
   }
 
   /**
