@@ -1,12 +1,12 @@
 package org.queryhub;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.Function;
 import org.queryhub.field.Field;
 import org.queryhub.helper.Helper;
 import org.queryhub.helper.KeyWord;
+import org.queryhub.helper.Mutator;
 import org.queryhub.helper.Variadic;
 import org.queryhub.steps.Terminal;
 
@@ -22,8 +22,6 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
 
   private static final String SPACE = " ";
   private static final String END = ";";
-  private static final String OPEN = "(";
-  private static final String CLOSE = ")";
 
   private final StringJoiner joiner = new StringJoiner(SPACE);
 
@@ -117,40 +115,11 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    *
    * @param field A field to be set.
    * @return Current statement building instance.
-   * @see #add(boolean, Field, Field...)
    * @since 0.1.0
    */
   final B add(final Field field, final Field... fields) {
-    return this.add(Boolean.FALSE, field, fields);
-  }
-
-  /**
-   * Adds the given {@link Field}'s string representation into the {@link #joiner statement
-   * builder}.
-   *
-   * @param field      The first field to be set.
-   * @param fields     The next fields to be set.
-   * @param isEnclosed Indicates if the {@link Field}'s value is going to be enclosed by
-   *                   parenthesis.
-   * @return Current statement building instance.
-   * @see #add(boolean, String)
-   * @since 0.1.0
-   */
-  final B add(final boolean isEnclosed, final Field field, final Field... fields) {
-    return Variadic.asString(Field::get).andThen(s -> this.add(isEnclosed, s)).apply(field, fields);
-  }
-
-  /**
-   * Adds a {@code SELECT} clause into the statement building. The statement is going to be
-   * implicitly enclosed by parenthesis.
-   *
-   * @param clause A {@code SELECT} clause.
-   * @return Current statement building instance.
-   * @see #add(boolean, String)
-   * @since 0.1.0
-   */
-  final B add(final Select clause) {
-    return this.add(Boolean.TRUE, clause.build(Boolean.FALSE));
+    Variadic.asString(Field::get).andThen(this.joiner::add).apply(field, fields);
+    return self();
   }
 
   /**
@@ -159,25 +128,23 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    *
    * @param keyWord A keyword to be set.
    * @return Current statement building instance.
-   * @see #add(boolean, String)
    * @since 0.1.0
    */
   final <K extends Enum & KeyWord> B add(final K keyWord) {
-    return this.add(Boolean.FALSE, keyWord.keyWord());
+    return this.add(Helper.asField(keyWord.keyWord()));
   }
 
-  // Privates
-
   /**
-   * Adds the given value into the {@link #joiner statement builder}.
+   * Encloses the string representation from a value within parenthesis.
    *
-   * @param value The value to be added.
+   * @param val  A value to be set.
+   * @param mapper A mapping function to supply a string representation.
+   * @param <T>    A type to be shared between parameters.
    * @return Current statement building instance.
-   * @see #self()
    * @since 0.1.0
    */
-  private B add(final boolean isEnclosed, final String value) {
-    this.joiner.add(isEnclosed ? OPEN + requireNonNull(value) + CLOSE : requireNonNull(value));
-    return self();
+  final <T> B enclose(final T val, final Function<T, String> mapper) {
+    return Mutator.ADD_PARENTHESIS.compose(mapper).andThen(Helper::asField)
+        .andThen(this::add).apply(val);
   }
 }

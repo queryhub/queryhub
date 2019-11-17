@@ -18,11 +18,11 @@ import org.queryhub.field.Field;
  */
 public final class Helper {
 
-  public static final String EMPTY = "";
+  static final String EMPTY = "";
   public static final String SPACE = " ";
 
   public static final DateTimeFormatter LOCAL_DATE_TIME = ofPattern("YYYY-MM-dd hh:mm:ss");
-  public static final Pattern DOUBLE_QUOTE = Pattern.compile("\"");
+  static final Pattern DOUBLE_QUOTE = Pattern.compile("\"");
 
   /**
    * Non-visible constructor.

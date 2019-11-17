@@ -51,7 +51,7 @@ final class Impl<I extends Impl<I>> extends WhereBase<Impl<I>> implements
    */
   @Override
   public final Terminal values(final Field fields) {
-    return this.add(Boolean.TRUE, fields);
+    return this.enclose(fields, Field::get);
   }
 
   /**
@@ -61,7 +61,7 @@ final class Impl<I extends Impl<I>> extends WhereBase<Impl<I>> implements
    */
   @Override
   public final Terminal values(final Select clause) {
-    return this.add(clause);
+    return this.enclose(clause, s -> s.build(Boolean.FALSE));
   }
 
   // Update

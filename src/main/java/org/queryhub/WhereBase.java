@@ -39,8 +39,8 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    * @since 0.1.0
    */
   @Override
-  public final Mixin where(final Single reference, final Select clause) {
-    return this.add(Keys.WHERE).add(reference).add(Keys.IN).add(clause);
+  public final Mixin where(final Single ref, final Select clause) {
+    return this.add(Keys.WHERE).add(ref).add(Keys.IN).enclose(clause, s -> s.build(Boolean.FALSE));
   }
 
   /**
@@ -50,7 +50,7 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    */
   @Override
   public final Where.Mixin where(final Single field, final Field fields) {
-    return this.add(Keys.WHERE).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
+    return this.add(Keys.WHERE).add(field).add(Keys.IN).enclose(fields, Field::get);
   }
 
   /**
@@ -69,8 +69,8 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    * @since 0.1.0
    */
   @Override
-  public final Mixin and(final Single reference, final Select clause) {
-    return this.add(Keys.AND).add(reference).add(Keys.IN).add(clause);
+  public final Mixin and(final Single ref, final Select clause) {
+    return this.add(Keys.AND).add(ref).add(Keys.IN).enclose(clause, s -> s.build(Boolean.FALSE));
   }
 
   /**
@@ -80,7 +80,7 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    */
   @Override
   public final Mixin and(final Single field, final Field fields) {
-    return this.add(Keys.AND).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
+    return this.add(Keys.AND).add(field).add(Keys.IN).enclose(fields, Field::get);
   }
 
   /**
@@ -99,8 +99,8 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    * @since 0.1.0
    */
   @Override
-  public final Mixin or(final Single reference, final Select clause) {
-    return this.add(Keys.OR).add(reference).add(Keys.IN).add(clause);
+  public final Mixin or(final Single ref, final Select clause) {
+    return this.add(Keys.OR).add(ref).add(Keys.IN).enclose(clause, s -> s.build(Boolean.FALSE));
   }
 
   /**
@@ -110,6 +110,6 @@ abstract class WhereBase<I extends WhereBase<I>> extends Base<I> implements Wher
    */
   @Override
   public final Mixin or(final Single field, final Field fields) {
-    return this.add(Keys.OR).add(field).add(Keys.IN).add(Boolean.TRUE, fields);
+    return this.add(Keys.OR).add(field).add(Keys.IN).enclose(fields, Field::get);
   }
 }
