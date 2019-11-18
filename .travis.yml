@@ -1,5 +1,8 @@
 # https://docs.travis-ci.com/user/languages/java/#projects-using-gradle
 language: java
+sudo: false
+install: true
+
 # https://www.deps.co/guides/travis-ci-latest-java/
 jdk:
   - oraclejdk11
@@ -14,17 +17,9 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-addons:
-  # https://docs.travis-ci.com/user/sonarcloud/
-  sonarcloud:
-    organization: queryhub
-    token:
-      secure: fe78c047c663a9859f71f618f499434eeb4d901a
-
 # https://github.com/codecov/example-gradle#-do-you-support-multi-module-projects
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 script:
-  - ./gradlew --scan check sonarqube
-
+  - ./gradlew --scan check
