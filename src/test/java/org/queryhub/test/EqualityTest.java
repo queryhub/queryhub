@@ -27,6 +27,8 @@ final class EqualityTest extends BaseTest {
 
   private static final Select DIFFERENT = Query.select(Single.of(TABLE_2), Single.of(FIELD_2));
 
+  private static final Select CLOSED = Query.select(Single.of(TABLE_2), Single.of(FIELD_2));
+
   /**
    * @since 0.1.0
    */
@@ -78,6 +80,20 @@ final class EqualityTest extends BaseTest {
 
     Assertions.assertEquals(Boolean.TRUE, SAME.equals(ONE));
   }
+
+
+  /**
+   * @since 0.1.0
+   */
+  @Test
+  @DisplayName("Should evaluate closed instances as different.")
+  final void shouldEvaluate_closedInstances_asDifferent() {
+    // Arrange
+    CLOSED.build();
+    // Assert
+    Assertions.assertNotEquals(Boolean.TRUE, CLOSED.equals(ONE));
+  }
+
 
   /**
    * @since 0.1.0
