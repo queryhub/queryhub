@@ -57,8 +57,8 @@ final class SelectTest extends BaseTest {
    * @since 0.1.0
    */
   @Test
-  @DisplayName("Should append WHERE clause sequentially to SELECT query.")
-  final void shouldAppend_whereClauseSequentially_toSelectQuery() {
+  @DisplayName("Should append AND to WHERE clause sequentially.")
+  final void shouldAppendAnd_toWhereClauseSequentially() {
     // Arrange
     final var QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' < 'field_2' AND 'field_2' LIKE 'field_1';";
     // Act
@@ -66,6 +66,24 @@ final class SelectTest extends BaseTest {
         .select(Single.of(TABLE_1), Single.of(FIELD_1))
         .where(Single.of(FIELD_1), Relation.LT, Single.of(FIELD_2))
         .and(Single.of(FIELD_2), Relation.LIKE, Single.of(FIELD_1))
+        .build();
+    // Assert
+    Assertions.assertEquals(QUERY, result);
+  }
+
+  /**
+   * @since 0.1.0
+   */
+  @Test
+  @DisplayName("Should append OR to WHERE clause sequentially.")
+  final void shouldAppendOr_toWhereClauseSequentially() {
+    // Arrange
+    final var QUERY = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' < 'field_2' OR 'field_2' LIKE 'field_1';";
+    // Act
+    final var result = Query
+        .select(Single.of(TABLE_1), Single.of(FIELD_1))
+        .where(Single.of(FIELD_1), Relation.LT, Single.of(FIELD_2))
+        .or(Single.of(FIELD_2), Relation.LIKE, Single.of(FIELD_1))
         .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
