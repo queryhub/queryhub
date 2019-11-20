@@ -1,5 +1,6 @@
 package org.queryhub.field;
 
+import org.queryhub.helper.Helper;
 import org.queryhub.helper.Mutator;
 import org.queryhub.helper.Variadic;
 
@@ -21,11 +22,12 @@ public interface Aggregate extends Single {
    * to the prepended aggregation function.
    * @since 0.1.0
    */
-  static Aggregate of(final Type type, final String value) {
-    return () -> Mutator.ADD_PARENTHESIS
-        .compose((String s) -> Single.of(s).get())
+  static Aggregate of(final Type type, final String value, final String... values) {
+    Helper.throwIf(IllegalArgumentException::new, !type.supportsMultiple && values.length > 0);
+    return () -> Variadic.asString((String s) -> Single.of(s).get())
+        .andThen(Mutator.ADD_PARENTHESIS)
         .andThen(s -> type + s)
-        .apply(value);
+        .apply(value, values);
   }
 
   // Composition
@@ -46,19 +48,19 @@ public interface Aggregate extends Single {
   /**
    * Produces aggregation operations to a given fields.
    *
-   * @param type  Aggregation's type.
-   * @param first Another aggregate to be prepended, then allowing functional composition.
-   * @param next  Other aggregates to be prepended, then allowing functional composition.
+   * @param type       Aggregation's type.
+   * @param aggregate  Another aggregate to be prepended, then allowing functional composition.
+   * @param aggregates Other aggregates to be prepended, then allowing functional composition.
    * @return String representation of multiple fields, each one with enclosed by single quotes and
    * passed as parameter to the prepended aggregation function.
    * @since 0.1.0
    */
-  static Multiple of(final Type type, final Aggregate first, final Aggregate... next) {
+  static Aggregate of(final Type type, final Aggregate aggregate, final Aggregate... aggregates) {
     return () -> Variadic
         .asString(Aggregate::get)
         .andThen(Mutator.ADD_PARENTHESIS)
         .andThen(s -> type + s)
-        .apply(first, next);
+        .apply(aggregate, aggregates);
   }
 
   /**
@@ -68,5 +70,23 @@ public interface Aggregate extends Single {
    * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
    * @since 0.1.0
    */
-  enum Type {COUNT, AVG, MIN, MAX, DISTINCT}
+  enum Type {
+    COUNT(Boolean.FALSE),
+    AVG(Boolean.FALSE),
+    MIN(Boolean.FALSE),
+    MAX(Boolean.FALSE),
+    DISTINCT(Boolean.FALSE),
+    ;
+    private final Boolean supportsMultiple;
+
+    /**
+     * Default constructor.
+     *
+     * @param supportsMultiple Indicates if supports multiple parameters.
+     * @since 0.1.0
+     */
+    Type(Boolean supportsMultiple) {
+      this.supportsMultiple = supportsMultiple;
+    }
+  }
 }

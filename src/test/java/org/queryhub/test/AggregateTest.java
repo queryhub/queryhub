@@ -62,4 +62,15 @@ final class AggregateTest extends BaseTest {
             Aggregate.of(Type.MAX, FIELD_2))
             .get());
   }
+
+  /**
+   * @since 0.1.0
+   */
+  @Test
+  @DisplayName("Should throw IllegalArgumentException when passing multiple parameters inadequately.")
+  final void shouldThrow_illegalArgumentException_whenPassing_multipleParameters_inadequately() {
+    // Act / Assert
+    Assertions.assertThrows(IllegalArgumentException.class,
+        () -> Aggregate.of(Type.AVG, FIELD_1, FIELD_2));
+  }
 }
