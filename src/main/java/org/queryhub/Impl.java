@@ -18,8 +18,8 @@ import org.queryhub.steps.Update.Mixin;
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
  */
-final class Impl<I extends Impl<I>> extends WhereBase<Impl<I>> implements
-    Insert, Update, After, Mixin, Sort, Limit, Terminal, Select {
+final class Impl extends WhereBase<Impl>
+    implements Insert, Update, After, Mixin, Sort, Limit, Terminal, Select {
 
   private static final Field COMMA = () -> ",";
   private static final Field EQUAL = () -> "=";
@@ -39,9 +39,10 @@ final class Impl<I extends Impl<I>> extends WhereBase<Impl<I>> implements
    * @since 0.1.0
    */
   @Override
-  final Impl<I> self() {
+  final Impl self() {
     return this;
   }
+
   // Values
 
   /**

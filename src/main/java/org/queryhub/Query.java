@@ -63,7 +63,7 @@ public interface Query {
    * @since 0.1.0
    */
   static Insert insert(final Single table) {
-    return new Impl<>(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
+    return new Impl(Keys.INSERT).add(Keys.INTO).add(table).add(Keys.VALUES);
   }
 
   /**
@@ -93,7 +93,7 @@ public interface Query {
    * @since 0.1.0
    */
   static Select select(final Single from, final Field fields) {
-    return new Impl<>(Keys.SELECT).add(fields).add(Keys.FROM).add(from);
+    return new Impl(Keys.SELECT).add(fields).add(Keys.FROM).add(from);
   }
 
   // TODO: Composite SELECT query
@@ -125,7 +125,7 @@ public interface Query {
    * @since 0.1.0
    */
   static Update update(final Single table) {
-    return new Impl<>(Keys.UPDATE).add(table);
+    return new Impl(Keys.UPDATE).add(table);
   }
 
   // TODO: Upsert
@@ -155,6 +155,6 @@ public interface Query {
    * @since 0.1.0
    */
   static Where delete(final Single table) {
-    return new Impl<>(Keys.DELETE).add(Keys.FROM).add(table);
+    return new Impl(Keys.DELETE).add(Keys.FROM).add(table);
   }
 }
