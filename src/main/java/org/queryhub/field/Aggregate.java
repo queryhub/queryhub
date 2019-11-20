@@ -75,7 +75,7 @@ public interface Aggregate extends Single {
     AVG(Boolean.FALSE),
     MIN(Boolean.FALSE),
     MAX(Boolean.FALSE),
-    DISTINCT(Boolean.FALSE),
+    DISTINCT(Boolean.TRUE),
     ;
     private final Boolean supportsMultiple;
 

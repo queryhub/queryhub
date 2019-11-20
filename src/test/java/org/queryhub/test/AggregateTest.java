@@ -72,5 +72,9 @@ final class AggregateTest extends BaseTest {
     // Act / Assert
     Assertions.assertThrows(IllegalArgumentException.class,
         () -> Aggregate.of(Type.AVG, FIELD_1, FIELD_2));
+
+    Assertions.assertDoesNotThrow(() -> Aggregate.of(Type.DISTINCT, FIELD_1, FIELD_2));
+
+    Assertions.assertDoesNotThrow(() -> Aggregate.of(Type.MAX, FIELD_1));
   }
 }
