@@ -56,7 +56,7 @@ public interface Multiple extends Field {
    * @since 0.1.0
    */
   static Multiple of(final ChronoLocalDate value, final ChronoLocalDate... values) {
-    return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(String::valueOf)).apply(value, values);
+    return () -> asString(Mutator.ADD_BACK_TICKS.compose(String::valueOf)).apply(value, values);
   }
 
   /**
@@ -71,7 +71,7 @@ public interface Multiple extends Field {
    * @since 0.1.0
    */
   static Multiple of(final ChronoLocalDateTime value, final ChronoLocalDateTime... values) {
-    return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(Helper.LOCAL_DATE_TIME::format))
+    return () -> asString(Mutator.ADD_BACK_TICKS.compose(Helper.LOCAL_DATE_TIME::format))
         .apply(value, values);
   }
 
@@ -86,7 +86,7 @@ public interface Multiple extends Field {
    * @since 0.1.0
    */
   static Multiple of(final CharSequence value, final CharSequence... values) {
-    return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(String::valueOf))
+    return () -> asString(Mutator.ADD_BACK_TICKS.compose(String::valueOf))
         .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES).apply(value, values);
   }
 }

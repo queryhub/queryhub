@@ -27,7 +27,7 @@ final class SelectTest extends BaseTest {
   @DisplayName("Should build select query.")
   final void shouldBuild_selectQuery() {
     // Arrange
-    final var expected = "SELECT 'field_1' FROM 'table_1';";
+    final var expected = "SELECT `field_1` FROM `table_1`;";
     // Act
     final var result = Query.select(Single.of(TABLE_1), Single.of(FIELD_1)).build();
     // Assert
@@ -43,7 +43,7 @@ final class SelectTest extends BaseTest {
   @DisplayName("Should append WHERE clause to SELECT query.")
   final void shouldAppend_whereClause_toSelectQuery() {
     // Arrange
-    final var expected = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' <= 'field_2';";
+    final var expected = "SELECT `field_1` FROM `table_1` WHERE `field_1` <= `field_2`;";
     // Act
     final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_1))
@@ -62,7 +62,7 @@ final class SelectTest extends BaseTest {
   @DisplayName("Should append AND to WHERE clause sequentially.")
   final void shouldAppendAnd_toWhereClauseSequentially() {
     // Arrange
-    final var expected = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' < 'field_2' AND 'field_2' LIKE 'field_1';";
+    final var expected = "SELECT `field_1` FROM `table_1` WHERE `field_1` < `field_2` AND `field_2` LIKE `field_1`;";
     // Act
     final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_1))
@@ -82,7 +82,7 @@ final class SelectTest extends BaseTest {
   @DisplayName("Should append OR to WHERE clause sequentially.")
   final void shouldAppendOr_toWhereClauseSequentially() {
     // Arrange
-    final var expected = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' < 'field_2' OR 'field_2' LIKE 'field_1';";
+    final var expected = "SELECT `field_1` FROM `table_1` WHERE `field_1` < `field_2` OR `field_2` LIKE `field_1`;";
     // Act
     final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_1))
@@ -102,9 +102,9 @@ final class SelectTest extends BaseTest {
   @DisplayName("Should append SELECT query to WHERE clause compositely.")
   final void shouldAppend_selectQuery_toWhereClause_compositely() {
     // Arrange
-    final var expected = "SELECT 'field_1' FROM 'table_1' WHERE 'field_1' IN "
-        + "(SELECT 'field_1', 'field_2' FROM 'table_1') AND 'field_2' IN (SELECT 'field_1' FROM "
-        + "'table_2');";
+    final var expected = "SELECT `field_1` FROM `table_1` WHERE `field_1` IN "
+        + "(SELECT `field_1`, `field_2` FROM `table_1`) AND `field_2` IN (SELECT `field_1` FROM "
+        + "`table_2`);";
     // Act
     final var result = Query
         .select(Single.of(TABLE_1), Single.of(FIELD_1))

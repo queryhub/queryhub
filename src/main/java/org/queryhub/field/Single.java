@@ -80,7 +80,7 @@ public interface Single extends Field {
    * @since 0.1.0
    */
   static Single of(final String value) {
-    return () -> Mutator.ADD_SIMPLE_QUOTE
+    return () -> Mutator.ADD_BACK_TICKS
         .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES)
         .apply(Objects.requireNonNull(value));
   }

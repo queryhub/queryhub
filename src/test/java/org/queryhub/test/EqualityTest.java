@@ -43,7 +43,7 @@ final class EqualityTest extends BaseTest {
    * @since 0.1.0
    */
   @Test
-  @DisplayName("Should return false for another class' parameter.")
+  @DisplayName("Should return false for another class` parameter.")
   final void shouldReturn_false_for_otherClassParameter() {
     // Assert
     Assertions.assertEquals(Boolean.FALSE, ONE.equals(""));

@@ -13,7 +13,7 @@ import org.queryhub.field.Multiple;
 import org.queryhub.field.Single;
 
 /**
- * Defines {@link Field}'s test cases.
+ * Defines {@link Field}`s test cases.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -56,9 +56,9 @@ final class FieldTest extends BaseTest {
   @DisplayName("Should ignore escaped double quotes.")
   final void shouldIgnore_escapedDoubleQuotes() {
     // Act / Assert
-    Assertions.assertEquals("'1'", Single.of("\"1\"").get());
+    Assertions.assertEquals("`1`", Single.of("\"1\"").get());
 
-    Assertions.assertEquals("'1', '2'", Multiple.of("\"1\"", "\"2\"").get());
+    Assertions.assertEquals("`1`, `2`", Multiple.of("\"1\"", "\"2\"").get());
   }
 
   /**
@@ -159,7 +159,7 @@ final class FieldTest extends BaseTest {
     @DisplayName(SINGLE_DESCRIPTION)
     final void shouldAccept_onlyOneValue() {
       // Act / Assert
-      Assertions.assertEquals("'2019-10-18'", Multiple.of(LocalDate.of(2019, 10, 18)).get());
+      Assertions.assertEquals("`2019-10-18`", Multiple.of(LocalDate.of(2019, 10, 18)).get());
     }
 
     /**
@@ -174,7 +174,7 @@ final class FieldTest extends BaseTest {
       // Act
       final var SUBJECT = Multiple.of(ld, ld, ld);
       // Assert
-      Assertions.assertEquals("'2019-10-18', '2019-10-18', '2019-10-18'", SUBJECT.get());
+      Assertions.assertEquals("`2019-10-18`, `2019-10-18`, `2019-10-18`", SUBJECT.get());
     }
 
     /**
@@ -190,9 +190,9 @@ final class FieldTest extends BaseTest {
 
       final var SUBJECT_2 = Multiple.of(LD, LD);
       // Assert
-      Assertions.assertEquals("'2019-10-18'", SUBJECT.get());
+      Assertions.assertEquals("`2019-10-18`", SUBJECT.get());
 
-      Assertions.assertEquals("'2019-10-18', '2019-10-18'", SUBJECT_2.get());
+      Assertions.assertEquals("`2019-10-18`, `2019-10-18`", SUBJECT_2.get());
     }
 
     /**
@@ -208,9 +208,9 @@ final class FieldTest extends BaseTest {
 
       final var SUBJECT_2 = Multiple.of(LDT, LDT);
       // Assert
-      Assertions.assertEquals("'2019-12-11 12:00:00'", SUBJECT.get());
+      Assertions.assertEquals("`2019-12-11 12:00:00`", SUBJECT.get());
 
-      Assertions.assertEquals("'2019-12-11 12:00:00', '2019-12-11 12:00:00'", SUBJECT_2.get());
+      Assertions.assertEquals("`2019-12-11 12:00:00`, `2019-12-11 12:00:00`", SUBJECT_2.get());
     }
   }
 }

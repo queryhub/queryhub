@@ -10,7 +10,7 @@ import org.queryhub.field.Single;
 import org.queryhub.steps.Limit;
 
 /**
- * Defines {@link Limit {@code LIMIT}}'s test cases.
+ * Defines {@link Limit {@code LIMIT}}`s test cases.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -26,7 +26,7 @@ final class LimitTest extends BaseTest {
   @DisplayName("Should append skip parameter as zero and offset parameter.")
   final void shouldAppend_skipParameter_asZero_and_offsetParameter() {
     // Arrange
-    final var EXPECTED = "SELECT * FROM 'table_1' WHERE 'field_1' IN ('value_1') LIMIT 0 , 10;";
+    final var EXPECTED = "SELECT * FROM `table_1` WHERE `field_1` IN (`value_1`) LIMIT 0 , 10;";
     // Act
     final var result = Query.select(Single.of(TABLE_1), Constants.ALL)
         .where(Single.of(FIELD_1), Single.of(VALUE_1))
@@ -45,7 +45,7 @@ final class LimitTest extends BaseTest {
   @DisplayName("Should append skip parameter and offset parameter.")
   final void shouldAppend_skipParameter_and_offsetParameter() {
     // Arrange
-    final var expected = "SELECT * FROM 'table_1' LIMIT 10 , 30;";
+    final var expected = "SELECT * FROM `table_1` LIMIT 10 , 30;";
     // Act
     final var result = Query.select(Single.of(TABLE_1), Constants.ALL).limit(10, 30).build();
     // Assert

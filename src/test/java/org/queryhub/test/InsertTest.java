@@ -9,7 +9,7 @@ import org.queryhub.field.Single;
 import org.queryhub.steps.Insert;
 
 /**
- * Defines {@link Insert {@code INSERT}}'s test cases.
+ * Defines {@link Insert {@code INSERT}}`s test cases.
  *
  * @author <a href="mailto:queryhub.pub@gmail.com">Diego Rocha</a>
  * @since 0.1.0
@@ -26,7 +26,7 @@ final class InsertTest extends BaseTest {
   final void shouldBuild_insertQuery_withValues() {
     // Arrange
     // FIXME: Column count does not match; SQL statement:
-    final var expected = "INSERT INTO 'table_1' VALUES ('value_1');";
+    final var expected = "INSERT INTO `table_1` VALUES (`value_1`);";
     // Act
     final var result = Query
         .insert(Single.of(TABLE_1))
@@ -46,7 +46,7 @@ final class InsertTest extends BaseTest {
   final void shouldBuild_insertQuery_basedOn_selectQuery() {
     // Arrange
     // FIXME: Column count does not match; SQL statement:
-    final var expected = "INSERT INTO 'table_1' VALUES (SELECT 'field_2' FROM 'table_2');";
+    final var expected = "INSERT INTO `table_1` VALUES (SELECT `field_2` FROM `table_2`);";
     // Act
     final var result = Query
         .insert(Single.of(TABLE_1))

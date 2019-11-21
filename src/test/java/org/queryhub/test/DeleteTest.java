@@ -26,7 +26,7 @@ final class DeleteTest extends BaseTest {
   @DisplayName("Should build DELETE query.")
   final void shouldBuild_deleteQuery() {
     // Arrange
-    final var expected = "DELETE FROM 'table_1';";
+    final var expected = "DELETE FROM `table_1`;";
     // Act
     final var result = Query.delete(Single.of(TABLE_1)).build();
     // Assert
@@ -43,7 +43,7 @@ final class DeleteTest extends BaseTest {
   final void shouldBuild_deleteQuery_withCondition() {
     // Arrange
     final var expected =
-        "DELETE FROM 'table_1' WHERE 'field_1' IN ('field_2');";
+        "DELETE FROM `table_1` WHERE `field_1` IN (`field_2`);";
     // Act
     final var result = Query
         .delete(Single.of(TABLE_1))
@@ -63,7 +63,7 @@ final class DeleteTest extends BaseTest {
   final void shouldBuild_deleteQuery_withAdditiveConditions() {
     // Arrange
     final var expected =
-        "DELETE FROM 'table_1' WHERE 'field_1' >= 'field_2' AND 'field_1' > 'field_2';";
+        "DELETE FROM `table_1` WHERE `field_1` >= `field_2` AND `field_1` > `field_2`;";
     // Act
     final var result = Query
         .delete(Single.of(TABLE_1))
@@ -84,7 +84,7 @@ final class DeleteTest extends BaseTest {
   final void shouldBuild_deleteQuery_withAlternativeConditions() {
     // Arrange
     final var expected =
-        "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' IN ('field_1', 'field_2');";
+        "DELETE FROM `table_1` WHERE `field_1` != `field_2` OR `field_1` IN (`field_1`, `field_2`);";
     // Act
     final var result = Query
         .delete(Single.of(TABLE_1))
@@ -105,7 +105,7 @@ final class DeleteTest extends BaseTest {
   final void shouldBuild_deleteQuery_withCompositeFragments() {
     // Arrange
     final var expected =
-        "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' IN (SELECT 'field_2' FROM 'table_2');";
+        "DELETE FROM `table_1` WHERE `field_1` != `field_2` OR `field_1` IN (SELECT `field_2` FROM `table_2`);";
     // Act
     final var result = Query
         .delete(Single.of(TABLE_1))

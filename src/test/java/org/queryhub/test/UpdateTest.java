@@ -27,7 +27,7 @@ final class UpdateTest extends BaseTest {
     // Arrange
     final var expected =
         // FIXME: Values must have single quote and field/table names must have back-ticks
-        "UPDATE 'table_1' SET 'field_1' = 'value_1' , 'field_2' = 'value_2';";
+        "UPDATE `table_1` SET `field_1` = `value_1` , `field_2` = `value_2`;";
     // Act
     final var result = Query
         .update(Single.of(TABLE_1))
@@ -49,8 +49,8 @@ final class UpdateTest extends BaseTest {
     // Arrange
     final var expected = ""
         // FIXME: Values must have single quote and field/table names must have back-ticks
-        + "UPDATE 'table_1' SET 'field_1' = 'value_1' , 'field_2' = 'value_2' WHERE 'field_1' IN "
-        + "('field_2') AND 'field_1' IN ('field_2');";
+        + "UPDATE `table_1` SET `field_1` = `value_1` , `field_2` = `value_2` WHERE `field_1` IN "
+        + "(`field_2`) AND `field_1` IN (`field_2`);";
     // Act
     final var result = Query
         .update(Single.of(TABLE_1))

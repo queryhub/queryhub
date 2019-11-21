@@ -19,8 +19,8 @@ import org.queryhub.steps.Terminal;
 @DisplayName("Terminal methods test cases.")
 final class TerminalTest extends BaseTest {
 
-  private static final String REF_QUERY = "SELECT 'field_1' FROM 'table_1';";
-  private static final String REF_QUERY_NO_SEMI_COLON = "SELECT 'field_1' FROM 'table_1'";
+  private static final String REF_QUERY = "SELECT `field_1` FROM `table_1`;";
+  private static final String REF_QUERY_NO_SEMI_COLON = "SELECT `field_1` FROM `table_1`";
 
   private Terminal subject;
 
@@ -75,7 +75,7 @@ final class TerminalTest extends BaseTest {
    * @since 0.1.0
    */
   @Test
-  @DisplayName("toString() method should have build()'s same behavior.")
+  @DisplayName("toString() method should have build()`s same behavior.")
   final void toStringMethod_shouldHave_buildSameBehavior() {
     // Arrange
     final var q = Query.select(Single.of(TABLE_1), Single.of(FIELD_1));
