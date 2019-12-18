@@ -38,29 +38,29 @@ final class AggregateTest extends BaseTest {
   final void shouldAppend_distinctKeyword_toAggregateFunction() {
     // Act / Assert
     Assertions.assertEquals("MAX(DISTINCT(COUNT(DISTINCT('field_1'))))",
-        Aggregate.of(Type.MAX,
-            Aggregate.of(Type.DISTINCT,
-                Aggregate.of(Type.COUNT,
-                    Aggregate.of(Type.DISTINCT, FIELD_1)))).get());
+      Aggregate.of(Type.MAX,
+        Aggregate.of(Type.DISTINCT,
+          Aggregate.of(Type.COUNT,
+            Aggregate.of(Type.DISTINCT, FIELD_1)))).get());
 
     Assertions.assertEquals("COUNT(MAX(DISTINCT('field_2')))",
-        Aggregate.of(Type.COUNT,
-            Aggregate.of(Type.MAX,
-                Aggregate.of(Type.DISTINCT, FIELD_2))).get());
+      Aggregate.of(Type.COUNT,
+        Aggregate.of(Type.MAX,
+          Aggregate.of(Type.DISTINCT, FIELD_2))).get());
 
     Assertions.assertEquals("MIN(DISTINCT(AVG('field_1')))",
-        Aggregate.of(Type.MIN,
-            Aggregate.of(Type.DISTINCT,
-                Aggregate.of(Type.AVG, FIELD_1))).get());
+      Aggregate.of(Type.MIN,
+        Aggregate.of(Type.DISTINCT,
+          Aggregate.of(Type.AVG, FIELD_1))).get());
 
     Assertions.assertEquals("COUNT(MAX('field_2'))",
-        Aggregate.of(Type.COUNT, Aggregate.of(Type.MAX, FIELD_2)).get());
+      Aggregate.of(Type.COUNT, Aggregate.of(Type.MAX, FIELD_2)).get());
 
     Assertions.assertEquals("AVG(MIN('field_1'), MAX('field_2'))",
-        Aggregate.of(Type.AVG,
-            Aggregate.of(Type.MIN, FIELD_1),
-            Aggregate.of(Type.MAX, FIELD_2))
-            .get());
+      Aggregate.of(Type.AVG,
+        Aggregate.of(Type.MIN, FIELD_1),
+        Aggregate.of(Type.MAX, FIELD_2))
+        .get());
   }
 
   /**
@@ -71,7 +71,7 @@ final class AggregateTest extends BaseTest {
   final void shouldThrow_illegalArgumentException_whenPassing_multipleParameters_inadequately() {
     // Act / Assert
     Assertions.assertThrows(IllegalArgumentException.class,
-        () -> Aggregate.of(Type.AVG, FIELD_1, FIELD_2));
+      () -> Aggregate.of(Type.AVG, FIELD_1, FIELD_2));
 
     Assertions.assertDoesNotThrow(() -> Aggregate.of(Type.DISTINCT, FIELD_1, FIELD_2));
 

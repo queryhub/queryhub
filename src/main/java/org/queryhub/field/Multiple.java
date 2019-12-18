@@ -72,7 +72,7 @@ public interface Multiple extends Field {
    */
   static Multiple of(final ChronoLocalDateTime value, final ChronoLocalDateTime... values) {
     return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(Helper.LOCAL_DATE_TIME::format))
-        .apply(value, values);
+      .apply(value, values);
   }
 
   /**
@@ -87,6 +87,6 @@ public interface Multiple extends Field {
    */
   static Multiple of(final CharSequence value, final CharSequence... values) {
     return () -> asString(Mutator.ADD_SIMPLE_QUOTE.compose(String::valueOf))
-        .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES).apply(value, values);
+      .andThen(Mutator.REMOVE_REDUNDANT_DOUBLE_QUOTES).apply(value, values);
   }
 }

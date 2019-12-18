@@ -19,7 +19,7 @@ import org.queryhub.steps.Update.Mixin;
  * @since 0.1.0
  */
 final class Impl extends WhereBase<Impl>
-    implements Insert, Update, After, Mixin, Sort, Limit, Terminal, Select {
+  implements Insert, Update, After, Mixin, Sort, Limit, Terminal, Select {
 
   private static final Field COMMA = () -> ",";
   private static final Field EQUAL = () -> "=";

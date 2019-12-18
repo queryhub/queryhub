@@ -29,8 +29,8 @@ final class DeleteTest extends BaseTest {
     final var QUERY = "DELETE FROM 'table_1';";
     // Act
     final var result = Query
-        .delete(Single.of(TABLE_1))
-        .build();
+      .delete(Single.of(TABLE_1))
+      .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
   }
@@ -45,9 +45,9 @@ final class DeleteTest extends BaseTest {
     final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' IN ('field_2');";
     // Act
     final var result = Query
-        .delete(Single.of(TABLE_1))
-        .where(Single.of(FIELD_1), Single.of(FIELD_2))
-        .build();
+      .delete(Single.of(TABLE_1))
+      .where(Single.of(FIELD_1), Single.of(FIELD_2))
+      .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
   }
@@ -62,10 +62,10 @@ final class DeleteTest extends BaseTest {
     final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' >= 'field_2' AND 'field_1' > 'field_2';";
     // Act
     final var result = Query
-        .delete(Single.of(TABLE_1))
-        .where(Single.of(FIELD_1), Relation.GTE, Single.of(FIELD_2))
-        .and(Single.of(FIELD_1), Relation.GT, Single.of(FIELD_2))
-        .build();
+      .delete(Single.of(TABLE_1))
+      .where(Single.of(FIELD_1), Relation.GTE, Single.of(FIELD_2))
+      .and(Single.of(FIELD_1), Relation.GT, Single.of(FIELD_2))
+      .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
   }
@@ -80,10 +80,10 @@ final class DeleteTest extends BaseTest {
     final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' IN ('field_1', 'field_2');";
     // Act
     final var result = Query
-        .delete(Single.of(TABLE_1))
-        .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
-        .or(Single.of(FIELD_1), Multiple.of(FIELD_1, FIELD_2))
-        .build();
+      .delete(Single.of(TABLE_1))
+      .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
+      .or(Single.of(FIELD_1), Multiple.of(FIELD_1, FIELD_2))
+      .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
   }
@@ -98,10 +98,10 @@ final class DeleteTest extends BaseTest {
     final var QUERY = "DELETE FROM 'table_1' WHERE 'field_1' != 'field_2' OR 'field_1' IN (SELECT 'field_2' FROM 'table_2');";
     // Act
     final var result = Query
-        .delete(Single.of(TABLE_1))
-        .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
-        .or(Single.of(FIELD_1), Query.select(Single.of(TABLE_2), Single.of(FIELD_2)))
-        .build();
+      .delete(Single.of(TABLE_1))
+      .where(Single.of(FIELD_1), Relation.NEQ, Single.of(FIELD_2))
+      .or(Single.of(FIELD_1), Query.select(Single.of(TABLE_2), Single.of(FIELD_2)))
+      .build();
     // Assert
     Assertions.assertEquals(QUERY, result);
   }

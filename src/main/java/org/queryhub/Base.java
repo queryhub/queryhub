@@ -138,7 +138,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
   /**
    * Encloses the string representation from a value within parenthesis.
    *
-   * @param val  A value to be set.
+   * @param val    A value to be set.
    * @param mapper A mapping function to supply a string representation.
    * @param <T>    A type to be shared between parameters.
    * @return Current statement building instance.

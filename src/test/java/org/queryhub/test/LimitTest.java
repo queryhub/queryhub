@@ -27,9 +27,9 @@ final class LimitTest extends BaseTest {
   final void shouldAppend_skipParameter_asZero_and_offsetParameter() {
     // Act / Assert
     Assertions.assertEquals("SELECT * FROM 'table_1' WHERE 'field_1' IN ('value_1') LIMIT 0 , 10;",
-        Query.select(Single.of(TABLE_1), Constants.ALL)
-            .where(Single.of(FIELD_1), Single.of(VALUE_1))
-            .limit(10).build());
+      Query.select(Single.of(TABLE_1), Constants.ALL)
+        .where(Single.of(FIELD_1), Single.of(VALUE_1))
+        .limit(10).build());
   }
 
   /**
@@ -40,7 +40,7 @@ final class LimitTest extends BaseTest {
   final void shouldAppend_skipParameter_and_offsetParameter() {
     // Act / Assert
     Assertions.assertEquals("SELECT * FROM 'table_1' LIMIT 10 , 30;",
-        Query.select(Single.of(TABLE_1), Constants.ALL).limit(10, 30).build());
+      Query.select(Single.of(TABLE_1), Constants.ALL).limit(10, 30).build());
   }
 
   /**

@@ -25,9 +25,9 @@ public interface Aggregate extends Single {
   static Aggregate of(final Type type, final String value, final String... values) {
     Helper.throwIf(IllegalArgumentException::new, !type.supportsMultiple && values.length > 0);
     return () -> Variadic.asString((String s) -> Single.of(s).get())
-        .andThen(Mutator.ADD_PARENTHESIS)
-        .andThen(s -> type + s)
-        .apply(value, values);
+      .andThen(Mutator.ADD_PARENTHESIS)
+      .andThen(s -> type + s)
+      .apply(value, values);
   }
 
   // Composition
@@ -57,10 +57,10 @@ public interface Aggregate extends Single {
    */
   static Aggregate of(final Type type, final Aggregate aggregate, final Aggregate... aggregates) {
     return () -> Variadic
-        .asString(Aggregate::get)
-        .andThen(Mutator.ADD_PARENTHESIS)
-        .andThen(s -> type + s)
-        .apply(aggregate, aggregates);
+      .asString(Aggregate::get)
+      .andThen(Mutator.ADD_PARENTHESIS)
+      .andThen(s -> type + s)
+      .apply(aggregate, aggregates);
   }
 
   /**

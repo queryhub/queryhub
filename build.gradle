@@ -8,48 +8,48 @@ wrapper { gradleVersion = '6.0.1' }
 
 allprojects {
 
-    apply plugin: 'idea'
-    apply plugin: 'base'
-    apply plugin: 'java-library'
+  apply plugin: 'idea'
+  apply plugin: 'base'
+  apply plugin: 'java-library'
 
-    apply plugin: 'jacoco'
+  apply plugin: 'jacoco'
 
-    repositories { jcenter() }
+  repositories { jcenter() }
 
-    tasks.withType(JavaCompile) {
+  tasks.withType(JavaCompile) {
 
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
-        options.compilerArgs.add('-parameters')
+    options.compilerArgs.add('-parameters')
+  }
+
+  idea {
+    module {
+      // https://docs.gradle.org/current/dsl/org.gradle.plugins.ide.idea.model.IdeaModule.html
+
+      jdkName = String.valueOf(JavaVersion.VERSION_11)
+
+      sourceDirs.add(file('src/main/java'))
+      testSourceDirs.add(file('src/test/java'))
+      resourceDirs.add(file('src/main/resources'))
+      testResourceDirs.add(file('src/test/resources'))
+      generatedSourceDirs.add(file('target/main/java'))
+      excludeDirs.addAll([file('gradle'), file('.gradle'),
+                          file('.idea'), file('build'), file('out')])
+
+      inheritOutputDirs = Boolean.FALSE
+      downloadJavadoc = Boolean.TRUE
+      downloadSources = Boolean.FALSE
     }
-
-    idea {
-        module {
-            // https://docs.gradle.org/current/dsl/org.gradle.plugins.ide.idea.model.IdeaModule.html
-
-            jdkName = String.valueOf(JavaVersion.VERSION_11)
-
-            sourceDirs.add(file('src/main/java'))
-            testSourceDirs.add(file('src/test/java'))
-            resourceDirs.add(file('src/main/resources'))
-            testResourceDirs.add(file('src/test/resources'))
-            generatedSourceDirs.add(file('target/main/java'))
-            excludeDirs.addAll([file('gradle'), file('.gradle'),
-                                file('.idea'), file('build'), file('out')])
-
-            inheritOutputDirs = Boolean.FALSE
-            downloadJavadoc = Boolean.TRUE
-            downloadSources = Boolean.FALSE
-        }
-    }
+  }
 }
 
 task runDefaultTasks {
-    subprojects.each { m -> m.defaultTasks.each { dependsOn String.format("%s:%s", m.path, it) } }
-    allprojects.each { p ->
-        p.defaultTasks.each { dependsOn 'clean', 'cleanTest', 'cleanIdea', 'cleanIdeaWorkspace', 'idea' }
-    }
+  subprojects.each { m -> m.defaultTasks.each { dependsOn String.format("%s:%s", m.path, it) } }
+  allprojects.each { p ->
+    p.defaultTasks.each { dependsOn 'clean', 'cleanTest', 'cleanIdea', 'cleanIdeaWorkspace', 'idea' }
+  }
 }
 
 subprojects { defaultTasks 'build' }
@@ -59,20 +59,20 @@ defaultTasks runDefaultTasks.name
 // Dependencies
 
 ext {
-    module_core = 'queryhub.core'
-    module_test = 'queryhub.test'
+  module_core = 'queryhub.core'
+  module_test = 'queryhub.test'
 
-    junit_version = '5.5.2+'
-    junit_platform_version = '1.5.2+'
+  junit_version = '5.5.2+'
+  junit_platform_version = '1.5.2+'
 }
 
 repositories { mavenCentral() }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:' + junit_version
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:' + junit_version
-    testImplementation 'org.junit.platform:junit-platform-suite-api:' + junit_platform_version
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:' + junit_platform_version
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:' + junit_version
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:' + junit_version
+  testImplementation 'org.junit.platform:junit-platform-suite-api:' + junit_platform_version
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher:' + junit_platform_version
 }
 
 // Jigsaw Modularization
@@ -80,41 +80,41 @@ dependencies {
 // Installing
 
 compileJava {
-    inputs.property('moduleName', module_core)
-    doFirst {
-        options.compilerArgs = [
-                '--module-path', classpath.asPath,
-        ]
-        classpath = files()
-    }
+  inputs.property('moduleName', module_core)
+  doFirst {
+    options.compilerArgs = [
+      '--module-path', classpath.asPath,
+    ]
+    classpath = files()
+  }
 }
 
 // Testing
 
 compileTestJava {
-    inputs.property('moduleName', module_test)
-    doFirst {
-        options.compilerArgs = [
-                '--module-path', classpath.asPath,
-                '--add-modules', 'org.junit.jupiter.api',
-                '--add-reads', "$module_test=org.junit.jupiter.api",
-                '--patch-module', "$module_test=" + files(sourceSets.test.java.srcDirs).asPath,
-        ]
-        classpath = files()
-    }
+  inputs.property('moduleName', module_test)
+  doFirst {
+    options.compilerArgs = [
+      '--module-path', classpath.asPath,
+      '--add-modules', 'org.junit.jupiter.api',
+      '--add-reads', "$module_test=org.junit.jupiter.api",
+      '--patch-module', "$module_test=" + files(sourceSets.test.java.srcDirs).asPath,
+    ]
+    classpath = files()
+  }
 }
 
 test {
-    useJUnitPlatform()
-    filter { exclude '**/module-info.class' }
+  useJUnitPlatform()
+  filter { exclude '**/module-info.class' }
 }
 
 jacocoTestReport {
-    reports {
-        xml.enabled Boolean.TRUE
-        html.enabled Boolean.TRUE
-        csv.enabled Boolean.TRUE
-    }
+  reports {
+    xml.enabled Boolean.TRUE
+    html.enabled Boolean.TRUE
+    csv.enabled Boolean.TRUE
+  }
 }
 
 check.dependsOn jacocoTestReport
@@ -122,23 +122,23 @@ check.dependsOn jacocoTestReport
 // Publishing
 
 buildScan {
-    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-    termsOfServiceAgree = 'yes'
+  termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+  termsOfServiceAgree = 'yes'
 }
 
 jar {
-    inputs.property('moduleName', module_core)
+  inputs.property('moduleName', module_core)
 
-    doFirst {
-        manifest {
-            attributes 'Manifest-Version': 1.0
-            attributes 'Specification-Title': rootProject.name
-            attributes 'Specification-Version': rootProject.version
-            attributes 'Specification-Vendor': rootProject.group
-            // attributes 'Implementation-Title': ''
-            // attributes 'Implementation-Version': ''
-            // attributes 'Implementation-Vendor': ''
-            attributes 'Automatic-Module-Name': module_core
-        }
+  doFirst {
+    manifest {
+      attributes 'Manifest-Version': 1.0
+      attributes 'Specification-Title': rootProject.name
+      attributes 'Specification-Version': rootProject.version
+      attributes 'Specification-Vendor': rootProject.group
+      // attributes 'Implementation-Title': ''
+      // attributes 'Implementation-Version': ''
+      // attributes 'Implementation-Vendor': ''
+      attributes 'Automatic-Module-Name': module_core
     }
+  }
 }
