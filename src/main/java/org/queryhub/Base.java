@@ -51,11 +51,12 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @since 0.1.0
    */
   @Override
+  @SuppressWarnings("unchecked")
   public final boolean equals(final Object o) {
     if (o == null || getClass() != o.getClass()) {
       return Boolean.FALSE;
     }
-    final var b = (Base) o;
+    final var b = (Base<B>) o;
     return this.isClosed == b.isClosed && this.joiner.equals(b.joiner);
   }
 
@@ -130,7 +131,7 @@ abstract class Base<B extends Base<B>> implements Query, Terminal {
    * @return Current statement building instance.
    * @since 0.1.0
    */
-  final <K extends Enum & KeyWord> B add(final K keyWord) {
+  final <K extends Enum<K> & KeyWord> B add(final K keyWord) {
     this.joiner.add(keyWord.keyWord());
     return self();
   }

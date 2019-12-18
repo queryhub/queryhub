@@ -12,7 +12,7 @@ import java.util.function.UnaryOperator;
  * @since 0.1.0
  */
 public enum Mutator implements UnaryOperator<String> {
-  ADD_SIMPLE_QUOTE(s -> "\'" + s + "\'"), // TODO: back-ticks
+  ADD_SIMPLE_QUOTE(s -> "'" + s + "'"), // TODO: back-ticks
   ADD_PARENTHESIS(s -> "(" + s + ")"),
   REMOVE_REDUNDANT_DOUBLE_QUOTES(s -> Helper.DOUBLE_QUOTE.matcher(s).replaceAll(Helper.EMPTY)),
   ;
